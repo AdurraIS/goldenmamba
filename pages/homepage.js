@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
-import Bottom from "../components/navBottom"
+import NavBottom from "../components/NavBottom"
 function homepage() {
 
     const [isHovered, setIsHovered] = useState(false);
@@ -106,55 +106,7 @@ function homepage() {
 
             </View>
 
-<Bottom/>
-            {/* <View style={styles.bottom}>
-                <TouchableOpacity
-                    style={[styles.image, isHovered && styles.buttonHovered]}
-                    onPress={() => console.log('Botão pressionado')}
-                    onPressIn={handleMouseEnter}
-                    onPressOut={handleMouseLeave}
-                >
-                    <Image
-                        style={styles.image}
-                        source={require('../icones/home.png')} // Caminho relativo para a imagem
-                    />
-                </TouchableOpacity>
-                <TouchableOpacity
-                    style={[styles.image, isHovered && styles.buttonHovered]}
-                    onPress={() => console.log('Botão pressionado')}
-                    onPressIn={handleMouseEnter}
-                    onPressOut={handleMouseLeave}
-                >
-                    <Image
-                        style={styles.card}
-                        source={require('../icones/cartao.png')} // Caminho relativo para a imagem
-                    />
-                </TouchableOpacity>
-                <TouchableOpacity
-                    style={[styles.image, isHovered && styles.buttonHovered]}
-                    onPress={() => console.log('Botão pressionado')}
-                    onPressIn={handleMouseEnter}
-                    onPressOut={handleMouseLeave}
-                >
-                    <Image
-                        style={styles.image}
-                        source={require('../icones/lupa.png')} // Caminho relativo para a imagem
-                    />
-                </TouchableOpacity>
-                <TouchableOpacity
-                    style={[styles.image, isHovered && styles.buttonHovered]}
-                    onPress={() => console.log('Botão pressionado')}
-                    onPressIn={handleMouseEnter}
-                    onPressOut={handleMouseLeave}
-                >
-                    <Image
-                        style={styles.image}
-                        source={require('../icones/perfil.png')} // Caminho relativo para a imagem
-                    />
-                </TouchableOpacity>
-            </View> */}
-
-
+            <NavBottom />
         </View>
     );
 }
