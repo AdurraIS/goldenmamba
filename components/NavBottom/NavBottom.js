@@ -74,23 +74,21 @@ const styles = StyleSheet.create({
         width: 30,
         height: 30,
     },
-    card: {
-        width: 30,
-        height: 25
-    },
+
     bottom: {
         borderTopRightRadius: 20,
         borderTopLeftRadius: 20,
-        backgroundColor: '#ebc7e9',
+        backgroundColor: '#ffffff',
         position: 'absolute',
         bottom: 0,
         height: 76,
+        
 
         width: '100%',
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-around',
-        paddingBottom: 10
+        paddingBottom: 10,
 
 
     }, buttonHovered: {
