@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
-function bottom() {
-
+function NavBottom() {
+    const navigation = useNavigation();
     const [isHovered, setIsHovered] = useState(false);
 
 
@@ -19,24 +20,24 @@ function bottom() {
         <View style={styles.bottom}>
             <TouchableOpacity
                 style={[styles.image, isHovered && styles.buttonHovered]}
-                onPress={() => console.log('Botão pressionado')}
+                onPress={() => navigation.navigate('HomePage')}
                 onPressIn={handleMouseEnter}
                 onPressOut={handleMouseLeave}
             >
                 <Image
                     style={styles.image}
-                    source={require('../icones/home.png')} // Caminho relativo para a imagem
+                    source={require('../../assets/icones/home.png')} // Caminho relativo para a imagem
                 />
             </TouchableOpacity>
             <TouchableOpacity
                 style={[styles.image, isHovered && styles.buttonHovered]}
-                onPress={() => console.log('Botão pressionado')}
+                onPress={() => navigation.navigate('meta/1')}
                 onPressIn={handleMouseEnter}
                 onPressOut={handleMouseLeave}
             >
                 <Image
                     style={styles.card}
-                    source={require('../icones/cartao.png')} // Caminho relativo para a imagem
+                    source={require('../../assets/icones/cartao.png')} // Caminho relativo para a imagem
                 />
             </TouchableOpacity>
             <TouchableOpacity
@@ -47,7 +48,7 @@ function bottom() {
             >
                 <Image
                     style={styles.image}
-                    source={require('../icones/lupa.png')} // Caminho relativo para a imagem
+                    source={require('../../assets/icones/lupa.png')} // Caminho relativo para a imagem
                 />
             </TouchableOpacity>
             <TouchableOpacity
@@ -58,7 +59,7 @@ function bottom() {
             >
                 <Image
                     style={styles.image}
-                    source={require('../icones/perfil.png')} // Caminho relativo para a imagem
+                    source={require('../../assets/icones/perfil.png')} // Caminho relativo para a imagem
                 />
             </TouchableOpacity>
         </View>
@@ -76,20 +77,21 @@ const styles = StyleSheet.create({
         height: 25
     },
     bottom: {
-        borderTopRightRadius: 40,
-        borderTopLeftRadius: 40,
+        borderTopRightRadius: 20,
+        borderTopLeftRadius: 20,
         backgroundColor: '#ebc7e9',
-        position: 'relative',
-        height: 160, // altura em pontos (píxeis)
+        position: 'absolute',
+        bottom: 0,
+        height: 76,
         width: '100%',
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-around',
-        paddingBottom: 50
+        paddingBottom: 10
 
     }, buttonHovered: {
         backgroundColor: 'lightblue',
     },
 })
 
-export default bottom;
+export default NavBottom;

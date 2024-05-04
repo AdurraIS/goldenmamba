@@ -1,16 +1,65 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import HomePage from "./pages/homepage"
+const Stack = createNativeStackNavigator();
+
 import Loading from './pages/Loading/Loading';
 import StartPage from './pages/StartPage/StartPage';
 import carIcon from './assets/MetaIcons/Car.png'
-import Meta from './components/Meta/Meta';
+import Meta from './components/Meta/Meta'
+import HomePage from './pages/HomePage/HomePage';
+import { useState } from 'react';
+
 export default function App() {
+
+
+  const [metas, setMetas] = useState([]);
+
+  const adicionarMeta = (valorAtual, valorMeta, tituloMeta, imageMeta, dataMeta) => {
+    const novaMeta = {
+      id: metas.length + 1,
+      valorAtual: valorAtual,
+      valorMeta: valorMeta,
+      titulo: tituloMeta,
+      imageMeta: imageMeta,
+      dataMeta: dataMeta
+    };
+    setMetas([...metas, novaMeta]);
+  };
+
   return (
-    <View style={styles.container}>
-      <Meta valorAtual={50} valorMeta={1000} tituloMeta={"Car"} imageMeta={carIcon} dataMeta={'27/08/2024'}/>
-    </View>
+
+
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen
+          name="HomePage"
+          options={{ headerShown: false }}
+        >
+          {props => <HomePage {...props} adicionarMeta={adicionarMeta} />}
+        </Stack.Screen>
+        {metas.map(meta => (
+          <Stack.Screen
+          name={"meta/" + meta.id}
+          options={{ headerShown: false }}
+        >
+          {() => (
+            <Meta
+            key={meta.id}
+              valorAtual={meta.valorAtual}
+              valorMeta={meta.valorMeta}
+              tituloMeta={meta.titulo}
+              imageMeta={meta.imageMeta}
+              dataMeta={meta.dataMeta}
+            />
+          )}
+        </Stack.Screen>
+        
+        ))}
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 

@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
-import Bottom from "../components/navBottom"
-function homepage() {
+import Bottom from "../../components/NavBottom/NavBottom"
+
+
+function HomePage() {
 
     const [isHovered, setIsHovered] = useState(false);
 
@@ -9,7 +11,7 @@ function homepage() {
     const handleMouseEnter = () => {
         setIsHovered(true);
     };
-
+    
     const handleMouseLeave = () => {
         setIsHovered(false);
     };
@@ -38,13 +40,11 @@ function homepage() {
                     <View>
                         <Image
                             style={styles.seta}
-                            source={require('../icones/setaDireita.png')} // Caminho relativo para a imagem
+                            source={require('../../assets/icones/setaDireita.png')} // Caminho relativo para a imagem
                         />
                     </View>
 
                 </View>
-                <View></View>
-
             </View>
             <View style={[styles.flexRow, styles.center]}>
 
@@ -54,7 +54,7 @@ function homepage() {
                     <View style={[styles.flexRow, styles.LinhaCenter]}>
                         <Image
                             style={styles.imageCenter}
-                            source={require('../icones/people.png')} // Caminho relativo para a imagem
+                            source={require('../../assets/icones/people.png')} // Caminho relativo para a imagem
                         />
                         <Text style={[styles.textH1, styles.textH1Center]}>Profile</Text>
 
@@ -62,7 +62,7 @@ function homepage() {
                     <View style={[styles.flexRow, styles.LinhaCenter]}>
                         <Image
                             style={styles.imageCenter}
-                            source={require('../icones/icones.png')} // Caminho relativo para a imagem
+                            source={require('../../assets/icones/icones.png')} // Caminho relativo para a imagem
                         />
                         <Text style={[styles.textH1, styles.textH1Center]}>Notifications</Text>
 
@@ -70,7 +70,7 @@ function homepage() {
                     <View style={[styles.flexRow, styles.LinhaCenter]}>
                         <Image
                             style={styles.imageCenter}
-                            source={require('../icones/people.png')} // Caminho relativo para a imagem
+                            source={require('../../assets/icones/people.png')} // Caminho relativo para a imagem
                         />
                         <Text style={[styles.textH1, styles.textH1Center]}>Profile</Text>
 
@@ -80,7 +80,7 @@ function homepage() {
                     <View style={[styles.flexRow, styles.LinhaCenter]}>
                         <Image
                             style={styles.imageCenter}
-                            source={require('../icones/segurança.png')} // Caminho relativo para a imagem
+                            source={require('../../assets/icones/segurança.png')} // Caminho relativo para a imagem
                         />
                         <Text style={[styles.textH1, styles.textH1Center]}>Preferences</Text>
 
@@ -88,7 +88,7 @@ function homepage() {
                     <View style={[styles.flexRow, styles.LinhaCenter]}>
                         <Image
                             style={styles.imageCenter}
-                            source={require('../icones/configurações.png')} // Caminho relativo para a imagem
+                            source={require('../../assets/icones/configurações.png')} // Caminho relativo para a imagem
                         />
                         <Text style={[styles.textH1, styles.textH1Center]}>Product Settings</Text>
 
@@ -96,7 +96,7 @@ function homepage() {
                     <View style={[styles.flexRow, styles.LinhaCenter]}>
                         <Image
                             style={styles.imageCenter}
-                            source={require('../icones/Qr.png')} // Caminho relativo para a imagem
+                            source={require('../../assets/icones/Qr.png')} // Caminho relativo para a imagem
                         />
                         <Text style={[styles.textH1, styles.textH1Center]}>QR & Passcodes</Text>
 
@@ -106,7 +106,7 @@ function homepage() {
 
             </View>
 
-<Bottom/>
+            <Bottom />
             {/* <View style={styles.bottom}>
                 <TouchableOpacity
                     style={[styles.image, isHovered && styles.buttonHovered]}
@@ -263,4 +263,4 @@ const styles = StyleSheet.create({
     },
 })
 
-export default homepage;
+export default HomePage;
