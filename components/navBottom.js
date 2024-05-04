@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 
-function bottom() {
+function NavBottom() {
 
     const [isHovered, setIsHovered] = useState(false);
 
@@ -80,16 +80,16 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: 40,
         backgroundColor: '#ebc7e9',
         position: 'relative',
-        height: 160, // altura em pontos (píxeis)
+        height:100, // altura em pontos (píxeis)
         width: '100%',
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-around',
-        paddingBottom: 50
+        // paddingBottom: 50
 
     }, buttonHovered: {
         backgroundColor: 'lightblue',
     },
 })
 
-export default bottom;
+export default NavBottom;
