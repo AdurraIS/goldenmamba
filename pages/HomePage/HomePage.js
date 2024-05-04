@@ -1,30 +1,29 @@
 import React from 'react';
 import { Dimensions } from 'react-native';
-import { ScrollView, View, Text, StyleSheet, Image } from 'react-native';
+import { ScrollView, View, Text, StyleSheet, Image, FlatList } from 'react-native';
 import NavBottom from "../../components/NavBottom/NavBottom";
 const screenWidth = Dimensions.get('window').width;
+import cards from './Cards';
+import OnboardingItem from '../../components/OnboardingItem/OnboardingItem';
 
 function HomePage() {
     return (
         <View style={styles.container}>
+
             <ScrollView contentContainerStyle={styles.scroll} >
                 <View style={styles.containerCards}>
                     <View style={[styles.flexRow, styles.header]}>
                         <Image
                             style={styles.icones1}
-                            source={require('../../assets/icones/configurações.png')} // Caminho relativo para a imagem
-                        />
+                            source={require('../../assets/icones/configurações.png')} /
+                        >
                         <Text style={styles.textH2}>Bem-vinda, Malu</Text>
                         <Image
                             style={styles.icones1}
                             source={require('../../assets/icones/icones.png')} // Caminho relativo para a imagem
                         />
                     </View>
-                    <View style={styles.cartoes}>
-                        <View style={styles.cartaoEsquerdo}></View>
-                        <View style={styles.cartaoCentral}></View>
-                        <View style={styles.cartaoDireito}></View>
-                    </View>
+                    
                     <View style={styles.pagamentos}>
                         <View style={[styles.divBotoes, styles.enviar]}>
                             <Image
@@ -47,6 +46,18 @@ function HomePage() {
                             />
                             <Text style={styles.textH3}>Pay Bill</Text>
                         </View>
+                    </View>
+                    <View style={styles.cartoes}>
+                        <FlatList
+                            data={cards}
+                            renderItem={({ item }) => <OnboardingItem item={item} />}
+                            horizontal
+                            snapToAlignment='start'
+                            scrollEventThrottle={16}
+                            decelerationRate="fast"
+                            snapToOffsets={cards.map((_, i) => i * (304-15) + (i - 1) * 40)} // Correção aqui
+                            showsHorizontalScrollIndicator={false}
+                        />
                     </View>
                     <View style={[styles.marginBottom, styles.pagamentosDiv]}>
                         <Text>My Goals</Text>
@@ -83,12 +94,10 @@ const styles = StyleSheet.create({
     },
     containerCards: {
         flexDirection: 'column',
-        justifyContent: 'space-between',
         alignItems: 'center',
         width: '100%',
         height: '100%',
         marginBottom: 20,
-        overflow: 'visible'
 
     },
     flexRow: {
@@ -112,37 +121,9 @@ const styles = StyleSheet.create({
     },
 
     cartoes: {
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-        alignItems: 'center',
-        height: 150,
-        width: '100%',
-        position: 'relative',
-        marginTop: 50
-    },
-    cartaoCentral: {
-        width: '70%',
-        height: 180,
-        backgroundColor: '#eac6e8',
-        borderRadius: 30
-    },
-    cartaoEsquerdo: {
-        width: '50%',
-        height: 150,
-        backgroundColor: '#6b0364',
-        position: 'absolute',
-        top: 0,
-        right: -150,
-        borderRadius: 30
-    },
-    cartaoDireito: {
-        width: '50%',
-        height: 150,
-        backgroundColor: '#bb36a7',
-        position: 'absolute',
-        top: 0,
-        left: -150,
-        borderRadius: 30
+        height: 200,
+        overflow: 'visible',
+        width: screenWidth
     },
     pagamentos: {
         flexDirection: 'row',
