@@ -7,8 +7,9 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 const Stack = createNativeStackNavigator();
 
 import Meta from './components/Meta/Meta'
-import HomePage from './pages/Preferences/Preferences';
+import HomePage from './pages/HomePage/HomePage';
 import { useState } from 'react';
+import Preferences from './pages/Preferences/Preferences';
 
 export default function App() {
 
@@ -34,9 +35,13 @@ export default function App() {
         <Stack.Screen
           name="HomePage"
           options={{ headerShown: false }}
-        >
-          {props => <HomePage {...props} adicionarMeta={adicionarMeta} />}
-        </Stack.Screen>
+          component={HomePage}
+        />
+        <Stack.Screen
+          name="Preferences"
+          options={{ headerShown: false }}
+          component={Preferences}
+        />
         {metas.map(meta => (
           <Stack.Screen
           name={"meta/" + meta.id}
@@ -53,7 +58,6 @@ export default function App() {
             />
           )}
         </Stack.Screen>
-        
         ))}
       </Stack.Navigator>
     </NavigationContainer>
