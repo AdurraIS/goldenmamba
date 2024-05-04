@@ -1,52 +1,96 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Dimensions } from 'react-native';
-import { ScrollView, View, Text, StyleSheet, Image, FlatList } from 'react-native';
+import { ScrollView, View, Text, StyleSheet, Button, Image, FlatList } from 'react-native';
 import NavBottom from "../../components/NavBottom/NavBottom";
 const screenWidth = Dimensions.get('window').width;
+const screenHeight = Dimensions.get('window').height;
 import cards from './Cards';
 import OnboardingItem from '../../components/OnboardingItem/OnboardingItem';
+import ProgressCircle from '../../components/ProgressCircle/ProgressCircle';
 
 function HomePage() {
+    const [balance, setBalance] = useState(8.5);
+    const [metas, setMetas] = useState([]);
+
+    const adicionarMeta = (valorAtual, valorMeta, tituloMeta, imageMeta, dataMeta) => {
+        const novaMeta = {
+            id: metas.length + 1,
+            valorAtual: valorAtual,
+            valorMeta: valorMeta,
+            titulo: tituloMeta,
+            imageMeta: imageMeta,
+            dataMeta: dataMeta
+        };
+        setMetas([...metas, novaMeta]);
+    };
+
+    const handleAdicionarMeta = () => {
+        // Chamar a função adicionarMeta passando os valores desejados
+        adicionarMeta(500, 1000, "Car", require('../../assets/MetaIcons/Car.png'), '27/08/2024');
+    };
     return (
         <View style={styles.container}>
 
             <ScrollView contentContainerStyle={styles.scroll} >
+                <Image
+                    style={styles.topBackgroundImage}
+                    source={require('../../assets/Backgrounds/background.png')} // Caminho relativo para a imagem
+                />
                 <View style={styles.containerCards}>
-                    <View style={[styles.flexRow, styles.header]}>
+                    <View style={[styles.header]}>
+                        <View>
+                            <Text style={[styles.textH2, { fontSize: 14, fontWeight: 200, marginBottom: 10 }]}>Welcome Back</Text>
+                            <Text style={styles.textH2}>Yasmine Coutinho</Text>
+                        </View>
                         <Image
                             style={styles.icones1}
-                            source={require('../../assets/icones/configurações.png')} /
-                        >
-                        <Text style={styles.textH2}>Bem-vinda, Malu</Text>
-                        <Image
-                            style={styles.icones1}
-                            source={require('../../assets/icones/icones.png')} // Caminho relativo para a imagem
+                            source={require('../../assets/icones/notificationicon.png')} // Caminho relativo para a imagem
                         />
                     </View>
-                    
+
                     <View style={styles.pagamentos}>
-                        <View style={[styles.divBotoes, styles.enviar]}>
-                            <Image
-                                style={styles.icones1}
-                                source={require('../../assets/icones/enviar.png')} // Caminho relativo para a imagem
-                            />
-                            <Text style={styles.textH3}>Send Money</Text>
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '100%', padding: 10, marginBottom: 10 }}>
+                            <Text style={{ fontSize: 14, color: '#840F74' }}>My Balance</Text>
+                            <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#840F74' }}>{balance} ETH</Text>
                         </View>
-                        <View style={[styles.divBotoes, styles.receber]}>
-                            <Image
-                                style={styles.icones1}
-                                source={require('../../assets/icones/receber.png')} // Caminho relativo para a imagem
-                            />
-                            <Text style={styles.textH3}>Receive Money</Text>
+                        <View style={{ width: '90%', backgroundColor: '#F2F2F2', height: 2 }}></View>
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '100%', padding: 20 }}>
+                            <View style={[styles.divBotoes]}>
+                                <Image
+                                    style={styles.icones}
+                                    source={require('../../assets/icones/Home/EnviarIcon.png')} // Caminho relativo para a imagem
+                                />
+                                <Text style={styles.textH3}>Send</Text>
+                            </View>
+                            <View style={[styles.divBotoes]}>
+                                <Image
+                                    style={styles.icones}
+                                    source={require('../../assets/icones/Home/RequestIcon.png')} // Caminho relativo para a imagem
+                                />
+                                <Text style={styles.textH3}>Request</Text>
+                            </View>
+                            <View style={[styles.divBotoes]}>
+                                <Image
+                                    style={styles.icones}
+                                    source={require('../../assets/icones/Home/PayIcon.png')} // Caminho relativo para a imagem
+                                />
+                                <Text style={styles.textH3}>Pay</Text>
+                            </View>
+                            <View style={[styles.divBotoes]}>
+                                <Image
+                                    style={styles.icones}
+                                    source={require('../../assets/icones/Home/TopUpIcon.png')} // Caminho relativo para a imagem
+                                />
+                                <Text style={styles.textH3}>Top Up</Text>
+                            </View>
                         </View>
-                        <View style={[styles.divBotoes, styles.pagar]}>
-                            <Image
-                                style={styles.icones1}
-                                source={require('../../assets/icones/contas.png')} // Caminho relativo para a imagem
-                            />
-                            <Text style={styles.textH3}>Pay Bill</Text>
-                        </View>
+
                     </View>
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: screenWidth, paddingHorizontal: 30, paddingVertical:20}}>
+                        <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#840F74' }}>Your Cards</Text>
+                        <Text style={{ fontSize: 14, color: '#840F74' }}>View All</Text>
+                    </View>
+
                     <View style={styles.cartoes}>
                         <FlatList
                             data={cards}
@@ -55,17 +99,28 @@ function HomePage() {
                             snapToAlignment='start'
                             scrollEventThrottle={16}
                             decelerationRate="fast"
-                            snapToOffsets={cards.map((_, i) => i * (304-15) + (i - 1) * 40)} // Correção aqui
+                            snapToOffsets={cards.map((_, i) => i * (304 - 15) + (i - 1) * 40)} // Correção aqui
                             showsHorizontalScrollIndicator={false}
                         />
                     </View>
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: screenWidth, paddingHorizontal: 30, paddingVertical:20 }}>
+                        <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#840F74' }}>Your Goals</Text>
+                        <Text style={{ fontSize: 14, color: '#840F74' }}>View All</Text>
+                    </View>
+
                     <View style={[styles.marginBottom, styles.pagamentosDiv]}>
-                        <Text>My Goals</Text>
-                        <View style={styles.cardGoals}></View>
-                        <View style={styles.cardGoals}></View>
-                        <View style={styles.cardGoals}></View>
-                        <View style={styles.cardGoals}></View>
-                        <View style={styles.cardGoals}></View>
+                        {metas.map((meta) => {
+                            return (
+                                <View style={styles.cardGoals} key={meta.id}>
+                                    <View style={{flexDirection: 'row', alignItems:'center', gap:10}}>
+                                        <Image style={{ width: 48, height: 48, borderRadius: 30 }} source={meta.imageMeta} />
+                                        <Text style={{ fontSize: 14, fontWeight:'bold', color: '#840F74' }}>{meta.titulo}</Text>
+                                    </View>
+                                    <ProgressCircle size={48} progress={meta.valorAtual/meta.valorMeta} />
+                                </View>
+                            );
+                        })}
+                        <Button title="Adicionar Meta" onPress={handleAdicionarMeta} />
                     </View>
                 </View>
 
@@ -77,6 +132,15 @@ function HomePage() {
 }
 
 const styles = StyleSheet.create({
+    header: {
+        flexDirection: 'row',
+        paddingTop: 60,
+        paddingHorizontal: 30,
+        justifyContent: 'space-between',
+        width: screenWidth,
+        alignItems: 'center',
+        marginBottom: 35
+    },
     bottom: {
         position: 'fixed',
         bottom: 0
@@ -88,9 +152,17 @@ const styles = StyleSheet.create({
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
-        backgroundColor: '#f2f2f3',
+        backgroundColor: '#fff',
         width: '100%',
         height: '100%',
+    },
+    topBackgroundImage: {
+        position: 'absolute',
+        height: screenHeight + 58,
+        width: screenWidth,
+        resizeMode: 'contain',
+        top: 0,
+        left: 0
     },
     containerCards: {
         flexDirection: 'column',
@@ -98,7 +170,6 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '100%',
         marginBottom: 20,
-
     },
     flexRow: {
         flexDirection: 'row',
@@ -108,30 +179,36 @@ const styles = StyleSheet.create({
         marginTop: 40,
     },
     textH2: {
-        fontSize: 20,
-        fontWeight: '600',
+        fontSize: 18,
+        fontWeight: '500',
+        color: '#fff'
     },
     textH3: {
         fontSize: 15,
         fontWeight: '400',
     },
     icones1: {
-        width: 65,
-        height: 65,
+        width: 24,
+        height: 24,
     },
-
+    icones: {
+        width: 46,
+        height: 46,
+    },
     cartoes: {
         height: 200,
         overflow: 'visible',
         width: screenWidth
     },
     pagamentos: {
-        flexDirection: 'row',
-        justifyContent: 'space-around',
+        borderWidth: 1,
+        borderColor: 'rgba(242, 242, 242, 0.5)',
+        flexDirection: 'col',
         alignItems: 'center',
-        height: 150,
+        backgroundColor: '#fff',
+        padding: 10,
         width: '80%',
-        position: 'relative',
+        borderRadius: 10,
     },
     FlexColumn: {
         display: 'flex',
@@ -143,7 +220,6 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        justifyContent: 'space-around',
     },
     pagamentosDiv: {
         flexDirection: 'column',
@@ -153,10 +229,15 @@ const styles = StyleSheet.create({
         position: 'relative',
     },
     cardGoals: {
+        borderWidth: 1,
+        borderColor: 'rgba(242, 242, 242, 0.3)',
         width: '100%',
-        height: 130,
-        backgroundColor: '#840f74',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        backgroundColor: '#fff',
         borderRadius: 20,
+        padding: 10,
         marginTop: 20
     },
     marginBottom: {

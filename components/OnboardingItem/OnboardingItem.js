@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, ImageBackground } from 'react-native'
 import React from 'react'
-import cardbackground from '../../assets/cardbackground.png'
+import cardbackground from '../../assets/Backgrounds/cardbackground.png'
 const OnboardingItem = ({ item }) => {
 
     return (
@@ -12,7 +12,7 @@ const OnboardingItem = ({ item }) => {
                         <Text style={{ fontSize: 12, color: '#fff', marginBottom: 35 }}>Payment Card</Text>
                         <Text style={{ fontSize: 16, color: '#fff' }}>{item.cardnumber}</Text>
                     </View>
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-between',marginRight:20 }}>
                         <Text style={{ fontSize: 16, color: '#fff' }}>{item.balance} ETH</Text>
                         <Text style={{ fontSize: 14, color: '#fff' }}>{item.expirationDate}</Text>
                     </View>
