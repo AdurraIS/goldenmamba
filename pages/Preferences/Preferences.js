@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
-import NavBottom from "../components/NavBottom"
-function homepage() {
+import NavBottom from "../../components/NavBottom/NavBottom"
+
+
+function Preferences() {
+
 
     const [isHovered, setIsHovered] = useState(false);
 
@@ -9,7 +12,7 @@ function homepage() {
     const handleMouseEnter = () => {
         setIsHovered(true);
     };
-
+    
     const handleMouseLeave = () => {
         setIsHovered(false);
     };
@@ -38,13 +41,11 @@ function homepage() {
                     <View>
                         <Image
                             style={styles.seta}
-                            source={require('../icones/setaDireita.png')} // Caminho relativo para a imagem
+                            source={require('../../assets/icones/setaDireita.png')} // Caminho relativo para a imagem
                         />
                     </View>
 
                 </View>
-                <View></View>
-
             </View>
             <View style={[styles.flexRow, styles.center]}>
 
@@ -54,7 +55,7 @@ function homepage() {
                     <View style={[styles.flexRow, styles.LinhaCenter]}>
                         <Image
                             style={styles.imageCenter}
-                            source={require('../icones/people.png')} // Caminho relativo para a imagem
+                            source={require('../../assets/icones/people.png')} // Caminho relativo para a imagem
                         />
                         <Text style={[styles.textH1, styles.textH1Center]}>Profile</Text>
 
@@ -62,7 +63,7 @@ function homepage() {
                     <View style={[styles.flexRow, styles.LinhaCenter]}>
                         <Image
                             style={styles.imageCenter}
-                            source={require('../icones/icones.png')} // Caminho relativo para a imagem
+                            source={require('../../assets/icones/icones.png')} // Caminho relativo para a imagem
                         />
                         <Text style={[styles.textH1, styles.textH1Center]}>Notifications</Text>
 
@@ -70,7 +71,7 @@ function homepage() {
                     <View style={[styles.flexRow, styles.LinhaCenter]}>
                         <Image
                             style={styles.imageCenter}
-                            source={require('../icones/people.png')} // Caminho relativo para a imagem
+                            source={require('../../assets/icones/people.png')} // Caminho relativo para a imagem
                         />
                         <Text style={[styles.textH1, styles.textH1Center]}>Profile</Text>
 
@@ -80,7 +81,7 @@ function homepage() {
                     <View style={[styles.flexRow, styles.LinhaCenter]}>
                         <Image
                             style={styles.imageCenter}
-                            source={require('../icones/segurança.png')} // Caminho relativo para a imagem
+                            source={require('../../assets/icones/segurança.png')} // Caminho relativo para a imagem
                         />
                         <Text style={[styles.textH1, styles.textH1Center]}>Preferences</Text>
 
@@ -88,7 +89,7 @@ function homepage() {
                     <View style={[styles.flexRow, styles.LinhaCenter]}>
                         <Image
                             style={styles.imageCenter}
-                            source={require('../icones/configurações.png')} // Caminho relativo para a imagem
+                            source={require('../../assets/icones/configurações.png')} // Caminho relativo para a imagem
                         />
                         <Text style={[styles.textH1, styles.textH1Center]}>Product Settings</Text>
 
@@ -96,16 +97,13 @@ function homepage() {
                     <View style={[styles.flexRow, styles.LinhaCenter]}>
                         <Image
                             style={styles.imageCenter}
-                            source={require('../icones/Qr.png')} // Caminho relativo para a imagem
+                            source={require('../../assets/icones/Qr.png')} // Caminho relativo para a imagem
                         />
                         <Text style={[styles.textH1, styles.textH1Center]}>QR & Passcodes</Text>
 
                     </View>
                 </View>
-
-
             </View>
-
             <NavBottom />
         </View>
     );
@@ -114,7 +112,6 @@ function homepage() {
 const styles = StyleSheet.create({
     container: {
         display: 'flex',
-        justifyContent: 'space-between',
         alignItems: 'center',
         backgroundColor: '#ffffff',
         width: '100%',
@@ -148,7 +145,6 @@ const styles = StyleSheet.create({
     },
     PerfilFoto: {
         width: "100%",
-
     },
 
     FotoDePerfil: {
@@ -156,7 +152,7 @@ const styles = StyleSheet.create({
         height: 70,
         borderRadius: 100,
         backgroundColor: '#840f74',
-        marginHorizontal: 10
+        marginRight: 10
 
     },
 
@@ -215,4 +211,4 @@ const styles = StyleSheet.create({
     },
 })
 
-export default homepage;
+export default Preferences;
