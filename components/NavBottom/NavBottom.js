@@ -33,7 +33,7 @@ function NavBottom() {
             </TouchableOpacity>
             <TouchableOpacity
                 style={[styles.image, isHovered && styles.buttonHovered]}
-                onPress={() => navigation.navigate('meta/1')}
+                onPress={() => navigation.navigate('History')}
                 onPressIn={handleMouseEnter}
                 onPressOut={handleMouseLeave}
             >

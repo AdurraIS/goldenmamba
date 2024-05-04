@@ -5,7 +5,7 @@ import NavBottom from "../../components/NavBottom/NavBottom"
 
 const screenWidth = Dimensions.get('window').width;
 
-function Preferences() {
+function History() {
 
 
     const [isHovered, setIsHovered] = useState(false);
@@ -310,4 +310,4 @@ const styles = StyleSheet.create({
 
 })
 
-export default Preferences;
+export default History;

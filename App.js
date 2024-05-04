@@ -10,6 +10,7 @@ import Meta from './components/Meta/Meta'
 import HomePage from './pages/HomePage/HomePage';
 import { useState } from 'react';
 import Preferences from './pages/Preferences/Preferences';
+import History from './pages/History/History';
 
 export default function App() {
 
@@ -38,26 +39,31 @@ export default function App() {
           component={HomePage}
         />
         <Stack.Screen
+          name="History"
+          options={{ headerShown: false }}
+          component={History}
+        />
+        <Stack.Screen
           name="Preferences"
           options={{ headerShown: false }}
           component={Preferences}
         />
         {metas.map(meta => (
           <Stack.Screen
-          name={"meta/" + meta.id}
-          options={{ headerShown: false }}
-        >
-          {() => (
-            <Meta
-            key={meta.id}
-              valorAtual={meta.valorAtual}
-              valorMeta={meta.valorMeta}
-              tituloMeta={meta.titulo}
-              imageMeta={meta.imageMeta}
-              dataMeta={meta.dataMeta}
-            />
-          )}
-        </Stack.Screen>
+            name={"meta/" + meta.id}
+            options={{ headerShown: false }}
+          >
+            {() => (
+              <Meta
+                key={meta.id}
+                valorAtual={meta.valorAtual}
+                valorMeta={meta.valorMeta}
+                tituloMeta={meta.titulo}
+                imageMeta={meta.imageMeta}
+                dataMeta={meta.dataMeta}
+              />
+            )}
+          </Stack.Screen>
         ))}
       </Stack.Navigator>
     </NavigationContainer>
