@@ -12,12 +12,12 @@ function HomePage() {
                     <View style={[styles.flexRow, styles.header]}>
                         <Image
                             style={styles.icones1}
-                            source={require('../icones/configurações.png')} // Caminho relativo para a imagem
+                            source={require('../../assets/icones/configurações.png')} // Caminho relativo para a imagem
                         />
                         <Text style={styles.textH2}>Bem-vinda, Malu</Text>
                         <Image
                             style={styles.icones1}
-                            source={require('../icones/icones.png')} // Caminho relativo para a imagem
+                            source={require('../../assets/icones/icones.png')} // Caminho relativo para a imagem
                         />
                     </View>
                     <View style={styles.cartoes}>
@@ -29,21 +29,21 @@ function HomePage() {
                         <View style={[styles.divBotoes, styles.enviar]}>
                             <Image
                                 style={styles.icones1}
-                                source={require('../icones/enviar.png')} // Caminho relativo para a imagem
+                                source={require('../../assets/icones/enviar.png')} // Caminho relativo para a imagem
                             />
                             <Text style={styles.textH3}>Send Money</Text>
                         </View>
                         <View style={[styles.divBotoes, styles.receber]}>
                             <Image
                                 style={styles.icones1}
-                                source={require('../icones/receber.png')} // Caminho relativo para a imagem
+                                source={require('../../assets/icones/receber.png')} // Caminho relativo para a imagem
                             />
                             <Text style={styles.textH3}>Receive Money</Text>
                         </View>
                         <View style={[styles.divBotoes, styles.pagar]}>
                             <Image
                                 style={styles.icones1}
-                                source={require('../icones/contas.png')} // Caminho relativo para a imagem
+                                source={require('../../assets/icones/contas.png')} // Caminho relativo para a imagem
                             />
                             <Text style={styles.textH3}>Pay Bill</Text>
                         </View>

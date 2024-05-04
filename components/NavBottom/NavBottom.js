@@ -44,7 +44,7 @@ function NavBottom() {
             </TouchableOpacity>
             <TouchableOpacity
                 style={[styles.image, isHovered && styles.buttonHovered]}
-                onPress={() => console.log('Botão pressionado')}
+                onPress={() => navigation.navigate('Preferences')}
                 onPressIn={handleMouseEnter}
                 onPressOut={handleMouseLeave}
             >
