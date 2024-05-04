@@ -1,10 +1,10 @@
 import React from 'react';
 import { Dimensions } from 'react-native';
 import { ScrollView, View, Text, StyleSheet, Image } from 'react-native';
-import NavBottom from "../components/NavBottom";
+import NavBottom from "../../components/NavBottom/NavBottom";
 const screenWidth = Dimensions.get('window').width;
 
-function StartPage() {
+function HomePage() {
     return (
         <View style={styles.container}>
             <ScrollView contentContainerStyle={styles.scroll} >
@@ -183,4 +183,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default StartPage;
+export default HomePage;
