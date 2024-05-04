@@ -1,15 +1,13 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
+
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 const Stack = createNativeStackNavigator();
 
-import Loading from './pages/Loading/Loading';
-import StartPage from './pages/StartPage/StartPage';
-import carIcon from './assets/MetaIcons/Car.png'
 import Meta from './components/Meta/Meta'
-import HomePage from './pages/HomePage/HomePage';
+import HomePage from './pages/Preferences/Preferences';
 import { useState } from 'react';
 
 export default function App() {
@@ -30,7 +28,6 @@ export default function App() {
   };
 
   return (
-
 
     <NavigationContainer>
       <Stack.Navigator>
@@ -69,6 +66,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+    width: '100%',
   },
-
 });

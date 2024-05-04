@@ -3,7 +3,9 @@ import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 function NavBottom() {
+
     const navigation = useNavigation();
+
     const [isHovered, setIsHovered] = useState(false);
 
 
@@ -83,11 +85,13 @@ const styles = StyleSheet.create({
         position: 'absolute',
         bottom: 0,
         height: 76,
+
         width: '100%',
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-around',
         paddingBottom: 10
+
 
     }, buttonHovered: {
         backgroundColor: 'lightblue',
