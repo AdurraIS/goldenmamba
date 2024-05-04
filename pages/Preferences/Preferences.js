@@ -9,16 +9,16 @@ function Preferences() {
 
 
     const [isHovered, setIsHovered] = useState(false);
-    
-    
+
+
     const handleMouseEnter = () => {
         setIsHovered(true);
     };
-    
+
     const handleMouseLeave = () => {
         setIsHovered(false);
     };
-    
+
 
     return (
         <View style={styles.container}>
@@ -29,9 +29,16 @@ function Preferences() {
             <ScrollView contentContainerStyle={[styles.container, styles.scroll]} >
 
                 <View style={[
+                    styles.marginTop2,
+
+
+                ]}>
+                    <Text style={[styles.textH1, styles.white]}>Your Profile</Text>
+                </View>
+
+                <View style={[
                     styles.card,
                     styles.flexRow,
-                    styles.marginTop,
                 ]}>
 
                     <Image
@@ -63,13 +70,13 @@ function Preferences() {
                     ]}>
                         <Image
                             style={[
-                                styles.icones,
+                                styles.icones2,
                                 styles.marginhorizontal,
 
                             ]}
                             source={require('../../assets/icones/Qr.png')} // Caminho relativo para a imagem
                         />
-                        <Text style={[styles.marginhorizontal, styles.textH3]}>Scan Qr</Text>
+                        <Text style={[styles.textH2]}>Scan Qr</Text>
                     </View>
 
                     <View style={[
@@ -80,12 +87,12 @@ function Preferences() {
                     ]}>
                         <Image
                             style={[
-                                styles.icones,
+                                styles.icones2,
                                 styles.marginhorizontal,
                             ]}
                             source={require('../../assets/icones/MeuQr.png')} // Caminho relativo para a imagem
-                            />
-                        <Text style={[styles.marginhorizontal, styles.textH3]}>My Qr</Text>
+                        />
+                        <Text style={[styles.textH2]}>My Qr</Text>
                     </View>
                 </View>
                 <View style={[
@@ -97,13 +104,13 @@ function Preferences() {
                         styles.card,
                         styles.flexRow,
                         styles.marginTop2,
-                        
+
                     ]}>
                         <Image
                             style={[
                                 styles.icones,
                                 styles.marginhorizontal,
-                                
+
                             ]}
                             source={require('../../assets/icones/people.png')} // Caminho relativo para a imagem
                         />
@@ -115,7 +122,7 @@ function Preferences() {
                         styles.card,
                         styles.flexRow,
                         styles.marginTop2,
-                        
+
                     ]}>
                         <Image
                             style={[
@@ -133,7 +140,7 @@ function Preferences() {
                         styles.flexRow,
                         styles.marginTop2,
                         styles.card,
-                        
+
                     ]}>
                         <Image
                             style={[
@@ -159,16 +166,16 @@ function Preferences() {
                         styles.card,
                         styles.flexRow,
                         styles.marginTop2,
-                        
+
                     ]}>
                         <Image
                             style={[
                                 styles.icones,
                                 styles.marginhorizontal,
-                                
+
                             ]}
                             source={require('../../assets/icones/cadeadoChave.png')} // Caminho relativo para a imagem
-                            />
+                        />
                         <Text style={[
                             styles.marginhorizontal,
                             styles.textH1,
@@ -197,7 +204,7 @@ function Preferences() {
                     <View style={[
                         styles.BottomInvisible,
                     ]}>
-                       
+
                     </View>
 
 
@@ -212,7 +219,7 @@ function Preferences() {
 const styles = StyleSheet.create({
     scroll: {
         width: screenWidth,
-        height: '160%'
+        height: '140%'
     },
     backgroundImage: {
         position: 'absolute',
@@ -274,20 +281,27 @@ const styles = StyleSheet.create({
         fontSize: 25,
         fontWeight: '800',
     },
+    white: {
+        color: 'white'
+    },
     card: {
         backgroundColor: '#fff',
-        borderRadius: 10,
+        borderRadius: 20,
         padding: 15,
         width: '80%',
     },
     card2: {
         backgroundColor: '#fff',
-        borderRadius: 10,
+        borderRadius: 20,
         padding: 15
     },
     icones: {
         width: 70,
         height: 70,
+    },
+    icones2: {
+        width: 50,
+        height: 50,
     },
     BottomInvisible: {
         width: 70,
