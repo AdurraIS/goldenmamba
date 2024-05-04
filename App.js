@@ -1,5 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
+
+import HomePage from "./pages/homepage"
 import Loading from './pages/Loading/Loading';
 import StartPage from './pages/StartPage/StartPage';
 import carIcon from './assets/MetaIcons/Car.png'
