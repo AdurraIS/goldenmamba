@@ -1,6 +1,8 @@
 import React from 'react';
+import { Dimensions } from 'react-native';
 import { ScrollView, View, Text, StyleSheet, Image } from 'react-native';
 import NavBottom from "../components/NavBottom";
+const screenWidth = Dimensions.get('window').width;
 
 function StartPage() {
     return (
@@ -46,8 +48,10 @@ function StartPage() {
                             <Text style={styles.textH3}>Pay Bill</Text>
                         </View>
                     </View>
-                    <View style={styles.pagamentosDiv}>
+                    <View style={[styles.marginBottom, styles.pagamentosDiv]}>
                         <Text>My Goals</Text>
+                        <View style={styles.cardGoals}></View>
+                        <View style={styles.cardGoals}></View>
                         <View style={styles.cardGoals}></View>
                         <View style={styles.cardGoals}></View>
                         <View style={styles.cardGoals}></View>
@@ -67,8 +71,7 @@ const styles = StyleSheet.create({
         bottom: 0
     },
     scroll: {
-        height: '120%',
-        marginBottom: 90
+        width: screenWidth,
     },
     container: {
         display: 'flex',
@@ -84,7 +87,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         width: '100%',
         height: '100%',
+        marginBottom: 20,
         overflow: 'visible'
+
     },
     flexRow: {
         flexDirection: 'row',
@@ -168,10 +173,13 @@ const styles = StyleSheet.create({
     },
     cardGoals: {
         width: '100%',
-        height: 100,
+        height: 130,
         backgroundColor: '#840f74',
         borderRadius: 20,
         marginTop: 20
+    },
+    marginBottom: {
+        marginBottom: 50
     }
 });
 
