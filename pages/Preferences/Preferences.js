@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { Dimensions } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView } from 'react-native';
 import NavBottom from "../../components/NavBottom/NavBottom"
 
+const screenWidth = Dimensions.get('window').width;
 
 function Preferences() {
 
 
     const [isHovered, setIsHovered] = useState(false);
-
-
+    
+    
     const handleMouseEnter = () => {
         setIsHovered(true);
     };
@@ -16,106 +18,216 @@ function Preferences() {
     const handleMouseLeave = () => {
         setIsHovered(false);
     };
-
+    
 
     return (
         <View style={styles.container}>
-            <View style={[styles.flexRow, styles.Header]}>
+            <Image
+                style={styles.backgroundImage}
+                source={require('../../assets/background.png')} // Caminho relativo para a imagem
+            />
+            <ScrollView contentContainerStyle={[styles.container, styles.scroll]} >
 
-                <View style={[styles.flexRow, styles.PerfilFoto]}>
-                    <View style={[styles.flexRow, styles.divPerfilNome]}>
-                        <View style={[styles.FotoDePerfil]}>
-                        </View>
-                        <View>
-                            <View>
-                                <Text style={[styles.textH1]}>Malu Souza </Text>
-                            </View>
-                            <View>
-                                <Text style={[styles.textH2]}>Account detalis</Text>
-                            </View>
+                <View style={[
+                    styles.card,
+                    styles.flexRow,
+                    styles.marginTop,
+                ]}>
 
-                        </View>
-
+                    <Image
+                        style={[
+                            styles.icones,
+                            styles.marginhorizontal,
+                        ]}
+                        source={require('../../assets/fotoDePerfil.png')} // Caminho relativo para a imagem
+                    />
+                    <View style={[
+                        styles.FlexColumnStart,
+                    ]}>
+                        <Text style={[
+                            styles.textH2,
+                        ]}>Gabriel Moreira</Text>
+                        <Text style={[
+                            styles.textH3,
+                        ]}>1234 1234 1234</Text>
                     </View>
-
-                    <View>
-                        <Image
-                            style={styles.seta}
-                            source={require('../../assets/icones/setaDireita.png')} // Caminho relativo para a imagem
-                        />
-                    </View>
-
                 </View>
-            </View>
-            <View style={[styles.flexRow, styles.center]}>
+                <View style={[
+                    styles.flexRow,
+                ]}>
 
-                <View style={styles.perfil}>
-                    <Text style={styles.textH1}>Profile</Text>
-
-                    <View style={[styles.flexRow, styles.LinhaCenter]}>
+                    <View style={[
+                        styles.card2,
+                        styles.flexRow,
+                        styles.marginhorizontal,
+                    ]}>
                         <Image
-                            style={styles.imageCenter}
-                            source={require('../../assets/icones/people.png')} // Caminho relativo para a imagem
-                        />
-                        <Text style={[styles.textH1, styles.textH1Center]}>Profile</Text>
+                            style={[
+                                styles.icones,
+                                styles.marginhorizontal,
 
-                    </View>
-                    <View style={[styles.flexRow, styles.LinhaCenter]}>
-                        <Image
-                            style={styles.imageCenter}
-                            source={require('../../assets/icones/icones.png')} // Caminho relativo para a imagem
-                        />
-                        <Text style={[styles.textH1, styles.textH1Center]}>Notifications</Text>
-
-                    </View>
-                    <View style={[styles.flexRow, styles.LinhaCenter]}>
-                        <Image
-                            style={styles.imageCenter}
-                            source={require('../../assets/icones/people.png')} // Caminho relativo para a imagem
-                        />
-                        <Text style={[styles.textH1, styles.textH1Center]}>Profile</Text>
-
-                    </View>
-
-                    <Text style={styles.textH1}>Setting & Preferences</Text>
-                    <View style={[styles.flexRow, styles.LinhaCenter]}>
-                        <Image
-                            style={styles.imageCenter}
-                            source={require('../../assets/icones/segurança.png')} // Caminho relativo para a imagem
-                        />
-                        <Text style={[styles.textH1, styles.textH1Center]}>Preferences</Text>
-
-                    </View>
-                    <View style={[styles.flexRow, styles.LinhaCenter]}>
-                        <Image
-                            style={styles.imageCenter}
-                            source={require('../../assets/icones/configurações.png')} // Caminho relativo para a imagem
-                        />
-                        <Text style={[styles.textH1, styles.textH1Center]}>Product Settings</Text>
-
-                    </View>
-                    <View style={[styles.flexRow, styles.LinhaCenter]}>
-                        <Image
-                            style={styles.imageCenter}
+                            ]}
                             source={require('../../assets/icones/Qr.png')} // Caminho relativo para a imagem
                         />
-                        <Text style={[styles.textH1, styles.textH1Center]}>QR & Passcodes</Text>
+                        <Text style={[styles.marginhorizontal, styles.textH3]}>Scan Qr</Text>
+                    </View>
 
+                    <View style={[
+                        styles.card2,
+                        styles.flexRow,
+                        styles.marginhorizontal,
+
+                    ]}>
+                        <Image
+                            style={[
+                                styles.icones,
+                                styles.marginhorizontal,
+                            ]}
+                            source={require('../../assets/icones/MeuQr.png')} // Caminho relativo para a imagem
+                            />
+                        <Text style={[styles.marginhorizontal, styles.textH3]}>My Qr</Text>
                     </View>
                 </View>
-            </View>
+                <View style={[
+                    styles.flexColumn
+                ]}>
+                    <Text style={[styles.textH1]}>Account</Text>
+
+                    <View style={[
+                        styles.card,
+                        styles.flexRow,
+                        styles.marginTop2,
+                        
+                    ]}>
+                        <Image
+                            style={[
+                                styles.icones,
+                                styles.marginhorizontal,
+                                
+                            ]}
+                            source={require('../../assets/icones/people.png')} // Caminho relativo para a imagem
+                        />
+                        <Text style={[
+                            styles.textH1,
+                        ]}>Account                    </Text>
+                    </View>
+                    <View style={[
+                        styles.card,
+                        styles.flexRow,
+                        styles.marginTop2,
+                        
+                    ]}>
+                        <Image
+                            style={[
+                                styles.icones,
+                                styles.marginhorizontal,
+
+                            ]}
+                            source={require('../../assets/icones/email.png')} // Caminho relativo para a imagem
+                        />
+                        <Text style={[
+                            styles.textH1,
+                        ]}>Change Email Address</Text>
+                    </View>
+                    <View style={[
+                        styles.flexRow,
+                        styles.marginTop2,
+                        styles.card,
+                        
+                    ]}>
+                        <Image
+                            style={[
+                                styles.icones,
+                                styles.marginhorizontal,
+
+                            ]}
+                            source={require('../../assets/icones/cadeadoSenha.png')} // Caminho relativo para a imagem
+                        />
+                        <Text style={[
+                            styles.marginhorizontal,
+                            styles.textH1,
+                        ]}>Change Password</Text>
+                    </View>
+
+                </View>
+                <View style={[
+                    styles.flexColumn
+                ]}>
+                    <Text style={[styles.textH1]}>More Settings </Text>
+
+                    <View style={[
+                        styles.card,
+                        styles.flexRow,
+                        styles.marginTop2,
+                        
+                    ]}>
+                        <Image
+                            style={[
+                                styles.icones,
+                                styles.marginhorizontal,
+                                
+                            ]}
+                            source={require('../../assets/icones/cadeadoChave.png')} // Caminho relativo para a imagem
+                            />
+                        <Text style={[
+                            styles.marginhorizontal,
+                            styles.textH1,
+                        ]}>Account security</Text>
+                    </View>
+                    <View style={[
+                        styles.card,
+                        styles.flexRow,
+                        styles.marginTop2,
+
+                    ]}>
+                        <Image
+                            style={[
+                                styles.icones,
+                                styles.marginhorizontal,
+
+                            ]}
+                            source={require('../../assets/icones/interrogacao.png')} // Caminho relativo para a imagem
+                        />
+                        <Text style={[
+                            styles.marginhorizontal,
+                            styles.textH1,
+                        ]}>Help and privacy</Text>
+                    </View>
+
+                    <View style={[
+                        styles.BottomInvisible,
+                    ]}>
+                       
+                    </View>
+
+
+                </View>
+
+            </ScrollView >
             <NavBottom />
-        </View>
+        </View >
     );
 }
 
 const styles = StyleSheet.create({
+    scroll: {
+        width: screenWidth,
+        height: '160%'
+    },
+    backgroundImage: {
+        position: 'absolute',
+        width: '100%',
+        height: '100%',
+        top: 0,
+        left: 0,
+    },
     container: {
         display: 'flex',
         alignItems: 'center',
-        backgroundColor: '#ffffff',
+        justifyContent: 'space-around',
         width: '100%',
         height: '100%',
+        position: 'relative',
     },
     flexRow: {
         display: 'flex',
@@ -123,11 +235,36 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-around',
     },
-    FlexColumn: {
+    flexColumn: {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'space-around',
+    },
+    flexRowStart: {
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'start',
+        justifyContent: 'space-around',
+    },
+    flexColumnStart: {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'start',
+        justifyContent: 'space-around',
+    },
+    marginTop2: {
+        marginTop: 30
+    },
+    marginTop: {
+        marginTop: 150
+    },
+    marginhorizontal: {
+        marginHorizontal: 10
+    },
+    textH3: {
+        fontSize: 18,
+        fontWeight: '400',
     },
     textH2: {
         fontSize: 20,
@@ -137,78 +274,26 @@ const styles = StyleSheet.create({
         fontSize: 25,
         fontWeight: '800',
     },
-    Header: {
-        marginTop: '10%',
-        width: '100%',
-        height: "20%"
-
+    card: {
+        backgroundColor: '#fff',
+        borderRadius: 10,
+        padding: 15,
+        width: '80%',
     },
-    PerfilFoto: {
-        width: "100%",
+    card2: {
+        backgroundColor: '#fff',
+        borderRadius: 10,
+        padding: 15
     },
-
-    FotoDePerfil: {
+    icones: {
         width: 70,
         height: 70,
-        borderRadius: 100,
-        backgroundColor: '#840f74',
-        marginRight: 10
-
+    },
+    BottomInvisible: {
+        width: 70,
+        height: 70,
     },
 
-    center: {
-        height: '60%',
-        width: '80%',
-        flexDirection: 'column',
-        alignItems: 'start',
-        justifyContent: 'space-around',
-        paddingBottom: 50,
-    },
-    perfil: {
-        justifyContent: 'space-between',
-        height: '113%'
-    },
-    LinhaCenter: {
-        width: '60%',
-        // height: '15%',
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'start',
-
-    },
-    imageCenter: {
-        height: 60,
-        width: 60,
-        marginRight: 20, // Espaçamento horizontal entre os itens
-    },
-    image: {
-        width: 30,
-        height: 30,
-    },
-    card: {
-        width: 30,
-        height: 25
-    },
-    seta: {
-        width: 19,
-        height: 35
-    },
-    bottom: {
-        borderTopRightRadius: 40,
-        borderTopLeftRadius: 40,
-        backgroundColor: '#ebc7e9',
-        position: 'relative',
-        height: 160, // altura em pontos (píxeis)
-        width: '100%',
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-around',
-        paddingBottom: 50
-
-    }, buttonHovered: {
-        backgroundColor: 'lightblue',
-    },
 })
 
 export default Preferences;

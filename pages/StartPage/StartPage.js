@@ -5,6 +5,7 @@ import LogoEscuro from '../../assets/LogoEscuro.png';
 export default function Loading() {
     return (
         <View style={styles.container}>
+            
             <ImageBackground source={BackgroundStart} style={styles.imageBackground}>
                 <View style={styles.insideContainer}>
                     <Image source={LogoEscuro} style={styles.image} />
