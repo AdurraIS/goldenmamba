@@ -1,7 +1,7 @@
 import React, { useState, useRef} from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableWithoutFeedback, TouchableOpacity, Keyboard } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
-
+import { supabase } from '../../shared/CreateClient';
 export default function EmailVerification({ userData }) {
     const generateRandomNumber = () => {
         const min = 1000;
@@ -34,21 +34,25 @@ export default function EmailVerification({ userData }) {
     const handleChange = (value) => {
         setCode(value);
     };
-    const handleSubmit = () => {
-        if (randomNumber.toString() == code) {
-            navigation.navigate('AccountCreated')
+    async function handleSubmit(){
+        try{
+            const { data2, error2 } = await supabase.auth.verifyOtp({ code: tokenHash, type: 'email'})
+            if(error2) throw error2
+        } catch(error){
+            console.error(error)
         }
-    };
+            console.log("DEU CERTO!")
+        }
     return (
 
         <View style={styles.container}>
             <TouchableWithoutFeedback onPress={handleOpenKeyboard}>
                 <View style={styles.containerText}>
                     <Text style={styles.title}>Verify Account</Text>
-                    <Text style={styles.subtitle}>Enter 4 digit code we have sent
+                    <Text style={styles.subtitle}>Enter 6 digit code we have sent
                         to <Text style={{ fontWeight: 'bold', color: '#333333', }}>{userData.email}</Text></Text>
                     <View style={styles.inputContainer}>
-                        {[0, 1, 2, 3].map((index) => (
+                        {[0, 1, 2, 3,4,5].map((index) => (
                             <View key={index} style={styles.characterContainer}>
                                 <Text style={styles.character}>{code[index] || '-'}</Text>
                                 <View style={styles.line} />
@@ -67,7 +71,7 @@ export default function EmailVerification({ userData }) {
                 ref={inputRef}
                 style={styles.hiddenInput}
                 keyboardType="numeric"
-                maxLength={4}
+                maxLength={6}
                 value={code}
                 onChangeText={handleChange}
                 onBlur={handleBlur}
@@ -129,12 +133,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     character: {
-        fontSize: 32,
+        fontSize: 22,
         fontWeight: '400',
         color: '#BB35A9'
     },
     line: {
-        width: 70,
+        width: 40,
         height: 2,
         backgroundColor: '#BB35A9',
         marginTop: 5,
