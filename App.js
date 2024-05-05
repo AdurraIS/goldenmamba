@@ -9,6 +9,7 @@ import NavBottom from './components/NavBottom/NavBottom';
 import Onboarding from './pages/Onboarding/Onboarding';
 import Register from './pages/Register/Register';
 import AllGoals from './pages/AllGoals/AllGoals';
+import AllCards from './pages/AllCards/AllCards';
 import CreatePin from './pages/CreatePin/CreatePin';
 import ConfirmPin from './pages/ConfirmPin/ConfirmPin';
 import VerifyEmail from './pages/Verify/VerifyEmail';
@@ -28,11 +29,12 @@ export default function App() {
     const isAuthenticated = checkAuthentication();
     setUserAuthenticated(isAuthenticated);
   }, []);
-  
+
   const checkAuthentication = () => {
     // Simule a autenticação de usuário, substitua pela sua lógica real
     return false; // ou false, dependendo se o usuário está autenticado
   };
+
   const adicionarMeta = (valorAtual, valorMeta, tituloMeta, imageMeta, dataMeta) => {
     const novaMeta = {
       id: metas.length + 1,
@@ -44,6 +46,7 @@ export default function App() {
     };
     setMetas([...metas, novaMeta]);
   }
+
   const getUserData = (prop) => {
     const vUserData = {
       fullName: prop.fullName,
@@ -62,7 +65,7 @@ export default function App() {
           <Stack.Screen name="HomePage" options={{ headerShown: false }}>
             {(props) => (
               <View style={{ flex: 1 }}>
-                <HomePage {...props} adicionarMetaApp={adicionarMeta} userData={userData} metasData={metas}/>
+                <HomePage {...props} adicionarMetaApp={adicionarMeta} userData={userData} metasData={metas} />
                 <NavBottom />
               </View>
             )}
@@ -70,7 +73,7 @@ export default function App() {
           <Stack.Screen name="Preferences" options={{ headerShown: false }}>
             {(props) => (
               <View style={{ flex: 1 }}>
-                <Preferences {...props} setUserAuthenticated={setUserAuthenticated}/>
+                <Preferences {...props} setUserAuthenticated={setUserAuthenticated} />
                 <NavBottom />
               </View>
             )}
@@ -78,12 +81,15 @@ export default function App() {
           <Stack.Screen name="AllGoals" options={{ headerShown: false }} >
             {() => (<AllGoals metasData={metas} />)}
           </Stack.Screen>
+          <Stack.Screen name="AllCards" options={{ headerShown: false }} >
+            {() => (<AllCards  metasCard={cards} />)}
+          </Stack.Screen>
           <Stack.Screen name="History" options={{ headerShown: false }} >
             {() => (
-            <>
-              <History />
-              <NavBottom/>
-            </>)}
+              <>
+                <History />
+                <NavBottom />
+              </>)}
           </Stack.Screen>
         </Stack.Navigator>
       ) : (
@@ -132,7 +138,7 @@ export default function App() {
             name="SignIn"
             options={{ headerShown: false }}
           >
-            {() => (<SignIn setUserAuthenticated={setUserAuthenticated} setUserData={setUserData}/>)}
+            {() => (<SignIn setUserAuthenticated={setUserAuthenticated} setUserData={setUserData} />)}
           </Stack.Screen>
         </Stack.Navigator>
       )}

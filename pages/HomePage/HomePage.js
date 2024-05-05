@@ -3,26 +3,47 @@ import { Dimensions } from 'react-native';
 import { ScrollView, View, Text, StyleSheet, Image, FlatList, TouchableOpacity } from 'react-native';
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
-import cards from './Cards';
 import OnboardingItem from '../../components/OnboardingItem/OnboardingItem';
 import ProgressCircle from '../../components/ProgressCircle/ProgressCircle';
 import { useNavigation, useRoute } from '@react-navigation/native';
+
+
+
 import { supabase } from '../../shared/CreateClient';
-function HomePage({  userData, metasData }) {
+
+
+
+import cards from './Cards';
+
+
+
+
+function HomePage({ userData, metasData }) {
     const navigation = useNavigation();
     const [userDataHome, setUserDataHome] = useState([]);
     const [balance, setBalance] = useState(8.5);
     const [metas, setMetas] = useState(metasData);
+    const [cardss, setCards] = useState(false);
     const route = useRoute();
     const { name: currentScreen } = route;
+
+    useEffect(() => {
+        setCards(userDataHome.cartoes)
+        // if (cards) {
+        // console.log('SDGSDGSDGSDGSDGSDGSDGSDGSssssDGSDG', JSON.parse(cards[0]))
+        // console.log('SDGSDGSDGSDGSDGSDGSsDGSDGSDGSDG', JSON.parse(cardss[0]))
+        // console.log('aqquiiiiiiii', userDataHome.cartoes)
+        // }
+    }, [userDataHome]);
 
     async function buscaDados() {
         try {
             const { data, error } = await supabase
                 .from('usuarios')
-                .select('*') 
+                .select('*')
                 .eq('email', userData.email);
             setUserDataHome(data[0])
+
             if (error) {
                 throw error;
             }
@@ -35,7 +56,7 @@ function HomePage({  userData, metasData }) {
             buscaDados()
         }
     }, [currentScreen]);
-    
+
     return (
         <View style={styles.container}>
 
@@ -96,20 +117,24 @@ function HomePage({  userData, metasData }) {
                     </View>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: screenWidth, paddingHorizontal: 30, paddingVertical: 20 }}>
                         <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#840F74' }}>Your Cards</Text>
-                        <Text style={{ fontSize: 14, color: '#840F74' }}>View All</Text>
+                        <TouchableOpacity onPress={() => navigation.navigate('AllCards')}>
+                            <Text style={{ fontSize: 14, color: '#840F74' }}>View All</Text>
+                        </TouchableOpacity>
                     </View>
 
                     <View style={styles.cartoes}>
-                        <FlatList
-                            data={cards}
-                            renderItem={({ item }) => <OnboardingItem item={item} />}
-                            horizontal
-                            snapToAlignment='start'
-                            scrollEventThrottle={16}
-                            decelerationRate="fast"
-                            snapToOffsets={cards.map((_, i) => i * (304 - 15) + (i - 1) * 40)}
-                            showsHorizontalScrollIndicator={false}
-                        />
+                        {cards ? (
+                            <FlatList
+                                data={cards}
+                                renderItem={({ item }) => <OnboardingItem item={item} />}
+                                horizontal
+                                snapToAlignment='start'
+                                scrollEventThrottle={16}
+                                decelerationRate="fast"
+                                snapToOffsets={cards.map((_, i) => i * (304 - 15) + (i - 1) * 40)}
+                                showsHorizontalScrollIndicator={false}
+                            />
+                        ) : null}
                     </View>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: screenWidth, paddingHorizontal: 30, paddingVertical: 20 }}>
                         <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#840F74' }}>Your Goals</Text>
@@ -121,7 +146,7 @@ function HomePage({  userData, metasData }) {
                     <View style={[styles.marginBottom, styles.pagamentosDiv]}>
                         {metas.map((meta) => {
                             return (
-                                <TouchableOpacity key={meta.id} onPress={() => navigation.navigate('meta/' + meta.id)} > 
+                                <TouchableOpacity key={meta.id} onPress={() => navigation.navigate('meta/' + meta.id)} >
                                     <View style={styles.cardGoals}>
                                         <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
                                             <Image style={{ width: 48, height: 48, borderRadius: 30 }} source={meta.imageMeta} />
@@ -133,7 +158,7 @@ function HomePage({  userData, metasData }) {
 
                             );
                         })}
-                        
+
                     </View>
                 </View>
 
