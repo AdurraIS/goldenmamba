@@ -14,7 +14,7 @@ export default function StartPage() {
                         <TouchableOpacity onPress={() => navigation.navigate('Onboarding')} style={styles.button}>
                             <Text style={styles.textWhite}>Create an account</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={[styles.button, styles.whiteButton]}>
+                        <TouchableOpacity onPress={() => navigation.navigate('SignIn')} style={[styles.button, styles.whiteButton]}>
                             <Text style={styles.textPurple}>I have an account</Text>
                         </TouchableOpacity>
                         <Text style={styles.textWhite}>Don’t have an account? Sign up</Text>
