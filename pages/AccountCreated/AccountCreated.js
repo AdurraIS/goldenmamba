@@ -1,22 +1,57 @@
-import { StyleSheet, Text, View,Image, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
 import React from 'react'
 import accountCreatedImage from '../../assets/Backgrounds/AccountCreated.png';
-
+const APIKEY = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicHJvamVjdElkIjoiOWI3MTVhZjgtYTUyYi00NDQ3LWFlMTYtOWFkMjVjNGE0YmM1Iiwic2NvcGVzIjpbIlJFQURfV0FMTEVUUyIsIlJFQURfQ09OVFJBQ1RTIiwiUkVBRF9UT0tFTl9UWVBFUyIsIlJFQURfVFJBTlNBQ1RJT05TIiwiREVQTE9ZX0NPTlRSQUNUUyIsIldSSVRFX0NPTlRSQUNUUyIsIldSSVRFX0NVU1RPTV9UUkFOU0FDVElPTlMiLCJXUklURV9NSU5UUyIsIldSSVRFX01JTlRTIiwiV1JJVEVfVE9LRU5fVFlQRVMiLCJXUklURV9UUkFOU0ZFUlMiLCJXUklURV9XQUxMRVRTIl0sImlhdCI6MTcxNDkwODIxNX0.miKl5yoCyI-MWzxSoj9dhAXF6SIUMnyvCm6ra7TUegN6GlPIxPxNG-M6tga26iRd6GRGhzpv6M9LfwmGQQXF7z1rt3qA-gP3yZ7AxMvIQRaytYKIzFyO9UiQGM1Qs0PMkoctToiw3wIiTgthXBGdBfNSY_Y0JkgqfiSk8KPreBBrt63cpQJOXamTUkYNYDcUu5TcPP0Cq_wrjzt5zHLqjxikPBvcQnoIRwrlOUFImMhojhfLyQ_7qOoB_zLnTu-OulSlGH5edkkVlr_AjB87x_dToRWpnkL--SCN_lVnWTLLQQq5up730UyF575ckuRXB-k6z7Sf-t8xym8rjXInHKVTQbx0kc6OO3LsL5jcwQsGrdzUxN5voVSbuONxVINAdn8i0YY6vOlIzA9Ms75tdp1arlOxymMYXSU8PTWxxymYvYkbyaoTS3wIhEQEFuF3j8FBgV43RPtWuTd6yZaesGbGOVdg1lw2IDfB74P4Dv-lsvZhfQ3EGHIldiBgbUeaTscPSIUdAr4NadZx3NIYyMmqFouUguPGD0nGicbkh7VeDHwx6YYkEA6nDoK2hOYNtbmOns7UuNa5jbi_btS93R7z8jw583XZKoLlae5tGAvkhtdeoBj3A1eRB2Il6K-t9Q3AgmmIEIphaj0TyTEziSkSxJIP7UsYenOQYDAtaWM";
+import { supabase } from '../../shared/CreateClient';
+import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
-export default function AccountCreated({register}) {
-    const navigation = useNavigation();
-    function handleSubmit(){
-        register()
-        navigation.navigate('Home');
-    }
 
+export default function AccountCreated({ userData, dataPin }) {
+    const navigation = useNavigation();
+    function handleSubmit() {
+        register()
+        navigation.navigate('HomePage');
+    }
+    const options = { method: 'POST', headers: { Authorization: 'Bearer ' + APIKEY } }
+    async function register() {
+        var response;
+        try {
+            response = await axios('https://protocol-sandbox.lumx.io/v2/wallets', options)
+            console.log(response.data)
+        } catch (error) {
+            console.error(error);
+        }
+        const data = {
+            idWallet: response.id,
+            address: response.adress,
+            fullName: userData.fullName,
+            email: userData.email,
+            password: userData.password,
+            pin: dataPin,
+        }
+        try {
+            // const { signUpResponse, error1 } = await supabase.auth.signUp({
+            //     email: userData.email,
+            //     password: userData.password,
+            // });
+            // if (error1) throw error1;
+            const { insertResponse, error2 } = await supabase
+                .from('usuarios')
+                .insert(data);
+            if (error2) throw error2;
+            alert("Dados inseridos com sucesso");
+        } catch (error) {
+            alert(error);
+        }
+
+    }
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Account Created</Text>
             <Text style={styles.subtitle}>
                 Your account has been created successfully. Press continue to continue using the app
             </Text>
-            <Image source={accountCreatedImage}/>
+            <Image source={accountCreatedImage} />
             <TouchableOpacity style={[styles.button, { marginBottom: 16 }]} onPress={handleSubmit}>
                 <Text style={[styles.buttonText, { color: 'white' }]}>Continue</Text>
             </TouchableOpacity>
@@ -25,12 +60,12 @@ export default function AccountCreated({register}) {
 }
 
 const styles = StyleSheet.create({
-    container:{
+    container: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
         paddingHorizontal: 20,
-        gap:16,
+        gap: 16,
     },
     buttonText: {
         fontSize: 16,
