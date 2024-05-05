@@ -22,12 +22,12 @@ function Preferences() {
 
     return (
         <View style={styles.container}>
+
             <ScrollView contentContainerStyle={[styles.container, styles.scroll]} >
                 <Image
                     style={styles.backgroundImage}
-                    source={require('../../assets/background.png')} // Caminho relativo para a imagem
+                    source={require('../../assets/Backgrounds/background.png')} // Caminho relativo para a imagem
                 />
-
                 <View style={[
                     styles.marginTop2,
 
