@@ -27,18 +27,24 @@ function NavBottom() {
                 onPressOut={handleMouseLeave}
             >
                 <Image
-                    style={styles.image}
+                    style={{
+                        width: 37.4,
+                        height: 40,
+                    }}
                     source={require('../../assets/icones/home.png')} // Caminho relativo para a imagem
                 />
             </TouchableOpacity>
             <TouchableOpacity
                 style={[styles.image, isHovered && styles.buttonHovered]}
-                onPress={() => navigation.navigate('meta/1')}
+                onPress={() => navigation.navigate('History')}
                 onPressIn={handleMouseEnter}
                 onPressOut={handleMouseLeave}
             >
                 <Image
-                    style={styles.card}
+                    style={{
+                        width: 36,
+                        height: 35,
+                    }}
                     source={require('../../assets/icones/cartao.png')} // Caminho relativo para a imagem
                 />
             </TouchableOpacity>
@@ -49,7 +55,10 @@ function NavBottom() {
                 onPressOut={handleMouseLeave}
             >
                 <Image
-                    style={styles.image}
+                    style={{
+                        width: 36,
+                        height: 24,
+                    }}
                     source={require('../../assets/icones/lupa.png')} // Caminho relativo para a imagem
                 />
             </TouchableOpacity>
@@ -60,8 +69,12 @@ function NavBottom() {
                 onPressOut={handleMouseLeave}
             >
                 <Image
-                    style={styles.image}
+                    style={{
+                        width: 28,
+                        height: 30,
+                    }}
                     source={require('../../assets/icones/perfil.png')} // Caminho relativo para a imagem
+
                 />
             </TouchableOpacity>
         </View>
@@ -71,8 +84,8 @@ function NavBottom() {
 const styles = StyleSheet.create({
 
     image: {
-        width: 30,
-        height: 30,
+        width: 11,
+        height: 17,
     },
 
     bottom: {
@@ -82,7 +95,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         bottom: 0,
         height: 76,
-        
+
 
         width: '100%',
         flexDirection: 'row',
