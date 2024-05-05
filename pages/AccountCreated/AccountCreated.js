@@ -6,7 +6,7 @@ import { supabase } from '../../shared/CreateClient';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
 
-export default function AccountCreated({ userData, dataPin }) {
+export default function AccountCreated({ userData, dataPin, setUserAuthenticated}) {
     const navigation = useNavigation();
     function handleSubmit() {
         register()
@@ -45,6 +45,8 @@ export default function AccountCreated({ userData, dataPin }) {
         } catch (error) {
             alert(error.message); // Se ocorrer um erro, exibe a mensagem de erro
         }
+        setUserAuthenticated(true)
+        navigator.navigate('HomePage')
     }
     return (
         <View style={styles.container}>

@@ -10,7 +10,7 @@ const isValidEmail = (email) => {
     return emailRegex.test(email);
 };
 
-export default function SignIn({setUserAuthenticated}) {
+export default function SignIn({setUserAuthenticated,setUserData}) {
     const navigation = useNavigation();
     const [errorMessage, setErrorMessage] = useState();
     const [email, setEmail] = useState();
@@ -34,6 +34,7 @@ export default function SignIn({setUserAuthenticated}) {
             console.error(error.message);
             return;
         }
+        setUserData({email})
         setUserAuthenticated(true);
         navigation.navigate('HomePage')
         setErrorMessage('');

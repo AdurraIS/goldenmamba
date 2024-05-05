@@ -9,7 +9,7 @@ function NavBottom() {
     const [section, setSection] = useState(0);
 
     useEffect(() => {
-        if(currentScreen === 'Home'){
+        if(currentScreen === 'HomePage'){
             setSection(0);
         } else if(currentScreen === 'History'){
             setSection(1);
