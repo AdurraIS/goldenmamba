@@ -14,6 +14,7 @@ import ConfirmPin from './pages/ConfirmPin/ConfirmPin';
 import VerifyEmail from './pages/Verify/VerifyEmail';
 import AccountCreated from './pages/AccountCreated/AccountCreated';
 import History from './pages/History/History';
+
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -26,17 +27,7 @@ export default function App() {
     const isAuthenticated = checkAuthentication();
     setUserAuthenticated(isAuthenticated);
   }, []);
-  function register(){
-    
-    const User = {
-      fullName: userData.fullName,
-      email: userData.email,
-      password: userData.password,
-    }
-
-    setUserAuthenticated(true);
-
-  }
+  
   const checkAuthentication = () => {
     // Simule a autenticação de usuário, substitua pela sua lógica real
     return false; // ou false, dependendo se o usuário está autenticado
@@ -57,7 +48,7 @@ export default function App() {
       fullName: prop.fullName,
       email: prop.email,
       password: prop.password,
-  }
+    }
     setUserData(vUserData);
   }
   const getPinData = (prop) => {
@@ -106,31 +97,31 @@ export default function App() {
             name="Register"
             options={{ headerShown: false }}
           >
-            {(props)=> (<Register {...props} getUserData={getUserData}/>)}
+            {(props) => (<Register {...props} getUserData={getUserData} />)}
           </Stack.Screen>
           <Stack.Screen
             name="CreatePin"
             options={{ headerShown: false }}
           >
-            {(props) => (<CreatePin getPinData={getPinData}/>)}
+            {(props) => (<CreatePin getPinData={getPinData} />)}
           </Stack.Screen>
           <Stack.Screen
             name="ConfirmPin"
             options={{ headerShown: false }}
           >
-            {(props) => (<ConfirmPin pinData={pinData}/>)}
+            {(props) => (<ConfirmPin pinData={pinData} />)}
           </Stack.Screen>
           <Stack.Screen
             name="VerifyEmail"
             options={{ headerShown: false }}
           >
-            {(props) => (<VerifyEmail userData={userData}/>)}
+            {(props) => (<VerifyEmail userData={userData} />)}
           </Stack.Screen>
           <Stack.Screen
             name="AccountCreated"
             options={{ headerShown: false }}
           >
-            {() => (<AccountCreated register={register}/>)}
+            {() => (<AccountCreated userData={userData} dataPin={pinData} />)}
           </Stack.Screen>
         </Stack.Navigator>
       )}
