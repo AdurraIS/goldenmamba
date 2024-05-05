@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
 import { Dimensions } from 'react-native';
-import { ScrollView, View, Text, StyleSheet, Button, Image, FlatList } from 'react-native';
+import { ScrollView, View, Text, StyleSheet, Button, Image, FlatList, TouchableOpacity } from 'react-native';
 import NavBottom from "../../components/NavBottom/NavBottom";
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
 import cards from './Cards';
 import OnboardingItem from '../../components/OnboardingItem/OnboardingItem';
 import ProgressCircle from '../../components/ProgressCircle/ProgressCircle';
+import { useNavigation } from '@react-navigation/native';
 
-function HomePage() {
+function HomePage({ adicionarMetaApp }) {
+    const navigation = useNavigation();
+
     const [balance, setBalance] = useState(8.5);
     const [metas, setMetas] = useState([]);
 
@@ -25,8 +28,8 @@ function HomePage() {
     };
 
     const handleAdicionarMeta = () => {
-        // Chamar a função adicionarMeta passando os valores desejados
-        adicionarMeta(500, 1000, "Car", require('../../assets/MetaIcons/Car.png'), '27/08/2024');
+        adicionarMeta(1000, 1000, "Car", require('../../assets/MetaIcons/Car.png'), '27/08/2024');
+        adicionarMetaApp(1000, 1000, "Car", require('../../assets/MetaIcons/Car.png'), '27/08/2024');
     };
     return (
         <View style={styles.container}>
@@ -86,7 +89,7 @@ function HomePage() {
                         </View>
 
                     </View>
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: screenWidth, paddingHorizontal: 30, paddingVertical:20}}>
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: screenWidth, paddingHorizontal: 30, paddingVertical: 20 }}>
                         <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#840F74' }}>Your Cards</Text>
                         <Text style={{ fontSize: 14, color: '#840F74' }}>View All</Text>
                     </View>
@@ -99,25 +102,30 @@ function HomePage() {
                             snapToAlignment='start'
                             scrollEventThrottle={16}
                             decelerationRate="fast"
-                            snapToOffsets={cards.map((_, i) => i * (304 - 15) + (i - 1) * 40)} // Correção aqui
+                            snapToOffsets={cards.map((_, i) => i * (304 - 15) + (i - 1) * 40)} 
                             showsHorizontalScrollIndicator={false}
                         />
                     </View>
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: screenWidth, paddingHorizontal: 30, paddingVertical:20 }}>
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: screenWidth, paddingHorizontal: 30, paddingVertical: 20 }}>
                         <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#840F74' }}>Your Goals</Text>
-                        <Text style={{ fontSize: 14, color: '#840F74' }}>View All</Text>
+                        <TouchableOpacity onPress={() => navigation.navigate('AllGoals')}>
+                            <Text style={{ fontSize: 14, color: '#840F74' }}>View All</Text>
+                        </TouchableOpacity>
                     </View>
 
                     <View style={[styles.marginBottom, styles.pagamentosDiv]}>
                         {metas.map((meta) => {
                             return (
-                                <View style={styles.cardGoals} key={meta.id}>
-                                    <View style={{flexDirection: 'row', alignItems:'center', gap:10}}>
-                                        <Image style={{ width: 48, height: 48, borderRadius: 30 }} source={meta.imageMeta} />
-                                        <Text style={{ fontSize: 14, fontWeight:'bold', color: '#840F74' }}>{meta.titulo}</Text>
+                                <TouchableOpacity key={meta.id} onPress={() => navigation.navigate('meta/' + meta.id)}>
+                                    <View style={styles.cardGoals}>
+                                        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
+                                            <Image style={{ width: 48, height: 48, borderRadius: 30 }} source={meta.imageMeta} />
+                                            <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#840F74' }}>{meta.titulo}</Text>
+                                        </View>
+                                        <ProgressCircle size={48} progress={meta.valorAtual / meta.valorMeta} />
                                     </View>
-                                    <ProgressCircle size={48} progress={meta.valorAtual/meta.valorMeta} />
-                                </View>
+                                </TouchableOpacity>
+
                             );
                         })}
                         <Button title="Adicionar Meta" onPress={handleAdicionarMeta} />
@@ -125,7 +133,6 @@ function HomePage() {
                 </View>
 
             </ScrollView>
-            <NavBottom style={styles.bottom} />
         </View >
 
     );
@@ -158,7 +165,7 @@ const styles = StyleSheet.create({
     },
     topBackgroundImage: {
         position: 'absolute',
-        height: screenHeight + 58,
+        height: screenHeight + 59,
         width: screenWidth,
         resizeMode: 'contain',
         top: 0,

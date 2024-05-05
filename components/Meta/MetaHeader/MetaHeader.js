@@ -1,9 +1,15 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
-
+import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import back from "../../../assets/MetaIcons/back.png"
+    
 const MetaHeader = ({ title, image }) => {
+  const navigation = useNavigation();
   return (
     <View style={styles.container}>
+         <TouchableOpacity style={{marginBottom:20, flexDirection:'row', alignItems:'center'}} onPress={() => navigation.goBack()}>
+                <Image style={{tintColor:'#fff'}} source={back}/><Text style={{color:'#fff'}}>Back</Text>
+            </TouchableOpacity>
       <View style={styles.insideContainer}>
         <Image source={image} style={styles.image} />
         <Text style={styles.title}>{title}</Text>
@@ -20,9 +26,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#840F74',
     borderBottomLeftRadius: 30,
     borderBottomRightRadius: 30,
-    alignItems: 'flex-end',
-    flexDirection: 'row',
-    padding: 30,
+    justifyContent: 'flex-end',
+    flexDirection: 'col',
+    paddingLeft:30,
+    paddingBottom:30
   },
   insideContainer: {
     flexDirection: 'row',

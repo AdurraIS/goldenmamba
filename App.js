@@ -1,22 +1,46 @@
-import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
-
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-
+import { useEffect, useState } from 'react';
+import StartPage from './pages/StartPage/StartPage';
+import Preferences from './pages/Preferences/Preferences';
+import HomePage from './pages/HomePage/HomePage';
+import NavBottom from './components/NavBottom/NavBottom';
+import Onboarding from './pages/Onboarding/Onboarding';
+import Register from './pages/Register/Register';
+import AllGoals from './pages/AllGoals/AllGoals';
+import CreatePin from './pages/CreatePin/CreatePin';
+import ConfirmPin from './pages/ConfirmPin/ConfirmPin';
+import VerifyEmail from './pages/Verify/VerifyEmail';
+import AccountCreated from './pages/AccountCreated/AccountCreated';
+import History from './pages/History/History';
 const Stack = createNativeStackNavigator();
 
-import Meta from './components/Meta/Meta'
-import HomePage from './pages/HomePage/HomePage';
-import { useState } from 'react';
-import Preferences from './pages/Preferences/Preferences';
-import History from './pages/History/History';
-
 export default function App() {
-
-
+  const [userAuthenticated, setUserAuthenticated] = useState(false);
   const [metas, setMetas] = useState([]);
+  const [userData, setUserData] = useState();
+  const [pinData, setPinData] = useState("");
 
+  useEffect(() => {
+    const isAuthenticated = checkAuthentication();
+    setUserAuthenticated(isAuthenticated);
+  }, []);
+  function register(){
+    
+    const User = {
+      fullName: userData.fullName,
+      email: userData.email,
+      password: userData.password,
+    }
+
+    setUserAuthenticated(true);
+
+  }
+  const checkAuthentication = () => {
+    // Simule a autenticação de usuário, substitua pela sua lógica real
+    return false; // ou false, dependendo se o usuário está autenticado
+  };
   const adicionarMeta = (valorAtual, valorMeta, tituloMeta, imageMeta, dataMeta) => {
     const novaMeta = {
       id: metas.length + 1,
@@ -27,45 +51,89 @@ export default function App() {
       dataMeta: dataMeta
     };
     setMetas([...metas, novaMeta]);
-  };
-
+  }
+  const getUserData = (prop) => {
+    const vUserData = {
+      fullName: prop.fullName,
+      email: prop.email,
+      password: prop.password,
+  }
+    setUserData(vUserData);
+  }
+  const getPinData = (prop) => {
+    setPinData(prop);
+  }
   return (
-
     <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen
-          name="HomePage"
-          options={{ headerShown: false }}
-          component={HomePage}
-        />
-        <Stack.Screen
-          name="History"
-          options={{ headerShown: false }}
-          component={History}
-        />
-        <Stack.Screen
-          name="Preferences"
-          options={{ headerShown: false }}
-          component={Preferences}
-        />
-        {metas.map(meta => (
-          <Stack.Screen
-            name={"meta/" + meta.id}
-            options={{ headerShown: false }}
-          >
-            {() => (
-              <Meta
-                key={meta.id}
-                valorAtual={meta.valorAtual}
-                valorMeta={meta.valorMeta}
-                tituloMeta={meta.titulo}
-                imageMeta={meta.imageMeta}
-                dataMeta={meta.dataMeta}
-              />
+      {userAuthenticated ? (
+        <Stack.Navigator>
+          <Stack.Screen name="HomePage" options={{ headerShown: false }}>
+            {(props) => (
+              <View style={{ flex: 1 }}>
+                <HomePage {...props} adicionarMetaApp={adicionarMeta} />
+                <NavBottom />
+              </View>
             )}
           </Stack.Screen>
-        ))}
-      </Stack.Navigator>
+          <Stack.Screen name="Preferences" options={{ headerShown: false }}>
+            {(props) => (
+              <View style={{ flex: 1 }}>
+                <Preferences {...props} />
+                <NavBottom />
+              </View>
+            )}
+          </Stack.Screen>
+          <Stack.Screen name="AllGoals" options={{ headerShown: false }} >
+            {() => (<AllGoals metasData={metas} />)}
+          </Stack.Screen>
+          <Stack.Screen name="History" options={{ headerShown: false }} >
+            {() => (<History />)}
+          </Stack.Screen>
+        </Stack.Navigator>
+      ) : (
+        <Stack.Navigator>
+          <Stack.Screen
+            name="StartPage"
+            options={{ headerShown: false }}
+            component={StartPage}
+          />
+          <Stack.Screen
+            name="Onboarding"
+            options={{ headerShown: false }}
+            component={Onboarding}
+          />
+          <Stack.Screen
+            name="Register"
+            options={{ headerShown: false }}
+          >
+            {(props)=> (<Register {...props} getUserData={getUserData}/>)}
+          </Stack.Screen>
+          <Stack.Screen
+            name="CreatePin"
+            options={{ headerShown: false }}
+          >
+            {(props) => (<CreatePin getPinData={getPinData}/>)}
+          </Stack.Screen>
+          <Stack.Screen
+            name="ConfirmPin"
+            options={{ headerShown: false }}
+          >
+            {(props) => (<ConfirmPin pinData={pinData}/>)}
+          </Stack.Screen>
+          <Stack.Screen
+            name="VerifyEmail"
+            options={{ headerShown: false }}
+          >
+            {(props) => (<VerifyEmail userData={userData}/>)}
+          </Stack.Screen>
+          <Stack.Screen
+            name="AccountCreated"
+            options={{ headerShown: false }}
+          >
+            {() => (<AccountCreated register={register}/>)}
+          </Stack.Screen>
+        </Stack.Navigator>
+      )}
     </NavigationContainer>
   );
 }

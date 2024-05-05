@@ -1,280 +1,267 @@
 import React, { useState } from 'react';
-import { Dimensions } from 'react-native';
+import { Button, Dimensions } from 'react-native';
 import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView } from 'react-native';
-import NavBottom from "../../components/NavBottom/NavBottom"
 const screenWidth = Dimensions.get('window').width;
 import { useNavigation } from '@react-navigation/native';
-
 function History() {
 
     const navigation = useNavigation();
+    const [exibindoAtualmente, setExibindo] = useState('All');
 
-    const [Unread, setUnread] = useState('#cccccc');
-    const [All, setAll] = useState('#840f74');
-    const [exibindoAtualmente, setExibindo] = useState('all');
-
-    const unreadSelected = () => {
-        setUnread('#840f74')
-        setAll('#cccccc')
-        setExibindo('unread')
+    const [items, setItems] = useState([
+        {
+          id: 1,
+          Icon: '../../assets/icones/receber.png',
+          quantidade: -0.065, // quantidade negativa se você foi o remetente
+          cripto: 'DOGE',
+          remetente: 'Giovanni', // você enviou DOGE para alguém
+          destinatario: 'Alice', // nome aleatório
+        },
+        {
+          id: 2,
+          Icon: '../../assets/icones/receber.png', // você recebeu ETH de alguém
+          quantidade: 0.0001,
+          cripto: 'ETH',
+          remetente: 'Alice', // nome aleatório
+          destinatario: 'Giovanni', 
+        },
+        {
+          id: 3,
+          Icon: '../../assets/icones/enviar.png', // você enviou ETH para alguém
+          quantidade: -0.0001, // quantidade negativa se você foi o remetente
+          cripto: 'ETH',
+          remetente: 'Giovanni', 
+          destinatario: 'Bob', // nome aleatório
+        },
+        {
+          id: 4,
+          Icon: '../../assets/icones/enviar.png', // você recebeu DOGE de alguém
+          quantidade: 0.065,
+          cripto: 'DOGE',
+          remetente: 'Bob', // nome aleatório
+          destinatario: 'Giovanni', 
+        },
+        {
+          id: 5,
+          Icon: '../../assets/icones/receber.png', // você enviou BTC para alguém
+          quantidade: -0.0023, // quantidade negativa se você foi o remetente
+          cripto: 'BTC',
+          remetente: 'Giovanni', 
+          destinatario: 'Charlie', // nome aleatório
+        },
+        {
+          id: 6,
+          Icon: '../../assets/icones/receber.png', // você recebeu DOGE de alguém
+          quantidade: 322,
+          cripto: 'DOGE',
+          remetente: 'Charlie', // nome aleatório
+          destinatario: 'Giovanni', 
+        },
+        {
+          id: 7,
+          Icon: '../../assets/icones/enviar.png', // você enviou ETH para alguém
+          quantidade: -0.0001, // quantidade negativa se você foi o remetente
+          cripto: 'ETH',
+          remetente: 'Giovanni', 
+          destinatario: 'Dave', // nome aleatório
+        },
+        {
+          id: 8,
+          Icon: '../../assets/icones/receber.png', // você recebeu ETH de alguém
+          quantidade: 0.0001,
+          cripto: 'ETH',
+          remetente: 'Dave', // nome aleatório
+          destinatario: 'Giovanni', 
+        },
+        {
+          id: 9,
+          Icon: '../../assets/icones/receber.png', // você enviou BTC para alguém
+          quantidade: -0.0023, // quantidade negativa se você foi o remetente
+          cripto: 'BTC',
+          remetente: 'Giovanni', 
+          destinatario: 'Eve', // nome aleatório
+        },
+        {
+          id: 10,
+          Icon: '../../assets/icones/enviar.png', // você recebeu DOGE de alguém
+          quantidade: 322,
+          cripto: 'DOGE',
+          remetente: 'Eve', // nome aleatório
+          destinatario: 'Giovanni', 
+        },
+      ]);
+      
+    const allSelected = () => {
+        setExibindo('All')
     };
 
-    const AllSelected = () => {
-        setAll('#840f74')
-        setUnread('#cccccc')
-        setExibindo('all')
-
+    const sendSelected = () => {
+        setExibindo('Send')
     };
-
-    const [isHovered, setIsHovered] = useState(false);
-
-
-    const handleMouseEnter = () => {
-        setIsHovered(true);
+    const requestSelected = () => {
+        setExibindo('Request')
     };
-
-    const handleMouseLeave = () => {
-        setIsHovered(false);
-    };
-
-
-
-    const [UnreadItems, setUnreadItems] = useState([
-
-        {
-            Icon: '../../assets/icones/receber.png',
-            quantidade: 0.065,
-            cripto: 'DOGE',
-            enviado: false,
-            recebido: true,
-        },
-        {
-            Icon: '../../assets/icones/enviar.png',
-            quantidade: 0.0001,
-            cripto: 'ETH',
-            enviado: true,
-            recebido: false,
-        },
-        {
-            Icon: '../../assets/icones/receber.png',
-            quantidade: 0.0001,
-            cripto: 'ETH',
-            enviado: false,
-            recebido: true,
-        },
-        {
-            Icon: '../../assets/icones/receber.png',
-            quantidade: 0.065,
-            cripto: 'DOGE',
-            enviado: false,
-            recebido: true,
-        },
-        {
-            Icon: '../../assets/icones/enviar.png',
-            quantidade: 0.0001,
-            cripto: 'ETH',
-            enviado: true,
-            recebido: false,
-        },
-        {
-            Icon: '../../assets/icones/receber.png',
-            quantidade: 0.0001,
-            cripto: 'ETH',
-            enviado: false,
-            recebido: true,
-        },
-        {
-            Icon: '../../assets/icones/receber.png',
-            quantidade: 0.065,
-            cripto: 'DOGE',
-            enviado: false,
-            recebido: true,
-        },
-        {
-            Icon: '../../assets/icones/enviar.png',
-            quantidade: 0.0001,
-            cripto: 'ETH',
-            enviado: true,
-            recebido: false,
-        },
-        {
-            Icon: '../../assets/icones/receber.png',
-            quantidade: 0.0001,
-            cripto: 'ETH',
-            enviado: false,
-            recebido: true,
-        },
-    ]);
-    const [AllItems, setAllItems] = useState([
-        {
-            Icon: '../assets/icones/enviar.png',
-            quantidade: 0.0001,
-            cripto: 'ETH',
-            enviado: true,
-            recebido: false,
-        },
-        {
-            Icon: '../../assets/icones/receber.png',
-            quantidade: 0.0023,
-            cripto: 'BTC',
-            enviado: false,
-            recebido: true,
-        },
-        {
-            Icon: '../../assets/icones/enviar.png',
-            quantidade: 322,
-            cripto: 'DOGE',
-            enviado: true,
-            recebido: false,
-        },
-        {
-            Icon: '../../assets/icones/receber.png',
-            quantidade: 0.0001,
-            cripto: 'ETH',
-            enviado: false,
-            recebido: true,
-        },
-        {
-            Icon: '../assets/icones/enviar.png',
-            quantidade: 0.0001,
-            cripto: 'ETH',
-            enviado: true,
-            recebido: false,
-        },
-        {
-            Icon: '../../assets/icones/receber.png',
-            quantidade: 0.0023,
-            cripto: 'BTC',
-            enviado: false,
-            recebido: true,
-        },
-        {
-            Icon: '../../assets/icones/enviar.png',
-            quantidade: 322,
-            cripto: 'DOGE',
-            enviado: true,
-            recebido: false,
-        },
-        {
-            Icon: '../../assets/icones/receber.png',
-            quantidade: 0.0001,
-            cripto: 'ETH',
-            enviado: false,
-            recebido: true,
-        },
-    ]);
-
 
     return (
         <View style={styles.container}>
-            <View
-                style={[
-                    styles.flexRow,
-                    {
-                        width: '100%',
-                        marginTop: 50
-                    }
-                ]}
-            >
-                <TouchableOpacity
-                    style={[styles.image, isHovered && styles.buttonHovered]}
-                    onPress={() => navigation.navigate('HomePage')}
-                    onPressIn={handleMouseEnter}
-                    onPressOut={handleMouseLeave}>
-                    <Image
-                        style={[{
-                            width: 15,
-                            height: 28,
-                        }]}
-                        source={require('../../assets/icones/setaEsquerda.png')}
-                    />
-                </TouchableOpacity>
-                <Text
-                    style={[
-
-                        styles.textH2,
-
-                    ]}
-                >
-                    History
-                </Text>
-                <Image
-                    style={{
-                        width: 5,
-                        height: 25,
-                    }
-                    }
-                    source={require('../../assets/icones/pontos.png')}
-                />
+            <View style={styles.header}>
+                <Text>History</Text>
             </View>
             <View
-                style={[
-                    styles.flexRow, {
-                        width: '100%',
-                        marginTop: 50
-                    }
+                style={[{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'space-around',
+                    width: '100%',
+                    marginTop: 10
+                }
                 ]}
             >
-                <View style={[styles.flexColumn, { width: '50%' }]}>
-                    <Text onPress={AllSelected} style={[styles.textH2]}>all Notification</Text>
-                    <View
-                        style={{ width: '100%', height: 10, backgroundColor: All, borderRadius: 10 }}
-                    ></View>
+                <View style={[{ flexDirection: 'column', width: '33%' }]}>
+
+                    {exibindoAtualmente == 'All' ? (
+                        <TouchableOpacity style={{ width: '100%', alignItems: 'center' }} onPress={allSelected}>
+                            <Text style={[styles.textHeader]}>All</Text>
+                            <View
+                                style={{ width: '100%', height: 5, backgroundColor: '#840f74', borderRadius: 10 }}
+                            ></View>
+                        </TouchableOpacity>) : (
+                        <TouchableOpacity style={{ width: '100%', alignItems: 'center' }} onPress={allSelected}>
+                            <Text style={[styles.textHeaderGray]}>All</Text>
+                            <View
+                                style={{ width: '100%', height: 3, backgroundColor: '#cccccc', borderRadius: 10 }}
+                            ></View>
+                        </TouchableOpacity>)
+                    }
+
                 </View>
-                <View style={[styles.flexColumn, { width: '50%' }]}>
-                    <Text onPress={unreadSelected} style={[styles.textH2]}>Unread</Text>
-                    <View
-                        style={{ width: '100%', height: 10, backgroundColor: Unread, borderRadius: 10 }}
-                    ></View>
+                <View style={[{ flexDirection: 'column', alignItems: 'center', width: '33%' }]}>
+                    {exibindoAtualmente == 'Send' ? (
+                        <TouchableOpacity style={{ width: '100%', alignItems: 'center' }} onPress={sendSelected}>
+                            <Text style={[styles.textHeader]}>Send</Text>
+                            <View
+                                style={{ width: '100%', height: 5, backgroundColor: '#840f74', borderRadius: 10 }}
+                            ></View>
+                        </TouchableOpacity>) : (
+                        <TouchableOpacity style={{ width: '100%', alignItems: 'center' }} onPress={sendSelected}>
+                            <Text style={[styles.textHeaderGray]}>Send</Text>
+                            <View
+                                style={{ width: '100%', height: 3, backgroundColor: '#cccccc', borderRadius: 10 }}
+                            ></View>
+                        </TouchableOpacity>)
+                    }
+                </View>
+                <View style={[{ flexDirection: 'column', alignItems: 'center', width: '33%' }]}>
+                    {exibindoAtualmente == 'Request' ? (
+                        <TouchableOpacity style={{ width: '100%', alignItems: 'center' }} onPress={requestSelected}>
+                            <Text style={[styles.textHeader]}>Request</Text>
+                            <View
+                                style={{ width: '100%', height: 5, backgroundColor: '#840f74', borderRadius: 10 }}
+                            ></View>
+                        </TouchableOpacity>) : (
+                        <TouchableOpacity style={{ width: '100%', alignItems: 'center' }} onPress={requestSelected}>
+                            <Text style={[styles.textHeaderGray]}>Request</Text>
+                            <View
+                                style={{ width: '100%', height: 3, backgroundColor: '#cccccc', borderRadius: 10 }}
+                            ></View>
+                        </TouchableOpacity>)
+                    }
                 </View>
             </View>
+            <ScrollView contentContainerStyle={[styles.scrollcontainer]}>
+                {items.map((item) => {
+                    if (exibindoAtualmente == 'All') {
+                        return (
+                            <View key={item.id} style={styles.card}>
+                                <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
+                                    
+                                    {item.quantidade < 0 ?
+                                        (
+                                            <>
+                                            <Image style={{ width: 48, height: 48, borderRadius: 30 }} source={require('../../assets/icones/enviar.png')} />
+                                            <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#840F74' }}>{item.destinatario}</Text>
+                                            </>
+                                            
+                                        ) : (
+                                            <>
+                                            <Image style={{ width: 48, height: 48, borderRadius: 30 }} source={require('../../assets/icones/receber.png')} />
+                                            <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#840F74' }}>{item.remetente}</Text>
+                                            </>
+                                        )}
 
-            <ScrollView contentContainerStyle={[styles.container, styles.scroll]}>
-                {exibindoAtualmente === 'all' ? (
-                    AllItems.map((element, index) => (
-                        <View key={index}>
-                            {element.recebido ? (
-                                <View style={[styles.card, styles.flexRow, { marginBottom: 20 }]}>
-                                    <Image
-                                        style={[styles.icones2]}
-                                        source={require('../../assets/icones/receber.png')}
-                                    />
-                                    <Text>You have received + {element.quantidade} - {element.cripto}</Text>
                                 </View>
-                            ) : (
-                                <View style={[styles.card, styles.flexRow, { marginBottom: 20 }]}>
-                                    <Image
-                                        style={[styles.icones2]}
-                                        source={require('../../assets/icones/enviar.png')}
-                                    />
-                                    <Text>You have sent + {element.quantidade} - {element.cripto}</Text>
+                                {item.quantidade < 0 ?
+                                    (
+                                        <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#840F74' }}>{item.quantidade} {item.cripto}</Text>
+                                    ) : (
+                                        <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#840F74' }}>+{item.quantidade} {item.cripto}</Text>
+                                    )}
+                            </View>
+                        )
+                    }
+                    if(exibindoAtualmente === 'Send'){
+                        if(item.quantidade<0){
+                            return (
+                                <View key={item.id} style={styles.card}>
+                                    <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
+                                        
+                                        {item.quantidade < 0 ?
+                                            (
+                                                <>
+                                                <Image style={{ width: 48, height: 48, borderRadius: 30 }} source={require('../../assets/icones/enviar.png')} />
+                                                <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#840F74' }}>{item.destinatario}</Text>
+                                                </>
+                                                
+                                            ) : (
+                                                <>
+                                                <Image style={{ width: 48, height: 48, borderRadius: 30 }} source={require('../../assets/icones/receber.png')} />
+                                                <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#840F74' }}>{item.remetente}</Text>
+                                                </>
+                                            )}
+    
+                                    </View>
+                                    {item.quantidade < 0 ?
+                                        (
+                                            <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#840F74' }}>{item.quantidade} {item.cripto}</Text>
+                                        ) : (
+                                            <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#840F74' }}>+{item.quantidade} {item.cripto}</Text>
+                                        )}
                                 </View>
-                            )}
-                        </View>
-                    ))
-                ) : (
-                    UnreadItems.map((element, index) => (
-                        <View key={index}>
-                            {element.recebido ? (
-                                <View style={[styles.card, styles.flexRow, { marginBottom: 20 }]}>
-                                    <Image
-                                        style={[styles.icones2]}
-                                        source={require('../../assets/icones/receber.png')}
-                                    />
-                                    <Text>You have received + {element.quantidade} - {element.cripto}</Text>
+                            )
+                        }
+                    }
+                    if(exibindoAtualmente==='Request'){
+                        if(item.quantidade>0){
+                            return (
+                                <View key={item.id} style={styles.card}>
+                                    <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
+                                        
+                                        {item.quantidade < 0 ?
+                                            (
+                                                <>
+                                                <Image style={{ width: 48, height: 48, borderRadius: 30 }} source={require('../../assets/icones/enviar.png')} />
+                                                <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#840F74' }}>{item.destinatario}</Text>
+                                                </>
+                                                
+                                            ) : (
+                                                <>
+                                                <Image style={{ width: 48, height: 48, borderRadius: 30 }} source={require('../../assets/icones/receber.png')} />
+                                                <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#840F74' }}>{item.remetente}</Text>
+                                                </>
+                                            )}
+    
+                                    </View>
+                                    {item.quantidade < 0 ?
+                                        (
+                                            <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#840F74' }}>{item.quantidade} {item.cripto}</Text>
+                                        ) : (
+                                            <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#840F74' }}>+{item.quantidade} {item.cripto}</Text>
+                                        )}
                                 </View>
-                            ) : (
-                                <View style={[styles.card, styles.flexRow, { marginBottom: 20 }]}>
-                                    <Image
-                                        style={[styles.icones2]}
-                                        source={require('../../assets/icones/enviar.png')}
-                                    />
-                                    <Text>You have sent + {element.quantidade} - {element.cripto}</Text>
-                                </View>
-                            )}
-                        </View>
-                    ))
-                )}
+                            )
+                        }
+                    }
+                })}
             </ScrollView>
         </View >
     );
@@ -295,67 +282,34 @@ const styles = StyleSheet.create({
         top: 0,
         left: 0,
     },
-    container: {
-        display: 'flex',
-        alignItems: 'center',
+    textHeader: {
+        fontSize: 14,
+        color: '#840F74',
+        paddingBottom: 10
+    },
+    textHeaderGray: {
+        fontSize: 14,
+        color: '#CCCCCC',
+        paddingBottom: 10
+    },
+    scrollcontainer: {
         justifyContent: 'space-around',
-        width: '100%',
-        height: '100%',
-        position: 'relative',
-    },
-    flexRow: {
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-around',
-    },
-    flexColumn: {
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'space-around',
-    },
-    flexRowStart: {
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'start',
-        justifyContent: 'space-around',
-    },
-    flexColumnStart: {
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'start',
-        justifyContent: 'space-around',
-    },
-    marginTop2: {
-        marginTop: 30
-    },
-    marginTop: {
-        marginTop: 150
-    },
-    marginhorizontal: {
-        marginHorizontal: 10
-    },
-    textH3: {
-        fontSize: 18,
-        fontWeight: '400',
-    },
-    textH2: {
-        fontSize: 20,
-        fontWeight: '600',
-    },
-    textH1: {
-        fontSize: 25,
-        fontWeight: '800',
-    },
-    white: {
-        color: 'white'
+        alignItems:'center'
     },
     card: {
+        marginLeft: 20,
+        marginRight: 20,
+        borderWidth: 1,
+        borderColor: 'rgba(242, 242, 242, 0.3)',
+        width: screenWidth,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
         backgroundColor: '#fff',
+        width: '90%',
         borderRadius: 20,
-        padding: 15,
-        width: '80%',
+        padding: 10,
+        marginTop: 16
     },
     card2: {
         backgroundColor: '#fff',
@@ -378,7 +332,12 @@ const styles = StyleSheet.create({
         width: 70,
         height: 70,
     },
-
+    header: {
+        paddingBottom:30,
+        paddingTop: 80,
+        width: '100%',
+        alignItems: 'center',
+    }
 })
 
 export default History;
