@@ -22,11 +22,12 @@ export default function SignIn({setUserAuthenticated,setUserData}) {
             return;
         }
         try {
-            const { data, error } = await supabase.auth.signInWithPassword({
-                email: email,
-                password: senha,
-            })
-            if(data.user === null){
+            const { data, error } = await supabase
+            .from('usuarios')
+            .select('*') 
+            .eq('email', email);
+            const response = data[0]
+            if(response.password != senha){
                 setErrorMessage("Email ou senha inválida!")
                 return;
             }

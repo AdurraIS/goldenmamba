@@ -62,7 +62,7 @@ export default function App() {
           <Stack.Screen name="HomePage" options={{ headerShown: false }}>
             {(props) => (
               <View style={{ flex: 1 }}>
-                <HomePage {...props} adicionarMetaApp={adicionarMeta} userData={userData} />
+                <HomePage {...props} adicionarMetaApp={adicionarMeta} userData={userData} metasData={metas}/>
                 <NavBottom />
               </View>
             )}
@@ -79,7 +79,11 @@ export default function App() {
             {() => (<AllGoals metasData={metas} />)}
           </Stack.Screen>
           <Stack.Screen name="History" options={{ headerShown: false }} >
-            {() => (<History />)}
+            {() => (
+            <>
+              <History />
+              <NavBottom/>
+            </>)}
           </Stack.Screen>
         </Stack.Navigator>
       ) : (
