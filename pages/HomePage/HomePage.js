@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Dimensions } from 'react-native';
 import { ScrollView, View, Text, StyleSheet, Button, Image, FlatList, TouchableOpacity } from 'react-native';
 import NavBottom from "../../components/NavBottom/NavBottom";
@@ -7,40 +7,18 @@ const screenHeight = Dimensions.get('window').height;
 import cards from './Cards';
 import OnboardingItem from '../../components/OnboardingItem/OnboardingItem';
 import ProgressCircle from '../../components/ProgressCircle/ProgressCircle';
-import { useNavigation } from '@react-navigation/native';
-
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { supabase } from '../../shared/CreateClient';
-
-function HomePage({ adicionarMetaApp }) {
-
-    
-
-    async function copiarLinha() {
-        try {
-            // Selecione a linha que deseja copiar
-            const { data, error } = await supabase
-                .from('usuarios')
-                .select('*')
-                .eq('email', 'thurueclips@gmail.com'); // Substitua 'coluna' pelo nome da coluna e 'valor-desejado' pelo valor desejado
-
-            if (error) {
-                throw error;
-            }
-
-            if (data.length === 0) {
-                console.log('Nenhuma linha encontrada com o valor especificado.');
-                return;
-            }
-        } catch (error) {
-            console.error('Erro ao copiar linha:', error.message);
-        }
-    }
-
-    // Chame a função para copiar a linha
-    copiarLinha();
+function HomePage({ adicionarMetaApp, userData }) {
 
     const navigation = useNavigation();
-
+    const [userDataHome, setUserDataHome] = useState({
+        idWallet: "",
+        address: "",
+        fullName: "",
+        email: "",
+        pin: 0,
+    });
     const [balance, setBalance] = useState(8.5);
     const [metas, setMetas] = useState([]);
 
@@ -55,7 +33,37 @@ function HomePage({ adicionarMetaApp }) {
         };
         setMetas([...metas, novaMeta]);
     };
+    const route = useRoute();
+    const { name: currentScreen } = route;
 
+    async function buscaDados() {
+        try {
+            const { data, error } = await supabase
+                .from('Usuarios')
+                .select('*') // Seleciona todas as colunas
+                .eq('email', userData); // Filtra pelo email
+            console.log(userData)
+            console.log(data)
+            setUserDataHome({
+                idWallet: data.idWallet,
+                address: data.address,
+                fullName: data.fullName,
+                email: data.email,
+                pin: data.dataPin,
+            })
+
+            if (error) {
+                throw error;
+            }
+        } catch (error) {
+            console.error(error.message)
+        }
+    }
+    useEffect(() => {
+        if (currentScreen === 'HomePage') {
+            buscaDados()
+        }
+    }, [currentScreen]);
     const handleAdicionarMeta = () => {
         adicionarMeta(1000, 1000, "Car", require('../../assets/MetaIcons/Car.png'), '27/08/2024');
         adicionarMetaApp(1000, 1000, "Car", require('../../assets/MetaIcons/Car.png'), '27/08/2024');
@@ -72,7 +80,7 @@ function HomePage({ adicionarMetaApp }) {
                     <View style={[styles.header]}>
                         <View>
                             <Text style={[styles.textH2, { fontSize: 14, fontWeight: 200, marginBottom: 10 }]}>Welcome Back</Text>
-                            <Text style={styles.textH2}>Yasmine Coutinho</Text>
+                            <Text style={styles.textH2}>{userDataHome.fullName}</Text>
                         </View>
                         <Image
                             style={styles.icones1}

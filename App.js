@@ -62,7 +62,7 @@ export default function App() {
           <Stack.Screen name="HomePage" options={{ headerShown: false }}>
             {(props) => (
               <View style={{ flex: 1 }}>
-                <HomePage {...props} adicionarMetaApp={adicionarMeta} />
+                <HomePage {...props} adicionarMetaApp={adicionarMeta} userData={userData} />
                 <NavBottom />
               </View>
             )}
@@ -70,7 +70,7 @@ export default function App() {
           <Stack.Screen name="Preferences" options={{ headerShown: false }}>
             {(props) => (
               <View style={{ flex: 1 }}>
-                <Preferences {...props} />
+                <Preferences {...props} setUserAuthenticated={setUserAuthenticated}/>
                 <NavBottom />
               </View>
             )}
@@ -122,13 +122,13 @@ export default function App() {
             name="AccountCreated"
             options={{ headerShown: false }}
           >
-            {() => (<AccountCreated userData={userData} dataPin={pinData} />)}
+            {() => (<AccountCreated userData={userData} dataPin={pinData} setUserAuthenticated={setUserAuthenticated} />)}
           </Stack.Screen>
           <Stack.Screen
             name="SignIn"
             options={{ headerShown: false }}
           >
-            {() => (<SignIn setUserAuthenticated={setUserAuthenticated}/>)}
+            {() => (<SignIn setUserAuthenticated={setUserAuthenticated} setUserData={setUserData}/>)}
           </Stack.Screen>
         </Stack.Navigator>
       )}

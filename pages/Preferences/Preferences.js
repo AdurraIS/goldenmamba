@@ -3,9 +3,7 @@ import { Dimensions } from 'react-native';
 import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView } from 'react-native';
 const screenHeight = Dimensions.get('window').height;
 const screenWidth = Dimensions.get('window').width;
-
-function Preferences() {
-
+function Preferences({setUserAuthenticated}) {
 
     const [isHovered, setIsHovered] = useState(false);
 
@@ -17,7 +15,9 @@ function Preferences() {
     const handleMouseLeave = () => {
         setIsHovered(false);
     };
-
+    const handleLogout = () =>{
+        setUserAuthenticated(false);
+    };
 
     return (
         <View style={styles.container}>
@@ -116,7 +116,7 @@ function Preferences() {
                                 source={require('../../assets/icones/interrogacao.png')}/>
                             <Text style={[styles.textH1]}>Help and privacy</Text>
                         </View>
-                        <TouchableOpacity style={{marginTop: 14}}>
+                        <TouchableOpacity onPress={handleLogout} style={{marginTop: 14}}>
                             <Text style={{fontSize:16, color:'#FF552F', textDecorationLine: 'underline'}}>Log out</Text>
                         </TouchableOpacity>
                     </View>
