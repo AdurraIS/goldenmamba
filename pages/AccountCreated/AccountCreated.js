@@ -19,31 +19,32 @@ export default function AccountCreated({ userData, dataPin }) {
             response = await axios('https://protocol-sandbox.lumx.io/v2/wallets', options)
             console.log(response.data)
         } catch (error) {
-            console.error(error);
+            console.error(error.message);
         }
-        const data = {
-            idWallet: response.id,
-            address: response.adress,
-            fullName: userData.fullName,
-            email: userData.email,
-            password: userData.password,
-            pin: dataPin,
+        try{
+            const { error } = await supabase.auth.signUp({
+                email: userData.email,
+                password: userData.senha,
+            });
+        }catch(error){
+            alert(error.message);
         }
         try {
-            // const { signUpResponse, error1 } = await supabase.auth.signUp({
-            //     email: userData.email,
-            //     password: userData.password,
-            // });
-            // if (error1) throw error1;
-            const { insertResponse, error2 } = await supabase
+            console.log(response.id)
+            const { data, error } = await supabase
                 .from('usuarios')
-                .insert(data);
-            if (error2) throw error2;
+                .insert({
+                    idWallet: response.data.id,
+                    address: response.data.address,
+                    fullName: userData.fullName,
+                    email: userData.email,
+                    pin: dataPin,
+                });
+
             alert("Dados inseridos com sucesso");
         } catch (error) {
-            alert(error);
+            alert(error.message); // Se ocorrer um erro, exibe a mensagem de erro
         }
-
     }
     return (
         <View style={styles.container}>

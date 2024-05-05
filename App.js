@@ -14,6 +14,7 @@ import ConfirmPin from './pages/ConfirmPin/ConfirmPin';
 import VerifyEmail from './pages/Verify/VerifyEmail';
 import AccountCreated from './pages/AccountCreated/AccountCreated';
 import History from './pages/History/History';
+import SignIn from './pages/SignIn/SignIn';
 
 const Stack = createNativeStackNavigator();
 
@@ -122,6 +123,12 @@ export default function App() {
             options={{ headerShown: false }}
           >
             {() => (<AccountCreated userData={userData} dataPin={pinData} />)}
+          </Stack.Screen>
+          <Stack.Screen
+            name="SignIn"
+            options={{ headerShown: false }}
+          >
+            {() => (<SignIn setUserAuthenticated={setUserAuthenticated}/>)}
           </Stack.Screen>
         </Stack.Navigator>
       )}
