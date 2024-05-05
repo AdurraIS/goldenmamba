@@ -10,6 +10,7 @@ import ProgressCircle from '../../components/ProgressCircle/ProgressCircle';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { supabase } from '../../shared/CreateClient';
 function HomePage({ adicionarMetaApp, userData }) {
+
     const navigation = useNavigation();
     const [userDataHome, setUserDataHome] = useState({
         idWallet: "",
