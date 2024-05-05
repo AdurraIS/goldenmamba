@@ -9,17 +9,34 @@ import NavBottom from './components/NavBottom/NavBottom';
 import Onboarding from './pages/Onboarding/Onboarding';
 import Register from './pages/Register/Register';
 import AllGoals from './pages/AllGoals/AllGoals';
-
+import CreatePin from './pages/CreatePin/CreatePin';
+import ConfirmPin from './pages/ConfirmPin/ConfirmPin';
+import VerifyEmail from './pages/Verify/VerifyEmail';
+import AccountCreated from './pages/AccountCreated/AccountCreated';
+import History from './pages/History/History';
 const Stack = createNativeStackNavigator();
 
 export default function App() {
   const [userAuthenticated, setUserAuthenticated] = useState(false);
   const [metas, setMetas] = useState([]);
+  const [userData, setUserData] = useState();
+  const [pinData, setPinData] = useState("");
+
   useEffect(() => {
     const isAuthenticated = checkAuthentication();
     setUserAuthenticated(isAuthenticated);
   }, []);
+  function register(){
+    
+    const User = {
+      fullName: userData.fullName,
+      email: userData.email,
+      password: userData.password,
+    }
 
+    setUserAuthenticated(true);
+
+  }
   const checkAuthentication = () => {
     // Simule a autenticação de usuário, substitua pela sua lógica real
     return false; // ou false, dependendo se o usuário está autenticado
@@ -34,6 +51,17 @@ export default function App() {
       dataMeta: dataMeta
     };
     setMetas([...metas, novaMeta]);
+  }
+  const getUserData = (prop) => {
+    const vUserData = {
+      fullName: prop.fullName,
+      email: prop.email,
+      password: prop.password,
+  }
+    setUserData(vUserData);
+  }
+  const getPinData = (prop) => {
+    setPinData(prop);
   }
   return (
     <NavigationContainer>
@@ -58,7 +86,9 @@ export default function App() {
           <Stack.Screen name="AllGoals" options={{ headerShown: false }} >
             {() => (<AllGoals metasData={metas} />)}
           </Stack.Screen>
-
+          <Stack.Screen name="History" options={{ headerShown: false }} >
+            {() => (<History />)}
+          </Stack.Screen>
         </Stack.Navigator>
       ) : (
         <Stack.Navigator>
@@ -75,8 +105,33 @@ export default function App() {
           <Stack.Screen
             name="Register"
             options={{ headerShown: false }}
-            component={Register}
-          />
+          >
+            {(props)=> (<Register {...props} getUserData={getUserData}/>)}
+          </Stack.Screen>
+          <Stack.Screen
+            name="CreatePin"
+            options={{ headerShown: false }}
+          >
+            {(props) => (<CreatePin getPinData={getPinData}/>)}
+          </Stack.Screen>
+          <Stack.Screen
+            name="ConfirmPin"
+            options={{ headerShown: false }}
+          >
+            {(props) => (<ConfirmPin pinData={pinData}/>)}
+          </Stack.Screen>
+          <Stack.Screen
+            name="VerifyEmail"
+            options={{ headerShown: false }}
+          >
+            {(props) => (<VerifyEmail userData={userData}/>)}
+          </Stack.Screen>
+          <Stack.Screen
+            name="AccountCreated"
+            options={{ headerShown: false }}
+          >
+            {() => (<AccountCreated register={register}/>)}
+          </Stack.Screen>
         </Stack.Navigator>
       )}
     </NavigationContainer>

@@ -9,14 +9,14 @@ const isValidEmail = (email) => {
 };
 
 const isValidPassword = (password) => {
-    const navigation = useNavigation();
-
+    
     // Verificar se a senha tem pelo menos 6 caracteres, uma letra maiúscula e um caractere especial
     const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
     return passwordRegex.test(password);
 };
 
 export default function Register({getUserData}) {
+    const navigation = useNavigation();
     const [fullName, setFullName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
