@@ -21,17 +21,63 @@ export default function AccountCreated({ userData, dataPin }) {
         } catch (error) {
             console.error(error.message);
         }
-        try{
-            const { error } = await supabase.auth.signUp({
-                email: userData.email,
-                password: userData.senha,
-            });
-        }catch(error){
-            alert(error.message);
-        }
+
+
+        // try {
+        //     // Registra um novo usuário no Supabase
+        //     const { user, error } = await supabase.auth.signUp({
+        //         email: userData.email,
+        //         password: userData.senha,
+        //     });
+
+        //     if (error) {
+        //         // Se ocorrer um erro durante o registro, lança uma exceção com a mensagem de erro
+        //         throw new Error(error.message);
+        //     }
+
+        //     // Se o registro for bem-sucedido, exibe uma mensagem de sucesso
+        //     alert("Usuário registrado com sucesso!");
+
+        //     // Você pode adicionar aqui qualquer outra ação que deseje executar após o registro bem-sucedido, como redirecionar o usuário para outra página, etc.
+        // } catch (error) {
+        //     // Se ocorrer um erro durante o processo de registro, exibe uma mensagem de erro
+        //     alert("Erro ao registrar usuário: " + error.message);
+        // }
+
+        // try {
+        //     console.log(response.id)
+        //     const { data, error } = await supabase
+        //         .from('usuarios')
+        //         .insert({
+        //             idWallet: response.data.id,
+        //             address: response.data.address,
+        //             fullName: userData.fullName,
+        //             email: userData.email,
+        //             pin: dataPin,
+        //         });
+
+        //     alert("Dados inseridos com sucesso");
+        // } catch (error) {
+        //     alert(error.message); // Se ocorrer um erro, exibe a mensagem de erro
+        // }
+
         try {
-            console.log(response.id)
-            const { data, error } = await supabase
+            // Registra um novo usuário no Supabase
+            const { user, error } = await supabase.auth.signUp({
+                email: userData.email,
+                password: userData.password,
+            });
+
+            if (error) {
+                // Se ocorrer um erro durante o registro, lança uma exceção com a mensagem de erro
+                throw new Error(error.message);
+            }
+
+            // Se o registro for bem-sucedido, exibe uma mensagem de sucesso
+            alert("Usuário registrado com sucesso!");
+
+            // Insere os dados do usuário na tabela 'usuarios'
+            const { data, error: insertError } = await supabase
                 .from('usuarios')
                 .insert({
                     idWallet: response.data.id,
@@ -41,9 +87,16 @@ export default function AccountCreated({ userData, dataPin }) {
                     pin: dataPin,
                 });
 
+            if (insertError) {
+                // Se ocorrer um erro durante a inserção de dados, lança uma exceção com a mensagem de erro
+                throw new Error(insertError.message);
+            }
+
+            // Se a inserção de dados for bem-sucedida, exibe uma mensagem de sucesso
             alert("Dados inseridos com sucesso");
         } catch (error) {
-            alert(error.message); // Se ocorrer um erro, exibe a mensagem de erro
+            // Se ocorrer um erro durante o processo, exibe uma mensagem de erro
+            alert("Erro: " + error.message);
         }
     }
     return (
