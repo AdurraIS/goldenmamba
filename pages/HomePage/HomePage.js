@@ -9,7 +9,36 @@ import OnboardingItem from '../../components/OnboardingItem/OnboardingItem';
 import ProgressCircle from '../../components/ProgressCircle/ProgressCircle';
 import { useNavigation } from '@react-navigation/native';
 
+import { supabase } from '../../shared/CreateClient';
+
 function HomePage({ adicionarMetaApp }) {
+
+    
+
+    async function copiarLinha() {
+        try {
+            // Selecione a linha que deseja copiar
+            const { data, error } = await supabase
+                .from('usuarios')
+                .select('*')
+                .eq('email', 'thurueclips@gmail.com'); // Substitua 'coluna' pelo nome da coluna e 'valor-desejado' pelo valor desejado
+
+            if (error) {
+                throw error;
+            }
+
+            if (data.length === 0) {
+                console.log('Nenhuma linha encontrada com o valor especificado.');
+                return;
+            }
+        } catch (error) {
+            console.error('Erro ao copiar linha:', error.message);
+        }
+    }
+
+    // Chame a função para copiar a linha
+    copiarLinha();
+
     const navigation = useNavigation();
 
     const [balance, setBalance] = useState(8.5);
@@ -102,7 +131,7 @@ function HomePage({ adicionarMetaApp }) {
                             snapToAlignment='start'
                             scrollEventThrottle={16}
                             decelerationRate="fast"
-                            snapToOffsets={cards.map((_, i) => i * (304 - 15) + (i - 1) * 40)} 
+                            snapToOffsets={cards.map((_, i) => i * (304 - 15) + (i - 1) * 40)}
                             showsHorizontalScrollIndicator={false}
                         />
                     </View>
