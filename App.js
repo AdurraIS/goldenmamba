@@ -10,13 +10,14 @@ import Meta from './components/Meta/Meta'
 import HomePage from './pages/HomePage/HomePage';
 import { useState } from 'react';
 import Preferences from './pages/Preferences/Preferences';
+import AllGoals from './pages/AllGoals/AllGoals';
 
 export default function App() {
 
 
   const [metas, setMetas] = useState([]);
 
-  const adicionarMeta = (valorAtual, valorMeta, tituloMeta, imageMeta, dataMeta) => {
+  const adicionarMetaApp = (valorAtual, valorMeta, tituloMeta, imageMeta, dataMeta) => {
     const novaMeta = {
       id: metas.length + 1,
       valorAtual: valorAtual,
@@ -35,8 +36,15 @@ export default function App() {
         <Stack.Screen
           name="HomePage"
           options={{ headerShown: false }}
-          component={HomePage}
-        />
+        >
+          {(props) => <HomePage {...props} adicionarMetaApp={adicionarMetaApp} />}
+        </Stack.Screen>
+        <Stack.Screen
+          name="AllGoals"
+          options={{ headerShown: false }}
+        >
+          {() => <AllGoals metasData={metas} />}
+        </Stack.Screen>
         <Stack.Screen
           name="Preferences"
           options={{ headerShown: false }}
@@ -44,20 +52,20 @@ export default function App() {
         />
         {metas.map(meta => (
           <Stack.Screen
-          name={"meta/" + meta.id}
-          options={{ headerShown: false }}
-        >
-          {() => (
-            <Meta
-            key={meta.id}
-              valorAtual={meta.valorAtual}
-              valorMeta={meta.valorMeta}
-              tituloMeta={meta.titulo}
-              imageMeta={meta.imageMeta}
-              dataMeta={meta.dataMeta}
-            />
-          )}
-        </Stack.Screen>
+          key={meta.id}
+            name={"meta/" + meta.id}
+            options={{ headerShown: false }}
+          >
+            {() => (
+              <Meta
+                valorAtual={meta.valorAtual}
+                valorMeta={meta.valorMeta}
+                tituloMeta={meta.titulo}
+                imageMeta={meta.imageMeta}
+                dataMeta={meta.dataMeta}
+              />
+            )}
+          </Stack.Screen>
         ))}
       </Stack.Navigator>
     </NavigationContainer>
