@@ -3,8 +3,6 @@ import { Button, Dimensions } from 'react-native';
 import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView } from 'react-native';
 const screenWidth = Dimensions.get('window').width;
 import { useNavigation } from '@react-navigation/native';
-import back from "../../assets/MetaIcons/back.png"
-import settingsIcon from "../../assets/icones/settingsIcon.png"
 function History() {
 
     const navigation = useNavigation();
@@ -107,11 +105,7 @@ function History() {
     return (
         <View style={styles.container}>
             <View style={styles.header}>
-                <TouchableOpacity style={{ marginBottom: 20, flexDirection: 'row', alignItems: 'center' }} onPress={() => navigation.goBack()}>
-                    <Image style={{ tintColor: '#000' }} source={back} />
-                </TouchableOpacity>
                 <Text>History</Text>
-                <Image source={settingsIcon} />
             </View>
             <View
                 style={[{
@@ -339,10 +333,10 @@ const styles = StyleSheet.create({
         height: 70,
     },
     header: {
-        paddingTop: 70,
-        paddingHorizontal: 30,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
+        paddingBottom:30,
+        paddingTop: 80,
+        width: '100%',
+        alignItems: 'center',
     }
 })
 

@@ -133,7 +133,6 @@ function HomePage({ adicionarMetaApp }) {
                 </View>
 
             </ScrollView>
-            <NavBottom style={styles.bottom} />
         </View >
 
     );
@@ -166,7 +165,7 @@ const styles = StyleSheet.create({
     },
     topBackgroundImage: {
         position: 'absolute',
-        height: screenHeight + 58,
+        height: screenHeight + 59,
         width: screenWidth,
         resizeMode: 'contain',
         top: 0,
