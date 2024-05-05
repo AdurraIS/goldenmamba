@@ -28,8 +28,8 @@ function HomePage({ adicionarMetaApp }) {
     };
 
     const handleAdicionarMeta = () => {
-        adicionarMeta(500, 1000, "Car", require('../../assets/MetaIcons/Car.png'), '27/08/2024');
-        adicionarMetaApp(500, 1000, "Car", require('../../assets/MetaIcons/Car.png'), '27/08/2024');
+        adicionarMeta(1000, 1000, "Car", require('../../assets/MetaIcons/Car.png'), '27/08/2024');
+        adicionarMetaApp(1000, 1000, "Car", require('../../assets/MetaIcons/Car.png'), '27/08/2024');
     };
     return (
         <View style={styles.container}>
@@ -102,7 +102,7 @@ function HomePage({ adicionarMetaApp }) {
                             snapToAlignment='start'
                             scrollEventThrottle={16}
                             decelerationRate="fast"
-                            snapToOffsets={cards.map((_, i) => i * (304 - 15) + (i - 1) * 40)} // Correção aqui
+                            snapToOffsets={cards.map((_, i) => i * (304 - 15) + (i - 1) * 40)} 
                             showsHorizontalScrollIndicator={false}
                         />
                     </View>

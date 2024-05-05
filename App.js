@@ -11,10 +11,10 @@ import HomePage from './pages/HomePage/HomePage';
 import { useState } from 'react';
 import Preferences from './pages/Preferences/Preferences';
 import AllGoals from './pages/AllGoals/AllGoals';
+import History from './pages/History/History';
+import NavBottom from './components/NavBottom/NavBottom';
 
 export default function App() {
-
-
   const [metas, setMetas] = useState([]);
 
   const adicionarMetaApp = (valorAtual, valorMeta, tituloMeta, imageMeta, dataMeta) => {
@@ -30,29 +30,49 @@ export default function App() {
   };
 
   return (
-
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen
           name="HomePage"
           options={{ headerShown: false }}
         >
-          {(props) => <HomePage {...props} adicionarMetaApp={adicionarMetaApp} />}
+          {(props) => (
+            <View style={{ flex: 1 }}>
+              <HomePage {...props} adicionarMetaApp={adicionarMetaApp} />
+              <NavBottom />
+            </View>
+          )}
         </Stack.Screen>
         <Stack.Screen
           name="AllGoals"
           options={{ headerShown: false }}
         >
-          {() => <AllGoals metasData={metas} />}
+          {() => (
+            <View style={{ flex: 1 }}>
+              <AllGoals metasData={metas} />
+              <NavBottom />
+            </View>
+          )}
         </Stack.Screen>
+        <Stack.Screen
+          name="History"
+          options={{ headerShown: false }}
+          component={History}
+        />
         <Stack.Screen
           name="Preferences"
           options={{ headerShown: false }}
-          component={Preferences}
-        />
+        >
+          {() => (
+            <View style={{ flex: 1 }}>
+            <Preferences/>
+            <NavBottom />
+          </View>
+          )}
+        </Stack.Screen>
         {metas.map(meta => (
           <Stack.Screen
-          key={meta.id}
+            key={meta.id}
             name={"meta/" + meta.id}
             options={{ headerShown: false }}
           >

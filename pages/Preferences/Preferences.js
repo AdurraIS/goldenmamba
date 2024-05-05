@@ -211,7 +211,6 @@ function Preferences() {
                 </View>
 
             </ScrollView >
-            <NavBottom />
         </View >
     );
 }
