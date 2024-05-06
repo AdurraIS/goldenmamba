@@ -9,16 +9,16 @@ de Gerenciamento de Finanças Pessoais Integradas à Web3.
 <p>Também ganhando agilidade no projeto por ser em javascript, uma linguagem mais familiar.</p>
 
 ### Supabase
-<p>Backend as a service, que utilizamos para persistencia de dados</p>
-<p>Optamos supabase também pela complexidade que seria utilizar uma API e um banco de dados próprio, mas com intenção de desenvolver uma API no futuro, para que possamos tornar mais seguro, mais customizavel e salvar mais informações na Blockchain</p>
+<p>Backend as a service, que utilizamos para persistencia de dados.</p>
+<p>Optamos supabase também pela complexidade que seria utilizar uma API e um banco de dados próprio. Mas temos intenção de desenvolver uma API no futuro para que possamos tornar mais seguro, mais customizavel e salvar mais informações na Blockchain.</p>
 
 ### Lumx
-<p>Utilizamos a API da Lumx para fazer as criações de Wallets</p>
-<p>Posso dizer que a API está muito bem desenvolvida e documentada, portanto temos intenção de continuar utilizando as tecnologias da Lumx e nos aprofundarmos ainda mais em seus usos</p>
+<p>Utilizamos a API da Lumx para fazer as criações de Wallets.</p>
+<p>Posso dizer que a API está muito bem desenvolvida e documentada, portanto temos intenção de continuar utilizando as tecnologias da Lumx e nos aprofundarmos ainda mais em seus usos.</p>
 
 
 ### BlockChain
-<p>Estamos utilizando a blockchain do Ethereum por ser consolidada e conhecida, mas nos como integrantes da equipe de desenvolvimento pretendemos buscar mais conhecimento desse meio, para que possamos tomar as melhores decisões</p>
+<p>Estamos utilizando a blockchain do Ethereum por ser consolidada e conhecida, mas nos como integrantes da equipe de desenvolvimento pretendemos buscar mais conhecimento desse meio, para que possamos tomar as melhores decisões.</p>
 
 -------------------------------------------------------------
 ## Resumo do Projeto: 
