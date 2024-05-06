@@ -1,36 +1,32 @@
 import { StyleSheet, Text, View, TouchableOpacity, Image, ScrollView, ImageBackground } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Dimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { supabase } from '../../shared/CreateClient';
 
-
-import ProgressCircle from '../../components/ProgressCircle/ProgressCircle';
 import back from "../../assets/MetaIcons/back.png"
 import settingsIcon from "../../assets/icones/settingsIcon.png"
-import cardsArq from './cards.js';
 import cardbackground from '../../assets/Backgrounds/cardbackground.png'
+import CardCreateModal from './CardModal/CardCreateModal';
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
 
-export default async function AllGoals() {
+export default function AllCards({ adicionarCartao, cartoes, userData}) {
+    const [modalVisible, setModalVisible] = useState(false);
 
-
-
-    const [cards, setCards] = useState([...cardsArq]);
+    const [cards, setCards] = useState(cartoes);
     const navigation = useNavigation();
 
-
-    const adicionarCartao = () => {
-        // Aqui você pode adicionar lógica para adicionar um novo cartão
-        // por exemplo, abrir um modal para preencher os detalhes do cartão
+    const handleOpenModal = () => {
+        setModalVisible(true);
     }
-
+    const handleCloseModal = () => {
+        setModalVisible(false);
+      };
     return (
         <>
-            <View>
+            <View style={styles.container}>
                 <View style={styles.header}>
-                    <TouchableOpacity style={{ marginBottom: 20, flexDirection: 'row', alignItems: 'center' }} onPress={() => navigation.goBack()}>
+                    <TouchableOpacity style={{ marginBottom: 20 }} onPress={() => navigation.goBack()}>
                         <Image style={{ tintColor: '#000' }} source={back} />
                     </TouchableOpacity>
                     <Text>Your Cards</Text>
@@ -38,18 +34,18 @@ export default async function AllGoals() {
                 </View>
 
                 <ScrollView contentContainerStyle={styles.scroll}>
-                    {cardsArq && cardsArq.map((cards, index) => {
+                    {cards && cards.map((card, index) => {
                         return (
                             <View key={index} style={[styles.card, { backgroundColor: '#840F74', marginBottom: 10 }]}>
                                 <ImageBackground source={cardbackground} style={styles.backgroundimage}>
                                     <View style={[styles.card, { justifyContent: 'space-between', paddingVertical: 25, paddingHorizontal: 20, }]}>
                                         <View>
                                             <Text style={{ fontSize: 12, color: '#fff', marginBottom: 35 }}>Payment Card</Text>
-                                            <Text style={{ fontSize: 16, color: '#fff' }}>{cards.cardnumber}</Text>
+                                            <Text style={{ fontSize: 16, color: '#fff' }}>{card.cardNumber}</Text>
                                         </View>
                                         <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginRight: 20 }}>
-                                            <Text style={{ fontSize: 16, color: '#fff' }}>{cards.balance} ETH</Text>
-                                            <Text style={{ fontSize: 14, color: '#fff' }}>{cards.expirationDate}</Text>
+                                            <Text style={{ fontSize: 16, color: '#fff' }}>{card.balance ? card.balance : 0} ETH</Text>
+                                            <Text style={{ fontSize: 14, color: '#fff' }}>{card.expiryDate}</Text>
                                         </View>
                                     </View>
                                 </ImageBackground>
@@ -60,15 +56,20 @@ export default async function AllGoals() {
 
             </View>
             <View style={{ width: '100%', alignItems: 'center', position: 'absolute', bottom: 0 }}>
-                <TouchableOpacity style={styles.button} onPress={adicionarCartao} >
+                <TouchableOpacity style={styles.button} onPress={handleOpenModal} >
                     <Text style={styles.buttonText}>Add Card</Text>
                 </TouchableOpacity>
             </View>
+            <CardCreateModal visible={modalVisible}  walletId={userData.idWallet} onClose={handleCloseModal} adicionarCartao={adicionarCartao} setCards={setCards} cards={cards} />
         </>
     )
 }
 
 const styles = StyleSheet.create({
+    container:{
+        alignItems:'center',
+        height:'100%',
+    },
     card: {
         marginHorizontal: 10,
         width: 304,
@@ -82,15 +83,10 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
-    scroll: {
-        width: screenWidth,
-        height: 2 * screenHeight,
-        display: 'flex',
-        marginBottom: 2,
-        flexDirection: 'column',
-        alignItems: 'center'
+    scroll:{
+        paddingTop:20,
+        paddingBottom: 80,
     },
-
     buttonText: {
         fontSize: 16,
         color: 'white',
@@ -131,6 +127,7 @@ const styles = StyleSheet.create({
         paddingTop: 70,
         paddingHorizontal: 30,
         flexDirection: 'row',
+        width:'100%',
         justifyContent: 'space-between',
     }
 })

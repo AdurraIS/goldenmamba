@@ -7,24 +7,17 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import { Dimensions } from 'react-native';
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
-
-// Importações dos componentes
 import OnboardingItem from '../../components/OnboardingItem/OnboardingItem';
 import ProgressCircle from '../../components/ProgressCircle/ProgressCircle';
 
 // Importação do cliente supabase
 import { supabase } from '../../shared/CreateClient';
-
-// Importação dos cartões usados na demonstração
-import cards from './Cards';
-
-// Componente HomePage
-function HomePage({ userData, metasData }) {
+function HomePage({ userData, setUserData, metasData, cardsData, setCardsData }) {
     const navigation = useNavigation();
     const [userDataHome, setUserDataHome] = useState([]);
     const [balance, setBalance] = useState(8.5);
     const [metas, setMetas] = useState(metasData);
-    const [cardss, setCards] = useState(false);
+    const [cards, setCards] = useState([]);
     const route = useRoute();
     const { name: currentScreen } = route;
 
@@ -35,27 +28,55 @@ function HomePage({ userData, metasData }) {
                 .from('usuarios')
                 .select('*')
                 .eq('email', userData.email);
-            setUserDataHome(data[0]);
 
             if (error) {
                 throw error;
             }
+
+            return data[0];
         } catch (error) {
             console.error(error.message);
+            return null;
         }
     }
 
-    // Efeito para buscar os dados do usuário ao entrar na tela HomePage
-    useEffect(() => {
-        if (currentScreen === 'HomePage') {
-            buscaDados();
-        }
-    }, [currentScreen]);
+    async function buscaCards(IdWallet) {
+        try {
+            const { data, error } = await supabase
+                .from('cartoes')
+                .select('*')
+                .eq('idUsuario', IdWallet);
 
-    // Efeito para atualizar os cartões ao mudar os dados do usuário
+            if (error) {
+                throw error;
+            }
+
+            return data;
+        } catch (error) {
+            console.error(error.message);
+            return [];
+        }
+    }
+
     useEffect(() => {
-        setCards(userDataHome.cartoes);
-    }, [userDataHome]);
+        async function fetchData() {
+            try {
+                const userDataResult = await buscaDados();
+                setUserData(userDataResult);
+                setUserDataHome(userDataResult);
+
+                const cardsResult = await buscaCards(userDataResult.idWallet);
+                setCards(cardsResult);
+                setCardsData(cardsResult);
+            } catch (error) {
+                console.error(error.message);
+            }
+        }
+
+        if (currentScreen === 'HomePage') {
+            fetchData();
+        }
+    }, []);
 
     return (
         <View style={styles.container}>
@@ -130,20 +151,21 @@ function HomePage({ userData, metasData }) {
                             <Text style={{ fontSize: 14, color: '#840F74' }}>View All</Text>
                         </TouchableOpacity>
                     </View>
-                    <View style={styles.cartoes}>
-                        {/* Lista de cartões */}
-                        {cards ? (
-                            <FlatList
-                                data={cards}
-                                renderItem={({ item }) => <OnboardingItem item={item} />}
-                                horizontal
-                                snapToAlignment='start'
-                                scrollEventThrottle={16}
-                                decelerationRate="fast"
-                                snapToOffsets={cards.map((_, i) => i * (304 - 15) + (i - 1) * 40)}
-                                showsHorizontalScrollIndicator={false}
-                            />
-                        ) : null}
+
+                    <View style={[styles.cartoes, cardsData.length == 0 && styles.padding]}>
+                        {cardsData.length > 0 ? (<FlatList
+                            data={cardsData}
+                            renderItem={({ item }) => <OnboardingItem item={item} />}
+                            horizontal
+                            snapToAlignment='start'
+                            scrollEventThrottle={16}
+                            decelerationRate="fast"
+                            snapToOffsets={cardsData && cardsData.map((_, i) => i * (304 - 15) + (i - 1) * 40)}
+                            showsHorizontalScrollIndicator={false}
+                        />) : (<TouchableOpacity onPress={() => navigation.navigate('AllCards')}>
+                            <Text style={{ fontSize: 14, color: '#840F74' }}>Add Cards</Text>
+                        </TouchableOpacity>)}
+
                     </View>
 
                     {/* Seção de metas */}
@@ -154,8 +176,7 @@ function HomePage({ userData, metasData }) {
                         </TouchableOpacity>
                     </View>
                     <View style={[styles.marginBottom, styles.pagamentosDiv]}>
-                        {/* Lista de metas */}
-                        {metas.map((meta) => {
+                        {metas.length > 0 ? metas.map((meta) => {
                             return (
                                 <TouchableOpacity key={meta.id} onPress={() => navigation.navigate('meta/' + meta.id)} >
                                     <View style={styles.cardGoals}>
@@ -167,7 +188,10 @@ function HomePage({ userData, metasData }) {
                                     </View>
                                 </TouchableOpacity>
                             );
-                        })}
+                        }) : (<TouchableOpacity onPress={() => navigation.navigate('AllGoals')}>
+                            <Text style={{ fontSize: 14, color: '#840F74' }}>Add Goals</Text>
+                        </TouchableOpacity>)}
+
                     </View>
                 </View>
             </ScrollView>
@@ -244,6 +268,9 @@ const styles = StyleSheet.create({
         height: 200,
         overflow: 'visible',
         width: screenWidth
+    },
+    padding: {
+        paddingHorizontal: 30
     },
     pagamentos: {
         borderWidth: 1,
