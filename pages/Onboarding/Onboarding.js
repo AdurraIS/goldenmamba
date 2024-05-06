@@ -1,8 +1,15 @@
+// Importações necessárias do React Native
 import { StyleSheet, View, FlatList } from 'react-native';
+import { useRef } from 'react';
+
+// Importações das imagens usadas no Onboarding
 import backgroundimg from '../../assets/Backgrounds/Onboarding/Onboarding1.png';
 import backgroundimg2 from '../../assets/Backgrounds/Onboarding/Onboarding2.png';
+
+// Importação do componente Onboarding1
 import Onboarding1 from '../../components/Onboarding1/Onboarding1';
-import { useRef } from 'react';
+
+// Dados para renderizar os itens do Onboarding
 const data = [
     {
         id: 1,
@@ -20,8 +27,12 @@ const data = [
     }
 ];
 
+// Componente Onboarding
 export default function Onboarding() {
+    // Referência para a FlatList
     const flatListRef = useRef(null);
+
+    // Função para rolar para o próximo item
     const scrollToNextItem = () => {
         if (flatListRef.current) {
             flatListRef.current.scrollToIndex({
@@ -30,9 +41,12 @@ export default function Onboarding() {
             });
         }
     };
+
+    // Renderização do componente
     return (
         <View style={styles.container}>
             <View style={{ flex: 3 }}>
+                {/* FlatList para renderizar os itens do Onboarding */}
                 <FlatList
                     ref={flatListRef}
                     data={data}
@@ -42,13 +56,13 @@ export default function Onboarding() {
                     scrollEventThrottle={32}
                     showsHorizontalScrollIndicator={false}
                     renderItem={({ item }) => <Onboarding1 item={item} scrollToNext={scrollToNextItem} />}
-
                 />
             </View>
         </View>
     );
 }
 
+// Estilos para o componente Onboarding
 const styles = StyleSheet.create({
     container: {
         flex: 1,

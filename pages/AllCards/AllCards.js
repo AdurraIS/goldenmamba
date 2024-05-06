@@ -4,12 +4,11 @@ import { Dimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { supabase } from '../../shared/CreateClient';
 
-import cardsArq from './Cards.js'
 
 import ProgressCircle from '../../components/ProgressCircle/ProgressCircle';
 import back from "../../assets/MetaIcons/back.png"
 import settingsIcon from "../../assets/icones/settingsIcon.png"
-import cardsArq from './Cards.js';
+import cardsArq from './cards.js';
 import cardbackground from '../../assets/Backgrounds/cardbackground.png'
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;

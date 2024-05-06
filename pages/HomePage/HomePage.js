@@ -1,23 +1,24 @@
+// Importações necessárias do React Native
 import React, { useEffect, useState } from 'react';
-import { Dimensions } from 'react-native';
 import { ScrollView, View, Text, StyleSheet, Image, FlatList, TouchableOpacity } from 'react-native';
-const screenWidth = Dimensions.get('window').width;
-const screenHeight = Dimensions.get('window').height;
-import OnboardingItem from '../../components/OnboardingItem/OnboardingItem';
-import ProgressCircle from '../../components/ProgressCircle/ProgressCircle';
 import { useNavigation, useRoute } from '@react-navigation/native';
 
+// Importação para dimensionar a tela
+import { Dimensions } from 'react-native';
+const screenWidth = Dimensions.get('window').width;
+const screenHeight = Dimensions.get('window').height;
 
+// Importações dos componentes
+import OnboardingItem from '../../components/OnboardingItem/OnboardingItem';
+import ProgressCircle from '../../components/ProgressCircle/ProgressCircle';
 
+// Importação do cliente supabase
 import { supabase } from '../../shared/CreateClient';
 
-
-
+// Importação dos cartões usados na demonstração
 import cards from './Cards';
 
-
-
-
+// Componente HomePage
 function HomePage({ userData, metasData }) {
     const navigation = useNavigation();
     const [userDataHome, setUserDataHome] = useState([]);
@@ -27,45 +28,45 @@ function HomePage({ userData, metasData }) {
     const route = useRoute();
     const { name: currentScreen } = route;
 
-    useEffect(() => {
-        setCards(userDataHome.cartoes)
-        // if (cards) {
-        // console.log('SDGSDGSDGSDGSDGSDGSDGSDGSssssDGSDG', JSON.parse(cards[0]))
-        // console.log('SDGSDGSDGSDGSDGSDGSsDGSDGSDGSDG', JSON.parse(cardss[0]))
-        // console.log('aqquiiiiiiii', userDataHome.cartoes)
-        // }
-    }, [userDataHome]);
-
+    // Função para buscar os dados do usuário
     async function buscaDados() {
         try {
             const { data, error } = await supabase
                 .from('usuarios')
                 .select('*')
                 .eq('email', userData.email);
-            setUserDataHome(data[0])
+            setUserDataHome(data[0]);
 
             if (error) {
                 throw error;
             }
         } catch (error) {
-            console.error(error.message)
+            console.error(error.message);
         }
     }
+
+    // Efeito para buscar os dados do usuário ao entrar na tela HomePage
     useEffect(() => {
         if (currentScreen === 'HomePage') {
-            buscaDados()
+            buscaDados();
         }
     }, [currentScreen]);
 
+    // Efeito para atualizar os cartões ao mudar os dados do usuário
+    useEffect(() => {
+        setCards(userDataHome.cartoes);
+    }, [userDataHome]);
+
     return (
         <View style={styles.container}>
-
             <ScrollView contentContainerStyle={styles.scroll} >
+                {/* Imagem de fundo */}
                 <Image
                     style={styles.topBackgroundImage}
-                    source={require('../../assets/Backgrounds/background.png')} // Caminho relativo para a imagem
+                    source={require('../../assets/Backgrounds/background.png')}
                 />
                 <View style={styles.containerCards}>
+                    {/* Cabeçalho */}
                     <View style={[styles.header]}>
                         <View>
                             <Text style={[styles.textH2, { fontSize: 14, fontWeight: 200, marginBottom: 10 }]}>Welcome Back</Text>
@@ -73,56 +74,64 @@ function HomePage({ userData, metasData }) {
                         </View>
                         <Image
                             style={styles.icones1}
-                            source={require('../../assets/icones/notificationicon.png')} // Caminho relativo para a imagem
+                            source={require('../../assets/icones/notificationicon.png')}
                         />
                     </View>
 
+                    {/* Seção de pagamentos */}
                     <View style={styles.pagamentos}>
+                        {/* Balanço */}
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '100%', padding: 10, marginBottom: 10 }}>
                             <Text style={{ fontSize: 14, color: '#840F74' }}>My Balance</Text>
                             <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#840F74' }}>{balance} ETH</Text>
                         </View>
                         <View style={{ width: '90%', backgroundColor: '#F2F2F2', height: 2 }}></View>
+                        {/* Botões de ação */}
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '100%', padding: 20 }}>
+                            {/* Botão de enviar */}
                             <View style={[styles.divBotoes]}>
                                 <Image
                                     style={styles.icones}
-                                    source={require('../../assets/icones/Home/EnviarIcon.png')} // Caminho relativo para a imagem
+                                    source={require('../../assets/icones/Home/EnviarIcon.png')}
                                 />
                                 <Text style={styles.textH3}>Send</Text>
                             </View>
+                            {/* Botão de solicitar */}
                             <View style={[styles.divBotoes]}>
                                 <Image
                                     style={styles.icones}
-                                    source={require('../../assets/icones/Home/RequestIcon.png')} // Caminho relativo para a imagem
+                                    source={require('../../assets/icones/Home/RequestIcon.png')}
                                 />
                                 <Text style={styles.textH3}>Request</Text>
                             </View>
+                            {/* Botão de pagar */}
                             <View style={[styles.divBotoes]}>
                                 <Image
                                     style={styles.icones}
-                                    source={require('../../assets/icones/Home/PayIcon.png')} // Caminho relativo para a imagem
+                                    source={require('../../assets/icones/Home/PayIcon.png')}
                                 />
                                 <Text style={styles.textH3}>Pay</Text>
                             </View>
+                            {/* Botão de recarregar */}
                             <View style={[styles.divBotoes]}>
                                 <Image
                                     style={styles.icones}
-                                    source={require('../../assets/icones/Home/TopUpIcon.png')} // Caminho relativo para a imagem
+                                    source={require('../../assets/icones/Home/TopUpIcon.png')}
                                 />
                                 <Text style={styles.textH3}>Top Up</Text>
                             </View>
                         </View>
-
                     </View>
+
+                    {/* Seção de cartões */}
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: screenWidth, paddingHorizontal: 30, paddingVertical: 20 }}>
                         <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#840F74' }}>Your Cards</Text>
                         <TouchableOpacity onPress={() => navigation.navigate('AllCards')}>
                             <Text style={{ fontSize: 14, color: '#840F74' }}>View All</Text>
                         </TouchableOpacity>
                     </View>
-
                     <View style={styles.cartoes}>
+                        {/* Lista de cartões */}
                         {cards ? (
                             <FlatList
                                 data={cards}
@@ -136,14 +145,16 @@ function HomePage({ userData, metasData }) {
                             />
                         ) : null}
                     </View>
+
+                    {/* Seção de metas */}
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: screenWidth, paddingHorizontal: 30, paddingVertical: 20 }}>
                         <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#840F74' }}>Your Goals</Text>
                         <TouchableOpacity onPress={() => navigation.navigate('AllGoals')}>
                             <Text style={{ fontSize: 14, color: '#840F74' }}>View All</Text>
                         </TouchableOpacity>
                     </View>
-
                     <View style={[styles.marginBottom, styles.pagamentosDiv]}>
+                        {/* Lista de metas */}
                         {metas.map((meta) => {
                             return (
                                 <TouchableOpacity key={meta.id} onPress={() => navigation.navigate('meta/' + meta.id)} >
@@ -155,19 +166,16 @@ function HomePage({ userData, metasData }) {
                                         <ProgressCircle size={48} progress={meta.valorAtual / meta.valorMeta} />
                                     </View>
                                 </TouchableOpacity>
-
                             );
                         })}
-
                     </View>
                 </View>
-
             </ScrollView>
         </View >
-
     );
 }
 
+// Estilos para o componente HomePage
 const styles = StyleSheet.create({
     header: {
         flexDirection: 'row',
