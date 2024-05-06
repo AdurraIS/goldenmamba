@@ -1,11 +1,16 @@
+// Importações necessárias do React Native
 import React, { useEffect, useState } from 'react';
-import { Dimensions } from 'react-native';
 import { ScrollView, View, Text, StyleSheet, Image, FlatList, TouchableOpacity } from 'react-native';
+import { useNavigation, useRoute } from '@react-navigation/native';
+
+// Importação para dimensionar a tela
+import { Dimensions } from 'react-native';
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
 import OnboardingItem from '../../components/OnboardingItem/OnboardingItem';
 import ProgressCircle from '../../components/ProgressCircle/ProgressCircle';
-import { useNavigation, useRoute } from '@react-navigation/native';
+
+// Importação do cliente supabase
 import { supabase } from '../../shared/CreateClient';
 function HomePage({ userData, setUserData, metasData, cardsData, setCardsData }) {
     const navigation = useNavigation();
@@ -16,6 +21,7 @@ function HomePage({ userData, setUserData, metasData, cardsData, setCardsData })
     const route = useRoute();
     const { name: currentScreen } = route;
 
+    // Função para buscar os dados do usuário
     async function buscaDados() {
         try {
             const { data, error } = await supabase
@@ -74,13 +80,14 @@ function HomePage({ userData, setUserData, metasData, cardsData, setCardsData })
 
     return (
         <View style={styles.container}>
-
             <ScrollView contentContainerStyle={styles.scroll} >
+                {/* Imagem de fundo */}
                 <Image
                     style={styles.topBackgroundImage}
-                    source={require('../../assets/Backgrounds/background.png')} // Caminho relativo para a imagem
+                    source={require('../../assets/Backgrounds/background.png')}
                 />
                 <View style={styles.containerCards}>
+                    {/* Cabeçalho */}
                     <View style={[styles.header]}>
                         <View>
                             <Text style={[styles.textH2, { fontSize: 14, fontWeight: 200, marginBottom: 10 }]}>Welcome Back</Text>
@@ -88,48 +95,56 @@ function HomePage({ userData, setUserData, metasData, cardsData, setCardsData })
                         </View>
                         <Image
                             style={styles.icones1}
-                            source={require('../../assets/icones/notificationicon.png')} // Caminho relativo para a imagem
+                            source={require('../../assets/icones/notificationicon.png')}
                         />
                     </View>
 
+                    {/* Seção de pagamentos */}
                     <View style={styles.pagamentos}>
+                        {/* Balanço */}
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '100%', padding: 10, marginBottom: 10 }}>
                             <Text style={{ fontSize: 14, color: '#840F74' }}>My Balance</Text>
                             <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#840F74' }}>{balance} ETH</Text>
                         </View>
                         <View style={{ width: '90%', backgroundColor: '#F2F2F2', height: 2 }}></View>
+                        {/* Botões de ação */}
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '100%', padding: 20 }}>
+                            {/* Botão de enviar */}
                             <View style={[styles.divBotoes]}>
                                 <Image
                                     style={styles.icones}
-                                    source={require('../../assets/icones/Home/EnviarIcon.png')} // Caminho relativo para a imagem
+                                    source={require('../../assets/icones/Home/EnviarIcon.png')}
                                 />
                                 <Text style={styles.textH3}>Send</Text>
                             </View>
+                            {/* Botão de solicitar */}
                             <View style={[styles.divBotoes]}>
                                 <Image
                                     style={styles.icones}
-                                    source={require('../../assets/icones/Home/RequestIcon.png')} // Caminho relativo para a imagem
+                                    source={require('../../assets/icones/Home/RequestIcon.png')}
                                 />
                                 <Text style={styles.textH3}>Request</Text>
                             </View>
+                            {/* Botão de pagar */}
                             <View style={[styles.divBotoes]}>
                                 <Image
                                     style={styles.icones}
-                                    source={require('../../assets/icones/Home/PayIcon.png')} // Caminho relativo para a imagem
+                                    source={require('../../assets/icones/Home/PayIcon.png')}
                                 />
                                 <Text style={styles.textH3}>Pay</Text>
                             </View>
+                            {/* Botão de recarregar */}
                             <View style={[styles.divBotoes]}>
                                 <Image
                                     style={styles.icones}
-                                    source={require('../../assets/icones/Home/TopUpIcon.png')} // Caminho relativo para a imagem
+                                    source={require('../../assets/icones/Home/TopUpIcon.png')}
                                 />
                                 <Text style={styles.textH3}>Top Up</Text>
                             </View>
                         </View>
-
                     </View>
+
+                    {/* Seção de cartões */}
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: screenWidth, paddingHorizontal: 30, paddingVertical: 20 }}>
                         <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#840F74' }}>Your Cards</Text>
                         <TouchableOpacity onPress={() => navigation.navigate('AllCards')}>
@@ -152,13 +167,14 @@ function HomePage({ userData, setUserData, metasData, cardsData, setCardsData })
                         </TouchableOpacity>)}
 
                     </View>
+
+                    {/* Seção de metas */}
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: screenWidth, paddingHorizontal: 30, paddingVertical: 20 }}>
                         <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#840F74' }}>Your Goals</Text>
                         <TouchableOpacity onPress={() => navigation.navigate('AllGoals')}>
                             <Text style={{ fontSize: 14, color: '#840F74' }}>View All</Text>
                         </TouchableOpacity>
                     </View>
-
                     <View style={[styles.marginBottom, styles.pagamentosDiv]}>
                         {metas.length > 0 ? metas.map((meta) => {
                             return (
@@ -171,7 +187,6 @@ function HomePage({ userData, setUserData, metasData, cardsData, setCardsData })
                                         <ProgressCircle size={48} progress={meta.valorAtual / meta.valorMeta} />
                                     </View>
                                 </TouchableOpacity>
-
                             );
                         }) : (<TouchableOpacity onPress={() => navigation.navigate('AllGoals')}>
                             <Text style={{ fontSize: 14, color: '#840F74' }}>Add Goals</Text>
@@ -179,13 +194,12 @@ function HomePage({ userData, setUserData, metasData, cardsData, setCardsData })
 
                     </View>
                 </View>
-
             </ScrollView>
         </View >
-
     );
 }
 
+// Estilos para o componente HomePage
 const styles = StyleSheet.create({
     header: {
         flexDirection: 'row',
@@ -213,7 +227,7 @@ const styles = StyleSheet.create({
     },
     topBackgroundImage: {
         position: 'absolute',
-        height: screenHeight + 59,
+        height: screenHeight / 0.97,
         width: screenWidth,
         resizeMode: 'contain',
         top: 0,

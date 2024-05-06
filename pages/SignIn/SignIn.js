@@ -12,6 +12,8 @@ const isValidEmail = (email) => {
 
 export default function SignIn({setUserAuthenticated,setUserData}) {
     const navigation = useNavigation();
+
+    // Estados para armazenar os dados do formulário e a mensagem de erro
     const [errorMessage, setErrorMessage] = useState();
     const [email, setEmail] = useState();
     const [senha, setSenha] = useState();
@@ -26,8 +28,7 @@ export default function SignIn({setUserAuthenticated,setUserData}) {
             .from('usuarios')
             .select('*') 
             .eq('email', email);
-            const response = data[0]
-            console.log(senha)
+            const response = data[0];
             if(response.password != senha){
                 setErrorMessage("Email ou senha inválida!")
                 return;

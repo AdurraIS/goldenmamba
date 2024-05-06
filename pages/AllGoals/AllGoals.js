@@ -1,7 +1,13 @@
+// importando funçoes react
 import { StyleSheet, Text, View, TouchableOpacity, Image, ScrollView } from 'react-native'
-import React, { useState } from 'react'
 import { useNavigation } from '@react-navigation/native';
+import React, { useState } from 'react'
+
+
+// importando componentes
 import ProgressCircle from '../../components/ProgressCircle/ProgressCircle';
+
+// importando icons
 import back from "../../assets/MetaIcons/back.png"
 import settingsIcon from "../../assets/icones/settingsIcon.png"
 import GoalCreateModal from './CardModal/GoalCreateModal';
@@ -29,6 +35,7 @@ export default function AllGoals({ metasData, adicionarMeta, userData, setMetasD
     return (
         <>
             <View>
+                {/* janela do topocom de voltar e options */}
                 <View style={styles.header}>
                     <TouchableOpacity style={{ marginBottom: 20, flexDirection: 'row', alignItems: 'center' }} onPress={() => navigation.goBack()}>
                         <Image style={{ tintColor: '#000' }} source={back} />
@@ -47,6 +54,7 @@ export default function AllGoals({ metasData, adicionarMeta, userData, setMetasD
                 >
                     <View style={[{ flexDirection: 'column', alignItems: 'center', width: '50%' }]}>
 
+                        {/* botao de em progresso mudara de cor se for selecionaod */}
                         {exibindoAtualmente == 'OnProgress' ? (
                             <TouchableOpacity style={{ width: '100%', alignItems: 'center' }} onPress={OnProgressSelected}>
                                 <Text onPress={OnProgressSelected} style={[styles.textHeader]}>On Progress</Text>
@@ -54,7 +62,8 @@ export default function AllGoals({ metasData, adicionarMeta, userData, setMetasD
                                     style={{ width: '100%', height: 5, backgroundColor: '#840f74', borderRadius: 10 }}
                                 ></View>
                             </TouchableOpacity>) : (
-                            <TouchableOpacity style={{ width: '100%', alignItems: 'center' }} onPress={OnProgressSelected}>
+                            // nao mudara de cor se nao selecionado
+                            < TouchableOpacity style={{ width: '100%', alignItems: 'center' }} onPress={OnProgressSelected}>
                                 <Text onPress={OnProgressSelected} style={[styles.textHeaderGray]}>On Progress</Text>
                                 <View
                                     style={{ width: '100%', height: 3, backgroundColor: '#cccccc', borderRadius: 10 }}
@@ -65,12 +74,14 @@ export default function AllGoals({ metasData, adicionarMeta, userData, setMetasD
                     </View>
                     <View style={[{ flexDirection: 'column', alignItems: 'center', width: '50%' }]}>
                         {exibindoAtualmente == 'done' ? (
+                            // muudara de cor se for selecionaod
                             <TouchableOpacity style={{ width: '100%', alignItems: 'center' }} onPress={doneSelected}>
                                 <Text onPress={doneSelected} style={[styles.textHeader]}>Done</Text>
                                 <View
                                     style={{ width: '100%', height: 5, backgroundColor: '#840f74', borderRadius: 10 }}
                                 ></View>
                             </TouchableOpacity>) : (
+                            // muudara de cor se for selecionaod
                             <TouchableOpacity style={{ width: '100%', alignItems: 'center' }} onPress={doneSelected}>
                                 <Text onPress={doneSelected} style={[styles.textHeaderGray]}>Done</Text>
                                 <View
@@ -80,6 +91,7 @@ export default function AllGoals({ metasData, adicionarMeta, userData, setMetasD
                         }
                     </View>
                 </View>
+                {/* exibição das metas concluidas */}
                 <ScrollView style={styles.scroll}>
                     {metasData !== null && metasData.map((meta) => {
                         if (exibindoAtualmente === "done") {
@@ -97,6 +109,8 @@ export default function AllGoals({ metasData, adicionarMeta, userData, setMetasD
                                 );
                             }
                         }
+                        
+                        // exibição das metas em progresso
                         if (exibindoAtualmente === 'OnProgress') {
                             if (meta.valorAtual < meta.valorMeta) {
                                 return (
@@ -118,7 +132,8 @@ export default function AllGoals({ metasData, adicionarMeta, userData, setMetasD
 
                 </ScrollView>
 
-            </View>
+            </View >
+            {/* botao para adicionar meta DEMO */}
             <View style={{ width: '100%', alignItems: 'center', position: 'absolute', bottom: 0 }}>
                 <TouchableOpacity style={styles.button} onPress={handleOpenModal} >
                     <Text style={styles.buttonText}>Add goal</Text>
@@ -130,7 +145,7 @@ export default function AllGoals({ metasData, adicionarMeta, userData, setMetasD
 }
 
 const styles = StyleSheet.create({
-    scroll:{
+    scroll: {
         marginBottom: 240,
     },
     card: {

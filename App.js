@@ -39,6 +39,7 @@ export default function App() {
     // Simule a autenticação de usuário, substitua pela sua lógica real
     return false; // ou false, dependendo se o usuário está autenticado
   };
+
   const adicionarMeta = (valorAtual, valorMeta, tituloMeta, imageMeta, dataMeta) => {
     const novaMeta = {
       id: metas.length + 1,
@@ -50,6 +51,7 @@ export default function App() {
     };
     setMetas([...metas, novaMeta]);
   }
+
   const getUserData = (prop) => {
     const vUserData = {
       fullName: prop.fullName,
