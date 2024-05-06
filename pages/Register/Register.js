@@ -25,8 +25,8 @@ export default function Register({getUserData}) {
 
     const handleSubmit = () => {
         // Validação dos campos
-        if (fullName.length < 15) {
-            setErrorMessage('O nome completo deve ter pelo menos 15 caracteres.');
+        if (fullName.length < 10) {
+            setErrorMessage('O nome completo deve ter pelo menos 10 caracteres.');
             return;
         }
 

@@ -3,16 +3,16 @@ import { Dimensions } from 'react-native';
 import { ScrollView, View, Text, StyleSheet, Image, FlatList, TouchableOpacity } from 'react-native';
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
-import cards from './Cards';
 import OnboardingItem from '../../components/OnboardingItem/OnboardingItem';
 import ProgressCircle from '../../components/ProgressCircle/ProgressCircle';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { supabase } from '../../shared/CreateClient';
-function HomePage({  userData, metasData }) {
+function HomePage({ userData, setUserData, metasData, cardsData, setCardsData }) {
     const navigation = useNavigation();
     const [userDataHome, setUserDataHome] = useState([]);
     const [balance, setBalance] = useState(8.5);
     const [metas, setMetas] = useState(metasData);
+    const [cards, setCards] = useState([]);
     const route = useRoute();
     const { name: currentScreen } = route;
 
@@ -20,22 +20,58 @@ function HomePage({  userData, metasData }) {
         try {
             const { data, error } = await supabase
                 .from('usuarios')
-                .select('*') 
+                .select('*')
                 .eq('email', userData.email);
-            setUserDataHome(data[0])
+
             if (error) {
                 throw error;
             }
+
+            return data[0];
         } catch (error) {
-            console.error(error.message)
+            console.error(error.message);
+            return null;
         }
     }
-    useEffect(() => {
-        if (currentScreen === 'HomePage') {
-            buscaDados()
+
+    async function buscaCards(IdWallet) {
+        try {
+            const { data, error } = await supabase
+                .from('cartoes')
+                .select('*')
+                .eq('idUsuario', IdWallet);
+
+            if (error) {
+                throw error;
+            }
+
+            return data;
+        } catch (error) {
+            console.error(error.message);
+            return [];
         }
-    }, [currentScreen]);
-    
+    }
+
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                const userDataResult = await buscaDados();
+                setUserData(userDataResult);
+                setUserDataHome(userDataResult);
+
+                const cardsResult = await buscaCards(userDataResult.idWallet);
+                setCards(cardsResult);
+                setCardsData(cardsResult);
+            } catch (error) {
+                console.error(error.message);
+            }
+        }
+
+        if (currentScreen === 'HomePage') {
+            fetchData();
+        }
+    }, []);
+
     return (
         <View style={styles.container}>
 
@@ -96,20 +132,25 @@ function HomePage({  userData, metasData }) {
                     </View>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: screenWidth, paddingHorizontal: 30, paddingVertical: 20 }}>
                         <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#840F74' }}>Your Cards</Text>
-                        <Text style={{ fontSize: 14, color: '#840F74' }}>View All</Text>
+                        <TouchableOpacity onPress={() => navigation.navigate('AllCards')}>
+                            <Text style={{ fontSize: 14, color: '#840F74' }}>View All</Text>
+                        </TouchableOpacity>
                     </View>
 
-                    <View style={styles.cartoes}>
-                        <FlatList
-                            data={cards}
+                    <View style={[styles.cartoes, cardsData.length == 0 && styles.padding]}>
+                        {cardsData.length > 0 ? (<FlatList
+                            data={cardsData}
                             renderItem={({ item }) => <OnboardingItem item={item} />}
                             horizontal
                             snapToAlignment='start'
                             scrollEventThrottle={16}
                             decelerationRate="fast"
-                            snapToOffsets={cards.map((_, i) => i * (304 - 15) + (i - 1) * 40)}
+                            snapToOffsets={cardsData && cardsData.map((_, i) => i * (304 - 15) + (i - 1) * 40)}
                             showsHorizontalScrollIndicator={false}
-                        />
+                        />) : (<TouchableOpacity onPress={() => navigation.navigate('AllCards')}>
+                            <Text style={{ fontSize: 14, color: '#840F74' }}>Add Cards</Text>
+                        </TouchableOpacity>)}
+
                     </View>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: screenWidth, paddingHorizontal: 30, paddingVertical: 20 }}>
                         <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#840F74' }}>Your Goals</Text>
@@ -119,9 +160,9 @@ function HomePage({  userData, metasData }) {
                     </View>
 
                     <View style={[styles.marginBottom, styles.pagamentosDiv]}>
-                        {metas.map((meta) => {
+                        {metas.length > 0 ? metas.map((meta) => {
                             return (
-                                <TouchableOpacity key={meta.id} onPress={() => navigation.navigate('meta/' + meta.id)} > 
+                                <TouchableOpacity key={meta.id} onPress={() => navigation.navigate('meta/' + meta.id)} >
                                     <View style={styles.cardGoals}>
                                         <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
                                             <Image style={{ width: 48, height: 48, borderRadius: 30 }} source={meta.imageMeta} />
@@ -132,8 +173,10 @@ function HomePage({  userData, metasData }) {
                                 </TouchableOpacity>
 
                             );
-                        })}
-                        
+                        }) : (<TouchableOpacity onPress={() => navigation.navigate('AllGoals')}>
+                            <Text style={{ fontSize: 14, color: '#840F74' }}>Add Goals</Text>
+                        </TouchableOpacity>)}
+
                     </View>
                 </View>
 
@@ -211,6 +254,9 @@ const styles = StyleSheet.create({
         height: 200,
         overflow: 'visible',
         width: screenWidth
+    },
+    padding: {
+        paddingHorizontal: 30
     },
     pagamentos: {
         borderWidth: 1,

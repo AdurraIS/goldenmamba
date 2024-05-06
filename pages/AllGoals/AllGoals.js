@@ -4,12 +4,13 @@ import { useNavigation } from '@react-navigation/native';
 import ProgressCircle from '../../components/ProgressCircle/ProgressCircle';
 import back from "../../assets/MetaIcons/back.png"
 import settingsIcon from "../../assets/icones/settingsIcon.png"
+import GoalCreateModal from './CardModal/GoalCreateModal';
+import FotoDePerfil from '../../assets/fotoDePerfil.png'
 
-
-export default function AllGoals({ adicionarMetaApp, metasData }) {
+export default function AllGoals({ metasData, adicionarMeta, userData, setMetasData }) {
     const [metas, setMetas] = useState(metasData);
     const [exibindoAtualmente, setExibindo] = useState('OnProgress');
-
+    const [modalVisible, setModalVisible] = useState(false);
     const doneSelected = () => {
         setExibindo('done')
     };
@@ -19,21 +20,12 @@ export default function AllGoals({ adicionarMetaApp, metasData }) {
     };
     const navigation = useNavigation();
 
-    const adicionarMeta = (valorAtual, valorMeta, tituloMeta, imageMeta, dataMeta) => {
-        const novaMeta = {
-            id: metas.length + 1,
-            valorAtual: valorAtual,
-            valorMeta: valorMeta,
-            titulo: tituloMeta,
-            imageMeta: imageMeta,
-            dataMeta: dataMeta
-        };
-        setMetas([...metas, novaMeta]);
-    };
-    const handleAdicionarMeta = () => {
-        adicionarMeta(1000, 1000, "Car", require('../../assets/MetaIcons/Car.png'), '27/08/2024');
-       
-    };
+    const handleOpenModal = () => {
+        setModalVisible(true);
+    }
+    const handleCloseModal = () => {
+        setModalVisible(false);
+      };
     return (
         <>
             <View>
@@ -89,14 +81,14 @@ export default function AllGoals({ adicionarMetaApp, metasData }) {
                     </View>
                 </View>
                 <ScrollView style={styles.scroll}>
-                    {metas !== null && metas.map((meta) => {
+                    {metasData !== null && metasData.map((meta) => {
                         if (exibindoAtualmente === "done") {
                             if (meta.valorAtual === meta.valorMeta) {
                                 return (
                                     <TouchableOpacity key={meta.id} onPress={() => navigation.navigate('meta/' + meta.id)} style={styles.card}>
                                         <View style={styles.cardGoals}>
                                             <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
-                                                <Image style={{ width: 48, height: 48, borderRadius: 30 }} source={meta.imageMeta} />
+                                                <Image style={{ width: 48, height: 48, borderRadius: 30 }} source={FotoDePerfil} />
                                                 <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#840F74' }}>{meta.titulo}</Text>
                                             </View>
                                             <ProgressCircle size={48} progress={meta.valorAtual / meta.valorMeta} />
@@ -108,10 +100,10 @@ export default function AllGoals({ adicionarMetaApp, metasData }) {
                         if (exibindoAtualmente === 'OnProgress') {
                             if (meta.valorAtual < meta.valorMeta) {
                                 return (
-                                    <TouchableOpacity key={meta.id} onPress={() => navigation.navigate('meta/' + meta.id)} style={styles.card}>
+                                    <TouchableOpacity key={meta.id} onPress={() => navigation.navigate('meta/' + meta.titulo)} style={styles.card}>
                                         <View style={styles.cardGoals}>
                                             <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
-                                                <Image style={{ width: 48, height: 48, borderRadius: 30 }} source={meta.imageMeta} />
+                                                <Image style={{ width: 48, height: 48, borderRadius: 30 }} source={FotoDePerfil} />
                                                 <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#840F74' }}>{meta.titulo}</Text>
                                             </View>
                                             <ProgressCircle size={48} progress={meta.valorAtual / meta.valorMeta} />
@@ -128,10 +120,11 @@ export default function AllGoals({ adicionarMetaApp, metasData }) {
 
             </View>
             <View style={{ width: '100%', alignItems: 'center', position: 'absolute', bottom: 0 }}>
-                <TouchableOpacity style={styles.button} onPress={handleAdicionarMeta} >
+                <TouchableOpacity style={styles.button} onPress={handleOpenModal} >
                     <Text style={styles.buttonText}>Add goal</Text>
                 </TouchableOpacity>
             </View>
+            <GoalCreateModal visible={modalVisible} walletId={userData.idWallet} onClose={handleCloseModal} setMetas={setMetasData} adicionarMeta={adicionarMeta} metas={metasData}/>
         </>
     )
 }

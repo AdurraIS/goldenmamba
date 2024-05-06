@@ -10,6 +10,7 @@ export default function AccountCreated({ userData, dataPin, setUserAuthenticated
     const navigation = useNavigation();
     function handleSubmit() {
         register()
+        navigation.navigate('SignIn');
     }
     const options = { method: 'POST', headers: { Authorization: 'Bearer ' + APIKEY } }
     async function register() {
@@ -42,8 +43,7 @@ export default function AccountCreated({ userData, dataPin, setUserAuthenticated
             // Se ocorrer um erro durante o processo, exibe uma mensagem de erro
             alert("Erro: " + error.message);
         }
-        setUserAuthenticated(true);
-        navigation.navigate('HomePage');
+
     }
     return (
         <View style={styles.container}>

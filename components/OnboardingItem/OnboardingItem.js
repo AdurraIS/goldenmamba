@@ -10,11 +10,11 @@ const OnboardingItem = ({ item }) => {
                 <View style={[styles.card,{justifyContent: 'space-between', paddingVertical: 25,paddingHorizontal: 20,}]}>
                     <View>
                         <Text style={{ fontSize: 12, color: '#fff', marginBottom: 35 }}>Payment Card</Text>
-                        <Text style={{ fontSize: 16, color: '#fff' }}>{item.cardnumber}</Text>
+                        <Text style={{ fontSize: 16, color: '#fff' }}>{item.cardNumber}</Text>
                     </View>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between',marginRight:20 }}>
                         <Text style={{ fontSize: 16, color: '#fff' }}>{item.balance} ETH</Text>
-                        <Text style={{ fontSize: 14, color: '#fff' }}>{item.expirationDate}</Text>
+                        <Text style={{ fontSize: 14, color: '#fff' }}>{item.expiryDate}</Text>
                     </View>
 
                 </View>
