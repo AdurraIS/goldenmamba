@@ -65,7 +65,7 @@ function Preferences({ setUserAuthenticated }) {
                     {/* Cartões de opções */}
                     <View style={styles.qrContainer}>
                         {/* Cartão para escanear QR */}
-                        <View style={styles.qrCard}>
+                        <View style={styles.card2}>
                             <Image
                                 style={styles.icones2}
                                 source={require('../../assets/icones/Qr.png')}
@@ -73,7 +73,7 @@ function Preferences({ setUserAuthenticated }) {
                             <Text style={styles.textH2}>Scan Qr</Text>
                         </View>
                         {/* Cartão para exibir o próprio QR */}
-                        <View style={styles.qrCard}>
+                        <View style={styles.card2}>
                             <Image
                                 style={styles.icones2}
                                 source={require('../../assets/icones/MeuQr.png')}
@@ -179,7 +179,7 @@ const styles = StyleSheet.create({
     // Estilo para a imagem de fundo
     backgroundImage: {
         position: 'absolute',
-        height: screenHeight + 59,
+        height: screenHeight / 0.97,
         width: screenWidth,
         resizeMode: 'contain',
         top: 0,
@@ -224,6 +224,21 @@ const styles = StyleSheet.create({
         color: 'white'
     },
     // Estilo para os cartões
+    card2: {
+        backgroundColor: '#fff',
+        borderRadius: 20,
+        padding: 15,
+        width: '40%',
+        marginBottom: 24,
+        shadowColor: '#cccccc',
+        shadowOffset: {
+            width: 0,
+            height: -2,
+        },
+        shadowOpacity: 0.10,
+        shadowRadius: 10,
+        elevation: 10,
+    },
     card: {
         backgroundColor: '#fff',
         borderRadius: 20,

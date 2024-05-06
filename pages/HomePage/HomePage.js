@@ -203,7 +203,7 @@ const styles = StyleSheet.create({
     },
     topBackgroundImage: {
         position: 'absolute',
-        height: screenHeight + 59,
+        height: screenHeight / 0.97,
         width: screenWidth,
         resizeMode: 'contain',
         top: 0,
