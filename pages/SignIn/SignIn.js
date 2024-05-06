@@ -29,14 +29,15 @@ export default function SignIn({setUserAuthenticated,setUserData}) {
             .select('*') 
             .eq('email', email);
             const response = data[0];
-            if(response.password != senha){
-                setErrorMessage("Email ou senha inválida!")
-                return;
-            }
             if(response == null){
                 setErrorMessage("Email ou senha inválida!")
                 return;
             }
+            else if(response.password != senha){
+                setErrorMessage("Email ou senha inválida!")
+                return;
+            }
+            
         } catch (error) {
             console.error(error.message);
             return;
