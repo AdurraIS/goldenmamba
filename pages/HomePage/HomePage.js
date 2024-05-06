@@ -9,6 +9,7 @@ const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
 import OnboardingItem from '../../components/OnboardingItem/OnboardingItem';
 import ProgressCircle from '../../components/ProgressCircle/ProgressCircle';
+import FotoDePerfil from '../../assets/fotoDePerfil.png'
 
 // Importação do cliente supabase
 import { supabase } from '../../shared/CreateClient';
@@ -181,7 +182,7 @@ function HomePage({ userData, setUserData, metasData, cardsData, setCardsData })
                                 <TouchableOpacity key={meta.id} onPress={() => navigation.navigate('meta/' + meta.id)} >
                                     <View style={styles.cardGoals}>
                                         <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
-                                            <Image style={{ width: 48, height: 48, borderRadius: 30 }} source={meta.imageMeta} />
+                                            <Image style={{ width: 48, height: 48, borderRadius: 30 }} source={FotoDePerfil} />
                                             <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#840F74' }}>{meta.titulo}</Text>
                                         </View>
                                         <ProgressCircle size={48} progress={meta.valorAtual / meta.valorMeta} />
