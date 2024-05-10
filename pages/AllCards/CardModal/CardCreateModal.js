@@ -45,7 +45,6 @@ export default function CardCreateModal({ visible, onClose, adicionarCartao, wal
             address: address,
         }
         try {
-            console.log(walletId);
             // Insere os dados do cartao na tabela 'cartoes'
             const { error: insertError } = await supabase
                 .from('cartoes')

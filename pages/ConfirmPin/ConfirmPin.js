@@ -4,14 +4,12 @@ import { useNavigation, useFocusEffect } from '@react-navigation/native';
 
 export default function ConfirmPin({pinData}) {
     const [pin, setPin] = useState('');
-    const [isTextInputFocused, setIsTextInputFocused] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
     const navigation = useNavigation();
     const inputRef = useRef(null);
 
     const handleOpenKeyboard = () => {
-        setIsTextInputFocused(true);
-        Keyboard.dismiss(); // Dismiss any open keyboards
+        Keyboard.dismiss();
         if (inputRef.current) {
             inputRef.current.focus();
         }
@@ -31,9 +29,7 @@ export default function ConfirmPin({pinData}) {
     useFocusEffect(
         React.useCallback(() => {
             handleOpenKeyboard();
-            return () => {
-                setIsTextInputFocused(false);
-            };
+            return
         }, [])
     );
 

@@ -3,13 +3,11 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, Switch } from 'rea
 import { useNavigation} from '@react-navigation/native';
 
 const isValidEmail = (email) => {
-    // Regex para validar o formato do email
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
 };
 
 const isValidPassword = (password) => {
-    
     // Verificar se a senha tem pelo menos 6 caracteres, uma letra maiúscula e um caractere especial
     const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
     return passwordRegex.test(password);
@@ -24,17 +22,14 @@ export default function Register({getUserData}) {
     const [acceptedTerms, setAcceptedTerms] = useState(false);
 
     const handleSubmit = () => {
-        // Validação dos campos
         if (fullName.length < 10) {
             setErrorMessage('O nome completo deve ter pelo menos 10 caracteres.');
             return;
         }
-
         if (!isValidEmail(email)) {
             setErrorMessage('O email inserido não é válido.');
             return;
         }
-
         if (!isValidPassword(password)) {
             setErrorMessage('A senha deve ter pelo menos 6 caracteres, uma letra maiúscula e um caractere especial.');
             return;
@@ -43,7 +38,6 @@ export default function Register({getUserData}) {
             setErrorMessage('Você deve aceitar os termos antes de enviar.');
             return;
         }
-
         const userData = {
             fullName: fullName,
             email: email,
@@ -91,7 +85,7 @@ export default function Register({getUserData}) {
                     value={acceptedTerms}
                     onValueChange={setAcceptedTerms}
                     style={styles.switch}
-                    ios_backgroundColor="#3e3e3e" // Define a cor de fundo no iOS
+                    ios_backgroundColor="#3e3e3e"
                     thumbColor={acceptedTerms ? '#f4f3f4' : '#f4f3f4'}
                     trackColor={{ false: '#3e3e3e', true: '#BB35A9' }}
                 />

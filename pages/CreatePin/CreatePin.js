@@ -4,7 +4,6 @@ import { useNavigation, useRoute, useFocusEffect } from '@react-navigation/nativ
 
 export default function CreatePin({getPinData}) {
     const [pin, setPin] = useState('');
-    const [isTextInputFocused, setIsTextInputFocused] = useState(false);
 
     const navigation = useNavigation();
     const route = useRoute();
@@ -12,8 +11,7 @@ export default function CreatePin({getPinData}) {
     const inputRef = useRef(null);
 
     const handleOpenKeyboard = () => {
-        setIsTextInputFocused(true);
-        Keyboard.dismiss(); // Dismiss any open keyboards
+        Keyboard.dismiss();
         if (inputRef.current) {
             inputRef.current.focus();
         }
@@ -27,9 +25,7 @@ export default function CreatePin({getPinData}) {
     useFocusEffect(
         React.useCallback(() => {
             handleOpenKeyboard();
-            return () => {
-                setIsTextInputFocused(false);
-            };
+            return
         }, [])
     );
 

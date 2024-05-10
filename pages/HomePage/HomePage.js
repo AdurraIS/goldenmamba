@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { Dimensions } from 'react-native';
 import { ScrollView, View, Text, StyleSheet, Image, FlatList, TouchableOpacity } from 'react-native';
-const screenWidth = Dimensions.get('window').width;
-const screenHeight = Dimensions.get('window').height;
 import OnboardingItem from '../../components/OnboardingItem/OnboardingItem';
 import ProgressCircle from '../../components/ProgressCircle/ProgressCircle';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { supabase } from '../../shared/CreateClient';
+
+const screenWidth = Dimensions.get('window').width;
+const screenHeight = Dimensions.get('window').height;
+
 function HomePage({ userData, setUserData, metasData, cardsData, setCardsData }) {
     const navigation = useNavigation();
     const [userDataHome, setUserDataHome] = useState([]);
     const [balance, setBalance] = useState(8.5);
-    const [metas, setMetas] = useState(metasData);
-    const [cards, setCards] = useState([]);
     const route = useRoute();
     const { name: currentScreen } = route;
 
@@ -60,7 +60,6 @@ function HomePage({ userData, setUserData, metasData, cardsData, setCardsData })
                 setUserDataHome(userDataResult);
 
                 const cardsResult = await buscaCards(userDataResult.idWallet);
-                setCards(cardsResult);
                 setCardsData(cardsResult);
             } catch (error) {
                 console.error(error.message);
@@ -78,7 +77,7 @@ function HomePage({ userData, setUserData, metasData, cardsData, setCardsData })
             <ScrollView contentContainerStyle={styles.scroll} >
                 <Image
                     style={styles.topBackgroundImage}
-                    source={require('../../assets/Backgrounds/background.png')} // Caminho relativo para a imagem
+                    source={require('../../assets/Backgrounds/background.png')}
                 />
                 <View style={styles.containerCards}>
                     <View style={[styles.header]}>
@@ -88,7 +87,7 @@ function HomePage({ userData, setUserData, metasData, cardsData, setCardsData })
                         </View>
                         <Image
                             style={styles.icones1}
-                            source={require('../../assets/icones/notificationicon.png')} // Caminho relativo para a imagem
+                            source={require('../../assets/icones/notificationicon.png')}
                         />
                     </View>
 
@@ -102,28 +101,28 @@ function HomePage({ userData, setUserData, metasData, cardsData, setCardsData })
                             <View style={[styles.divBotoes]}>
                                 <Image
                                     style={styles.icones}
-                                    source={require('../../assets/icones/Home/EnviarIcon.png')} // Caminho relativo para a imagem
+                                    source={require('../../assets/icones/Home/EnviarIcon.png')}
                                 />
                                 <Text style={styles.textH3}>Send</Text>
                             </View>
                             <View style={[styles.divBotoes]}>
                                 <Image
                                     style={styles.icones}
-                                    source={require('../../assets/icones/Home/RequestIcon.png')} // Caminho relativo para a imagem
+                                    source={require('../../assets/icones/Home/RequestIcon.png')}
                                 />
                                 <Text style={styles.textH3}>Request</Text>
                             </View>
                             <View style={[styles.divBotoes]}>
                                 <Image
                                     style={styles.icones}
-                                    source={require('../../assets/icones/Home/PayIcon.png')} // Caminho relativo para a imagem
+                                    source={require('../../assets/icones/Home/PayIcon.png')}
                                 />
                                 <Text style={styles.textH3}>Pay</Text>
                             </View>
                             <View style={[styles.divBotoes]}>
                                 <Image
                                     style={styles.icones}
-                                    source={require('../../assets/icones/Home/TopUpIcon.png')} // Caminho relativo para a imagem
+                                    source={require('../../assets/icones/Home/TopUpIcon.png')}
                                 />
                                 <Text style={styles.textH3}>Top Up</Text>
                             </View>
@@ -160,7 +159,7 @@ function HomePage({ userData, setUserData, metasData, cardsData, setCardsData })
                     </View>
 
                     <View style={[styles.marginBottom, styles.pagamentosDiv]}>
-                        {metas.length > 0 ? metas.map((meta) => {
+                        {metasData.length > 0 ? metasData.map((meta) => {
                             return (
                                 <TouchableOpacity key={meta.id} onPress={() => navigation.navigate('meta/' + meta.id)} >
                                     <View style={styles.cardGoals}>

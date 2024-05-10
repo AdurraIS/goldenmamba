@@ -30,15 +30,6 @@ export default function App() {
   function adicionarCartao(cartao) {
     setCartoes([...cartoes, cartao]);
   }
-  useEffect(() => {
-    const isAuthenticated = checkAuthentication();
-    setUserAuthenticated(isAuthenticated);
-  }, []);
-
-  const checkAuthentication = () => {
-    // Simule a autenticação de usuário, substitua pela sua lógica real
-    return false; // ou false, dependendo se o usuário está autenticado
-  };
   const adicionarMeta = (valorAtual, valorMeta, tituloMeta, imageMeta, dataMeta) => {
     const novaMeta = {
       id: metas.length + 1,

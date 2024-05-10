@@ -8,7 +8,6 @@ import GoalCreateModal from './CardModal/GoalCreateModal';
 import FotoDePerfil from '../../assets/fotoDePerfil.png'
 
 export default function AllGoals({ metasData, adicionarMeta, userData, setMetasData }) {
-    const [metas, setMetas] = useState(metasData);
     const [exibindoAtualmente, setExibindo] = useState('OnProgress');
     const [modalVisible, setModalVisible] = useState(false);
     const doneSelected = () => {

@@ -1,20 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Dimensions } from 'react-native';
 import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView } from 'react-native';
 const screenHeight = Dimensions.get('window').height;
 const screenWidth = Dimensions.get('window').width;
 function Preferences({setUserAuthenticated}) {
 
-    const [isHovered, setIsHovered] = useState(false);
-
-
-    const handleMouseEnter = () => {
-        setIsHovered(true);
-    };
-
-    const handleMouseLeave = () => {
-        setIsHovered(false);
-    };
     const handleLogout = () =>{
         setUserAuthenticated(false);
     };
@@ -26,7 +16,7 @@ function Preferences({setUserAuthenticated}) {
 
                 <Image
                     style={styles.backgroundImage}
-                    source={require('../../assets/Backgrounds/background.png')} // Caminho relativo para a imagem
+                    source={require('../../assets/Backgrounds/background.png')}
                 />
                 <View style={[
                     styles.containerPage,
@@ -72,7 +62,7 @@ function Preferences({setUserAuthenticated}) {
                                     styles.icones2,
 
                                 ]}
-                                source={require('../../assets/icones/Qr.png')} // Caminho relativo para a imagem
+                                source={require('../../assets/icones/Qr.png')}
                             />
                             <Text style={[styles.textH2]}>Scan Qr</Text>
                         </View>

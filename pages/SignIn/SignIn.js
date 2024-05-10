@@ -5,7 +5,6 @@ import { supabase } from '../../shared/CreateClient';
 import { useNavigation} from '@react-navigation/native';
 
 const isValidEmail = (email) => {
-    // Regex para validar o formato do email
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
 };
@@ -27,7 +26,7 @@ export default function SignIn({setUserAuthenticated,setUserData}) {
             .select('*') 
             .eq('email', email);
             const response = data[0]
-            console.log(senha)
+
             if(response.password != senha){
                 setErrorMessage("Email ou senha inválida!")
                 return;
@@ -36,6 +35,7 @@ export default function SignIn({setUserAuthenticated,setUserData}) {
                 setErrorMessage("Email ou senha inválida!")
                 return;
             }
+            
         } catch (error) {
             console.error(error.message);
             return;

@@ -9,7 +9,7 @@ export default function GoalCreateModal({ visible, onClose, walletId, adicionarM
     const [imageUrl, setImageUrl] = useState('');
     const [dataMeta, setDataMeta] = useState('');
     const [error, setError] = useState('');
-    const vWalletId = walletId;
+    
     const validateImageUrl = (url) => {
         // Expressão regular para validar URL
         const regex = /^(ftp|http|https):\/\/[^ "]+$/;
