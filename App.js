@@ -17,13 +17,41 @@ import AccountCreated from './pages/AccountCreated/AccountCreated';
 import History from './pages/History/History';
 import SignIn from './pages/SignIn/SignIn';
 import Meta from './components/Meta/Meta';
-
+import LinkWallets from './pages/LinkWallets/LinkWallets';
+import { WagmiConfig } from 'wagmi'
+import { mainnet, polygon, arbitrum } from 'viem/chains'
+import { createWeb3Modal, defaultWagmiConfig } from '@web3modal/wagmi-react-native';
 const Stack = createNativeStackNavigator();
+const projectId = '9f511ee16d6963183c82616eb62fc665';
+
+// 2. Create config
+const metadata = {
+    name: 'Web3Modal RN',
+    description: 'Web3Modal RN Example',
+    url: 'https://web3modal.com',
+    icons: ['https://avatars.githubusercontent.com/u/37784886'],
+    redirect: {
+        native: 'YOUR_APP_SCHEME://',
+        universal: 'YOUR_APP_UNIVERSAL_LINK.com'
+    }
+}
+const chains = [mainnet, polygon, arbitrum]
+
+const wagmiConfig = defaultWagmiConfig({ chains, projectId, metadata })
+createWeb3Modal({
+  projectId,
+  chains,
+  wagmiConfig,
+  enableAnalytics: true
+})
+
 
 export default function App() {
+  
   const [userAuthenticated, setUserAuthenticated] = useState(false);
   const [metas, setMetas] = useState([]);
   const [userData, setUserData] = useState();
+  const [account, setAccount] = useState();
   const [pinData, setPinData] = useState("");
   const [cartoes, setCartoes] = useState([]);
 
@@ -53,16 +81,23 @@ export default function App() {
     setPinData(prop);
   }
   return (
+    
     <NavigationContainer>
+      <WagmiConfig config={wagmiConfig}>
       {userAuthenticated ? (
         <Stack.Navigator>
           <Stack.Screen name="HomePage" options={{ headerShown: false }}>
             {(props) => (
               <View style={{ flex: 1 }}>
-                <HomePage {...props} adicionarMetaApp={adicionarMeta} setUserData={setUserData} userData={userData} metasData={metas} cardsData={cartoes} setCardsData={setCartoes} />
+                <HomePage {...props} adicionarMetaApp={adicionarMeta} 
+                setUserData={setUserData} userData={userData} metasData={metas} 
+                cardsData={cartoes} setCardsData={setCartoes}/>
                 <NavBottom />
               </View>
             )}
+          </Stack.Screen>
+          <Stack.Screen name="LinkWallets" options={{ headerShown: false }}>
+              {()=>(<LinkWallets/>)}
           </Stack.Screen>
           <Stack.Screen name="AllCards" options={{ headerShown: false }}>
             {() => (<AllCards userData={userData} adicionarCartao={adicionarCartao} cartoes={cartoes} />)}
@@ -70,7 +105,7 @@ export default function App() {
           <Stack.Screen name="Preferences" options={{ headerShown: false }}>
             {(props) => (
               <View style={{ flex: 1 }}>
-                <Preferences {...props} setUserAuthenticated={setUserAuthenticated} />
+                <Preferences {...props} setUserAuthenticated={setUserAuthenticated} userData={userData}/>
                 <NavBottom />
               </View>
             )}
@@ -147,6 +182,7 @@ export default function App() {
           </Stack.Screen>
         </Stack.Navigator>
       )}
+      </WagmiConfig>
     </NavigationContainer>
   );
 }

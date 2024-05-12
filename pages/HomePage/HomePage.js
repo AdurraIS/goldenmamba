@@ -22,11 +22,9 @@ function HomePage({ userData, setUserData, metasData, cardsData, setCardsData })
                 .from('usuarios')
                 .select('*')
                 .eq('email', userData.email);
-
             if (error) {
                 throw error;
             }
-
             return data[0];
         } catch (error) {
             console.error(error.message);
@@ -57,8 +55,6 @@ function HomePage({ userData, setUserData, metasData, cardsData, setCardsData })
             try {
                 const userDataResult = await buscaDados();
                 setUserData(userDataResult);
-                setUserDataHome(userDataResult);
-
                 const cardsResult = await buscaCards(userDataResult.idWallet);
                 setCardsData(cardsResult);
             } catch (error) {
@@ -83,7 +79,7 @@ function HomePage({ userData, setUserData, metasData, cardsData, setCardsData })
                     <View style={[styles.header]}>
                         <View>
                             <Text style={[styles.textH2, { fontSize: 14, fontWeight: 200, marginBottom: 10 }]}>Welcome Back</Text>
-                            <Text style={styles.textH2}>{userDataHome.fullName}</Text>
+                            <Text style={styles.textH2}>{userData.fullName}</Text>
                         </View>
                         <Image
                             style={styles.icones1}
@@ -94,7 +90,11 @@ function HomePage({ userData, setUserData, metasData, cardsData, setCardsData })
                     <View style={styles.pagamentos}>
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '100%', padding: 10, marginBottom: 10 }}>
                             <Text style={{ fontSize: 14, color: '#840F74' }}>My Balance</Text>
-                            <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#840F74' }}>{balance} ETH</Text>
+                            {userData.account ? (
+                                <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#840F74' }}>{balance} ETH</Text>
+                            ): (
+                                <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#840F74' }}>Link account</Text>
+                            )}
                         </View>
                         <View style={{ width: '90%', backgroundColor: '#F2F2F2', height: 2 }}></View>
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '100%', padding: 20 }}>

@@ -3,9 +3,12 @@ import { Dimensions } from 'react-native';
 import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView } from 'react-native';
 const screenHeight = Dimensions.get('window').height;
 const screenWidth = Dimensions.get('window').width;
-function Preferences({setUserAuthenticated}) {
-
-    const handleLogout = () =>{
+import { useNavigation } from '@react-navigation/native';
+import { useAccount } from 'wagmi'
+function Preferences({ setUserAuthenticated, userData }) {
+    const {address} = useAccount();
+    const navigation = useNavigation();
+    const handleLogout = () => {
         setUserAuthenticated(false);
     };
 
@@ -39,10 +42,10 @@ function Preferences({setUserAuthenticated}) {
                             <View>
                                 <Text style={[
                                     styles.textH2, { color: '#000' }
-                                ]}>Gabriel Moreira</Text>
+                                ]}>{userData.fullName}</Text>
                                 <Text style={[
                                     styles.textH3,
-                                ]}>1234 1234 1234</Text>
+                                ]}>{address}</Text>
                             </View>
 
                         </View>
@@ -66,10 +69,10 @@ function Preferences({setUserAuthenticated}) {
                             />
                             <Text style={[styles.textH2]}>Scan Qr</Text>
                         </View>
-                        <View style={[ styles.qrCard]}>
+                        <View style={[styles.qrCard]}>
                             <Image
                                 style={[styles.icones2]}
-                                source={require('../../assets/icones/MeuQr.png')}/>
+                                source={require('../../assets/icones/MeuQr.png')} />
                             <Text style={[styles.textH2]}>My Qr</Text>
                         </View>
                     </View>
@@ -78,9 +81,15 @@ function Preferences({setUserAuthenticated}) {
                         <View style={[styles.optionCard]}>
                             <Image
                                 style={[styles.icones]}
-                                source={require('../../assets/icones/people.png')}/>
+                                source={require('../../assets/icones/people.png')} />
                             <Text style={[styles.textH1]}>Account</Text>
                         </View>
+                        <TouchableOpacity style={[styles.optionCard]} onPress={() => navigation.navigate('LinkWallets')}>
+                            <Image
+                                style={[styles.icones]}
+                                source={require('../../assets/icones/topUp.png')} />
+                            <Text style={[styles.textH1]}>Link Wallets</Text>
+                        </TouchableOpacity>
                         <View style={[styles.optionCard]}>
                             <Image
                                 style={[styles.icones]}
@@ -97,17 +106,17 @@ function Preferences({setUserAuthenticated}) {
                         <View style={[styles.optionCard]}>
                             <Image
                                 style={[styles.icones]}
-                                source={require('../../assets/icones/cadeadoChave.png')}/>
+                                source={require('../../assets/icones/cadeadoChave.png')} />
                             <Text style={[styles.textH1]}>Account security</Text>
                         </View>
                         <View style={[styles.optionCard]}>
                             <Image
                                 style={[styles.icones]}
-                                source={require('../../assets/icones/interrogacao.png')}/>
+                                source={require('../../assets/icones/interrogacao.png')} />
                             <Text style={[styles.textH1]}>Help and privacy</Text>
                         </View>
-                        <TouchableOpacity onPress={handleLogout} style={{marginTop: 14}}>
-                            <Text style={{fontSize:16, color:'#FF552F', textDecorationLine: 'underline'}}>Log out</Text>
+                        <TouchableOpacity onPress={handleLogout} style={{ marginTop: 14 }}>
+                            <Text style={{ fontSize: 16, color: '#FF552F', textDecorationLine: 'underline' }}>Log out</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -122,7 +131,7 @@ const styles = StyleSheet.create({
         width: '100%',
         alignItems: 'center',
         gap: 16,
-        height: 700
+        height: 800
     },
     qrContainer: {
         flexDirection: 'row',
@@ -172,11 +181,11 @@ const styles = StyleSheet.create({
     backgroundImage: {
         position: 'absolute',
         height: screenHeight + 59,
-        width: screenWidth ,
+        width: screenWidth,
         resizeMode: 'contain',
         top: 0,
         left: 0
-    },  
+    },
     scroll: {
         width: screenWidth,
     },
@@ -209,7 +218,7 @@ const styles = StyleSheet.create({
     white: {
         color: 'white'
     },
-    
+
     card: {
         backgroundColor: '#fff',
         borderRadius: 20,
