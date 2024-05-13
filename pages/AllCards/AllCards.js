@@ -57,7 +57,7 @@ export default function AllCards({ adicionarCartao, cartoes, userData}) {
             </View>
             <View style={{ width: '100%', alignItems: 'center', position: 'absolute', bottom: 0 }}>
                 <TouchableOpacity style={styles.button} onPress={handleOpenModal} >
-                    <Text style={styles.buttonText}>Add Card</Text>
+                    <Text style={styles.buttonText} >Add Card</Text>
                 </TouchableOpacity>
             </View>
             <CardCreateModal visible={modalVisible}  walletId={userData.idWallet} onClose={handleCloseModal} adicionarCartao={adicionarCartao} setCards={setCards} cards={cards} />
@@ -89,17 +89,22 @@ const styles = StyleSheet.create({
     },
     buttonText: {
         fontSize: 16,
-        color: 'white',
+        color: '#BB35A9',
         fontWeight: 'bold',
+        
     },
     button: {
         width: 327,
         height: 56,
-        backgroundColor: '#BB35A9',
+        // backgroundColor: '#BB35A9',
         justifyContent: 'center',
         alignItems: 'center',
-        borderRadius: 30,
-        marginBottom: 16
+        borderRadius: 15,
+        marginBottom: 16,
+
+        borderWidth: 3,
+        borderStyle: 'dotted',
+        borderColor: '#BB35A9',
     },
     textHeader: {
         fontSize: 14,
