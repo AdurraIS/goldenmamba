@@ -26,6 +26,7 @@
     "expo-crypto": "~13.0.2",
     "expo-status-bar": "~1.6.0",
     "firebase": "^10.11.1",
+    "native-base": "^3.4.28",
     "react": "18.2.0",
     "react-native": "0.72.10",
     "react-native-elements": "^3.4.3",
