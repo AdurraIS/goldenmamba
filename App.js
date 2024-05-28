@@ -19,6 +19,7 @@ import SignIn from './pages/SignIn/SignIn';
 import Meta from './components/Meta/Meta';
 import LinkWallets from './pages/LinkWallets/LinkWallets';
 import ChangeEmail from './pages/ChangeEmail/ChangeEmail';
+import ChangePassword from './pages/ChangePassword/ChangePassword';
 import { WagmiConfig } from 'wagmi'
 import { mainnet, polygon, arbitrum } from 'viem/chains'
 import { createWeb3Modal, defaultWagmiConfig } from '@web3modal/wagmi-react-native';
@@ -91,6 +92,16 @@ export default function App() {
               {(props) => (
                 <View style={{ flex: 1 }}>
                   <ChangeEmail {...props} adicionarMetaApp={adicionarMeta}
+                    setUserData={setUserData} userData={userData} metasData={metas}
+                    cardsData={cartoes} setCardsData={setCartoes} />
+                  <NavBottom />
+                </View>
+              )}
+            </Stack.Screen>
+            <Stack.Screen name="ChangePassword" options={{ headerShown: false }}>
+              {(props) => (
+                <View style={{ flex: 1 }}>
+                  <ChangePassword {...props} adicionarMetaApp={adicionarMeta}
                     setUserData={setUserData} userData={userData} metasData={metas}
                     cardsData={cartoes} setCardsData={setCartoes} />
                   <NavBottom />

@@ -98,7 +98,7 @@ function Preferences({ setUserAuthenticated, userData }) {
                             <Text style={[styles.textH1]}>Change Email Address</Text>
                         </TouchableOpacity>
 
-                        <TouchableOpacity style={[styles.optionCard]} onPress={() => navigation.navigate('ChangeEmail')}>
+                        <TouchableOpacity style={[styles.optionCard]} onPress={() => navigation.navigate('ChangePassword')}>
                             <Image
                                 style={[styles.icones]}
                                 source={require('../../assets/icones/cadeadoSenha.png')} />

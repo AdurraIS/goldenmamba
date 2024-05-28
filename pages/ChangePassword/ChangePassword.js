@@ -9,46 +9,12 @@ import settingsIcon from "../../assets/icones/settingsIcon.png"
 import back from "../../assets/MetaIcons/back.png"
 import { flare } from 'viem/chains';
 
-export default function ChangeEmail() {
+export default function ChangePassword() {
     const navigation = useNavigation();
 
     const [oldEmail, setOldEmail] = useState("")
     const [NewEmail, setNewEmail] = useState("")
     const [Password, setPassword] = useState("")
-
-    async function handleSubmit() {
-
-        if (!isValidEmail(email)) {
-            setErrorMessage('O email inserido não é válido.');
-            return;
-        }
-        try {
-            const { data, error } = await supabase
-                .from('usuarios')
-                .select('*')
-                .eq('email', email);
-            console.log(data)
-            const response = data[0]
-
-            if (response.password != senha) {
-                setErrorMessage("Email ou senha inválida!")
-                return;
-            }
-            if (response == null) {
-                setErrorMessage("Email ou senha inválida!")
-                return;
-            }
-
-        } catch (error) {
-            console.error(error.message);
-            return;
-        }
-        // setUserData({ email })
-        // setUserAuthenticated(true);
-        // navigation.navigate('HomePage')
-        // setErrorMessage('');
-    }
-
     return (
         <View
             style={styles.container}
@@ -59,7 +25,7 @@ export default function ChangeEmail() {
                 <TouchableOpacity onPress={() => navigation.goBack()}>
                     <Image style={{ tintColor: '#000' }} source={back} />
                 </TouchableOpacity>
-                <Text>Your Cards</Text>
+                <Text>Change Password</Text>
                 <Image source={settingsIcon} />
             </View>
             <View
@@ -68,10 +34,10 @@ export default function ChangeEmail() {
                 <Text
                     style={styles.TextInput}
                 >
-                    Current email</Text>
+                    Current Password</Text>
                 <TextInput
                     style={styles.input}
-                    placeholder="Example@123.com"
+                    placeholder="Password"
                 // value={text}
                 // onChangeText={setText}
                 />
@@ -82,11 +48,11 @@ export default function ChangeEmail() {
                 <Text
                     style={styles.TextInput}
                 >
-                    New email
+                    New Password
                 </Text>
                 <TextInput
                     style={styles.input}
-                    placeholder="Example@123.com"
+                    placeholder="Password"
                 // value={text}
                 // onChangeText={setText}
                 />
@@ -97,7 +63,7 @@ export default function ChangeEmail() {
                 <Text
                     style={styles.TextInput}
                 >
-                    Enter your email password
+                    Confirm new Password
                 </Text>
                 <TextInput
                     style={styles.input}
