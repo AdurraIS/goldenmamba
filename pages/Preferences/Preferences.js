@@ -6,7 +6,7 @@ const screenWidth = Dimensions.get('window').width;
 import { useNavigation } from '@react-navigation/native';
 import { useAccount } from 'wagmi'
 function Preferences({ setUserAuthenticated, userData }) {
-    const {address} = useAccount();
+    const { address } = useAccount();
     const navigation = useNavigation();
     const handleLogout = () => {
         setUserAuthenticated(false);
@@ -78,30 +78,33 @@ function Preferences({ setUserAuthenticated, userData }) {
                     </View>
                     <View style={[styles.optionsContainer]}>
                         <Text style={[styles.sectionTitle]}>Account</Text>
-                        <View style={[styles.optionCard]}>
+                        <TouchableOpacity style={[styles.optionCard]} onPress={() => navigation.navigate('ChangeEmail')}>
                             <Image
                                 style={[styles.icones]}
                                 source={require('../../assets/icones/people.png')} />
                             <Text style={[styles.textH1]}>Account</Text>
-                        </View>
+                        </TouchableOpacity>
                         <TouchableOpacity style={[styles.optionCard]} onPress={() => navigation.navigate('LinkWallets')}>
                             <Image
                                 style={[styles.icones]}
                                 source={require('../../assets/icones/topUp.png')} />
                             <Text style={[styles.textH1]}>Link Wallets</Text>
                         </TouchableOpacity>
-                        <View style={[styles.optionCard]}>
+
+                        <TouchableOpacity style={[styles.optionCard]} onPress={() => navigation.navigate('ChangeEmail')}>
                             <Image
                                 style={[styles.icones]}
                                 source={require('../../assets/icones/email.png')} />
                             <Text style={[styles.textH1]}>Change Email Address</Text>
-                        </View>
-                        <View style={[styles.optionCard]}>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity style={[styles.optionCard]} onPress={() => navigation.navigate('ChangeEmail')}>
                             <Image
                                 style={[styles.icones]}
                                 source={require('../../assets/icones/cadeadoSenha.png')} />
                             <Text style={[styles.textH1]}>Change Password</Text>
-                        </View>
+                        </TouchableOpacity>
+
                         <Text style={[styles.sectionTitle]}>More Settings </Text>
                         <View style={[styles.optionCard]}>
                             <Image

@@ -2,18 +2,18 @@ import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity } from 'reac
 import React, { useState } from 'react'
 import SignInImage from '../../assets/Backgrounds/SignIn.png';
 import { supabase } from '../../shared/CreateClient';
-import { useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 
 const isValidEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
 };
 
-export default function SignIn({setUserAuthenticated,setUserData}) {
+export default function SignIn({ setUserAuthenticated, setUserData }) {
     const navigation = useNavigation();
     const [errorMessage, setErrorMessage] = useState();
-    const [email, setEmail] = useState();
-    const [senha, setSenha] = useState();
+    const [email, setEmail] = useState("");
+    const [senha, setSenha] = useState("");
     async function handleSubmit() {
 
         if (!isValidEmail(email)) {
@@ -22,25 +22,26 @@ export default function SignIn({setUserAuthenticated,setUserData}) {
         }
         try {
             const { data, error } = await supabase
-            .from('usuarios')
-            .select('*') 
-            .eq('email', email);
+                .from('usuarios')
+                .select('*')
+                .eq('email', email);
+            console.log(data)
             const response = data[0]
 
-            if(response.password != senha){
+            if (response.password != senha) {
                 setErrorMessage("Email ou senha inválida!")
                 return;
             }
-            if(response == null){
+            if (response == null) {
                 setErrorMessage("Email ou senha inválida!")
                 return;
             }
-            
+
         } catch (error) {
             console.error(error.message);
             return;
         }
-        setUserData({email})
+        setUserData({ email })
         setUserAuthenticated(true);
         navigation.navigate('HomePage')
         setErrorMessage('');

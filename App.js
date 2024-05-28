@@ -18,6 +18,7 @@ import History from './pages/History/History';
 import SignIn from './pages/SignIn/SignIn';
 import Meta from './components/Meta/Meta';
 import LinkWallets from './pages/LinkWallets/LinkWallets';
+import ChangeEmail from './pages/ChangeEmail/ChangeEmail';
 import { WagmiConfig } from 'wagmi'
 import { mainnet, polygon, arbitrum } from 'viem/chains'
 import { createWeb3Modal, defaultWagmiConfig } from '@web3modal/wagmi-react-native';
@@ -26,14 +27,14 @@ const projectId = '9f511ee16d6963183c82616eb62fc665';
 
 // 2. Create config
 const metadata = {
-    name: 'Web3Modal RN',
-    description: 'Web3Modal RN Example',
-    url: 'https://web3modal.com',
-    icons: ['https://avatars.githubusercontent.com/u/37784886'],
-    redirect: {
-        native: 'YOUR_APP_SCHEME://',
-        universal: 'YOUR_APP_UNIVERSAL_LINK.com'
-    }
+  name: 'Web3Modal RN',
+  description: 'Web3Modal RN Example',
+  url: 'https://web3modal.com',
+  icons: ['https://avatars.githubusercontent.com/u/37784886'],
+  redirect: {
+    native: 'YOUR_APP_SCHEME://',
+    universal: 'YOUR_APP_UNIVERSAL_LINK.com'
+  }
 }
 const chains = [mainnet, polygon, arbitrum]
 
@@ -47,7 +48,7 @@ createWeb3Modal({
 
 
 export default function App() {
-  
+
   const [userAuthenticated, setUserAuthenticated] = useState(false);
   const [metas, setMetas] = useState([]);
   const [userData, setUserData] = useState();
@@ -81,107 +82,117 @@ export default function App() {
     setPinData(prop);
   }
   return (
-    
+
     <NavigationContainer>
       <WagmiConfig config={wagmiConfig}>
-      {userAuthenticated ? (
-        <Stack.Navigator>
-          <Stack.Screen name="HomePage" options={{ headerShown: false }}>
-            {(props) => (
-              <View style={{ flex: 1 }}>
-                <HomePage {...props} adicionarMetaApp={adicionarMeta} 
-                setUserData={setUserData} userData={userData} metasData={metas} 
-                cardsData={cartoes} setCardsData={setCartoes}/>
-                <NavBottom />
-              </View>
-            )}
-          </Stack.Screen>
-          <Stack.Screen name="LinkWallets" options={{ headerShown: false }}>
-              {()=>(<LinkWallets/>)}
-          </Stack.Screen>
-          <Stack.Screen name="AllCards" options={{ headerShown: false }}>
-            {() => (<AllCards userData={userData} adicionarCartao={adicionarCartao} cartoes={cartoes} />)}
-          </Stack.Screen>
-          <Stack.Screen name="Preferences" options={{ headerShown: false }}>
-            {(props) => (
-              <View style={{ flex: 1 }}>
-                <Preferences {...props} setUserAuthenticated={setUserAuthenticated} userData={userData}/>
-                <NavBottom />
-              </View>
-            )}
-          </Stack.Screen>
-          {metas && metas.map((meta) => {
-            return (
-              <Stack.Screen key={meta.titulo} name={"meta/"+meta.titulo} options={{ headerShown: false }}>
-                {(props) => (
-                  <View style={{ flex: 1 }}>
-                    <Meta valorAtual={meta.valorAtual} valorMeta={meta.valorMeta} tituloMeta={meta.titulo} imageMeta={meta.imageUrl} dataMeta={meta.dataMeta}/>
-                  </View>
-                )}
-              </Stack.Screen>
-            )
-          })}
-          <Stack.Screen name="AllGoals" options={{ headerShown: false }} >
-            {() => (<AllGoals metasData={metas} userData={userData} setMetasData={setMetas} adicionarMeta={adicionarMeta} />)}
-          </Stack.Screen>
-          <Stack.Screen name="History" options={{ headerShown: false }} >
-            {() => (
-              <>
-                <History />
-                <NavBottom />
-              </>)}
-          </Stack.Screen>
-        </Stack.Navigator>
-      ) : (
-        <Stack.Navigator>
-          <Stack.Screen
-            name="StartPage"
-            options={{ headerShown: false }}
-            component={StartPage}
-          />
-          <Stack.Screen
-            name="Onboarding"
-            options={{ headerShown: false }}
-            component={Onboarding}
-          />
-          <Stack.Screen
-            name="Register"
-            options={{ headerShown: false }}
-          >
-            {(props) => (<Register {...props} getUserData={getUserData} />)}
-          </Stack.Screen>
-          <Stack.Screen
-            name="CreatePin"
-            options={{ headerShown: false }}
-          >
-            {(props) => (<CreatePin getPinData={getPinData} />)}
-          </Stack.Screen>
-          <Stack.Screen
-            name="ConfirmPin"
-            options={{ headerShown: false }}
-          >
-            {(props) => (<ConfirmPin pinData={pinData} />)}
-          </Stack.Screen>
-          <Stack.Screen
-            name="VerifyEmail"
-            options={{ headerShown: false }}
-          >
-            {(props) => (<VerifyEmail userData={userData} />)}
-          </Stack.Screen>
-          <Stack.Screen
-            name="AccountCreated"
-            options={{ headerShown: false }}
-          >
-            {() => (<AccountCreated userData={userData} dataPin={pinData} setUserAuthenticated={setUserAuthenticated} />)}
-          </Stack.Screen>
-          <Stack.Screen
-            name="SignIn"
-            options={{ headerShown: false }}
-          >
-            {() => (<SignIn setUserAuthenticated={setUserAuthenticated} setUserData={setUserData} />)}
-          </Stack.Screen>
-        </Stack.Navigator>
-      )}
+        {userAuthenticated ? (
+          <Stack.Navigator>
+            <Stack.Screen name="ChangeEmail" options={{ headerShown: false }}>
+              {(props) => (
+                <View style={{ flex: 1 }}>
+                  <ChangeEmail {...props} adicionarMetaApp={adicionarMeta}
+                    setUserData={setUserData} userData={userData} metasData={metas}
+                    cardsData={cartoes} setCardsData={setCartoes} />
+                  <NavBottom />
+                </View>
+              )}
+            </Stack.Screen>
+            <Stack.Screen name="HomePage" options={{ headerShown: false }}>
+              {(props) => (
+                <View style={{ flex: 1 }}>
+                  <HomePage {...props} adicionarMetaApp={adicionarMeta}
+                    setUserData={setUserData} userData={userData} metasData={metas}
+                    cardsData={cartoes} setCardsData={setCartoes} />
+                  <NavBottom />
+                </View>
+              )}
+            </Stack.Screen>
+            <Stack.Screen name="LinkWallets" options={{ headerShown: false }}>
+              {() => (<LinkWallets />)}
+            </Stack.Screen>
+            <Stack.Screen name="AllCards" options={{ headerShown: false }}>
+              {() => (<AllCards userData={userData} adicionarCartao={adicionarCartao} cartoes={cartoes} />)}
+            </Stack.Screen>
+            <Stack.Screen name="Preferences" options={{ headerShown: false }}>
+              {(props) => (
+                <View style={{ flex: 1 }}>
+                  <Preferences {...props} setUserAuthenticated={setUserAuthenticated} userData={userData} />
+                  <NavBottom />
+                </View>
+              )}
+            </Stack.Screen>
+            {metas && metas.map((meta) => {
+              return (
+                <Stack.Screen key={meta.titulo} name={"meta/" + meta.titulo} options={{ headerShown: false }}>
+                  {(props) => (
+                    <View style={{ flex: 1 }}>
+                      <Meta valorAtual={meta.valorAtual} valorMeta={meta.valorMeta} tituloMeta={meta.titulo} imageMeta={meta.imageUrl} dataMeta={meta.dataMeta} />
+                    </View>
+                  )}
+                </Stack.Screen>
+              )
+            })}
+            <Stack.Screen name="AllGoals" options={{ headerShown: false }} >
+              {() => (<AllGoals metasData={metas} userData={userData} setMetasData={setMetas} adicionarMeta={adicionarMeta} />)}
+            </Stack.Screen>
+            <Stack.Screen name="History" options={{ headerShown: false }} >
+              {() => (
+                <>
+                  <History />
+                  <NavBottom />
+                </>)}
+            </Stack.Screen>
+          </Stack.Navigator>
+        ) : (
+          <Stack.Navigator>
+            <Stack.Screen
+              name="StartPage"
+              options={{ headerShown: false }}
+              component={StartPage}
+            />
+            <Stack.Screen
+              name="Onboarding"
+              options={{ headerShown: false }}
+              component={Onboarding}
+            />
+            <Stack.Screen
+              name="Register"
+              options={{ headerShown: false }}
+            >
+              {(props) => (<Register {...props} getUserData={getUserData} />)}
+            </Stack.Screen>
+            <Stack.Screen
+              name="CreatePin"
+              options={{ headerShown: false }}
+            >
+              {(props) => (<CreatePin getPinData={getPinData} />)}
+            </Stack.Screen>
+            <Stack.Screen
+              name="ConfirmPin"
+              options={{ headerShown: false }}
+            >
+              {(props) => (<ConfirmPin pinData={pinData} />)}
+            </Stack.Screen>
+            <Stack.Screen
+              name="VerifyEmail"
+              options={{ headerShown: false }}
+            >
+              {(props) => (<VerifyEmail userData={userData} />)}
+            </Stack.Screen>
+            <Stack.Screen
+              name="AccountCreated"
+              options={{ headerShown: false }}
+            >
+              {() => (<AccountCreated userData={userData} dataPin={pinData} setUserAuthenticated={setUserAuthenticated} />)}
+            </Stack.Screen>
+            <Stack.Screen
+              name="SignIn"
+              options={{ headerShown: false }}
+            >
+              {() => (<SignIn setUserAuthenticated={setUserAuthenticated} setUserData={setUserData} />)}
+            </Stack.Screen>
+          </Stack.Navigator>
+        )}
       </WagmiConfig>
     </NavigationContainer>
   );
